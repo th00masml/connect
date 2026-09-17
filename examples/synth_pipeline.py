@@ -58,7 +58,7 @@ def main() -> None:
         Prediction("D01", "leaky", "leakage_resplit", "retrieval.accuracy.delta", "down", 0.20, 0.8, "magnitude",
                    "retrieval baseline collapses once near-duplicates are removed"),
         Prediction("D02", "leaky", "leakage_resplit", "retrieval_dominance.sim_correctness_corr", "below", 0.15, 0.7, "manipulation_check"),
-        Prediction("D03", "leaky", "rebalance_and_filter", "label_prior_skew.tv_label_vs_uniform", "below", 0.05, 0.9, "manipulation_check"),
+        Prediction("D03", "leaky", "rebalance_and_filter", "label_marginal.tv_label_vs_uniform", "below", 0.05, 0.9, "manipulation_check"),
         Prediction("D04", "leaky", "constraint_ablation", "em.constrained_minus_free", "up", 0.10, 0.8, "metric_specific"),
         Prediction("D05", "leaky", "constraint_ablation", "sem.constrained_minus_free", "flat", 0.03, 0.8, "metric_specific"),
         Prediction("D06", "synthmodal_control", "leakage_resplit", "llm.accuracy.delta", "flat", 0.03, 0.85, "specificity"),
@@ -112,7 +112,7 @@ def main() -> None:
         r["rebalance_and_filter"] = {
             "n_after": len(bal),
             "llm": {"accuracy": {"before": before.accuracy, "after": after_b.accuracy, "delta": after_b.accuracy - before.accuracy}},
-            "label_prior_skew": {"tv_label_vs_uniform": tv},
+            "label_marginal": {"tv_label_vs_uniform": tv},
             "manipulation_check": REBALANCE.manipulation_check(partial_input_accuracy(NoisyFormatModel(gold_b, 0.75, 0.4, seed=1), bal)),
         }
 

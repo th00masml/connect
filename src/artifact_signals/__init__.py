@@ -1,6 +1,6 @@
 """artifact_signals: diagnostic instrument for benchmark artifacts in LLM reasoning evaluation.
 
-The package computes an Artifact Risk Profile (six diagnostics) for a benchmark,
+The package computes an Artifact Risk Profile (five diagnostics) for a benchmark,
 applies targeted de-artifacting interventions with manipulation checks, and scores a
 hash-stamped ledger of pre-registered predictions against the observed changes.
 

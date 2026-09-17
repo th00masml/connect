@@ -1,4 +1,4 @@
-"""The six diagnostics and the Artifact Risk Profile.
+"""The five diagnostics and the Artifact Risk Profile.
 
 Each diagnostic returns a Signal: a scalar value on a stated scale, a bootstrap CI where
 one is meaningful, and a details dict with everything needed to audit it. The profile is
@@ -28,7 +28,7 @@ LEVELS = ("dataset", "protocol", "model", "model_x_benchmark")
 SIGNAL_LEVEL = {
     "format_sensitivity": "model_x_benchmark",   # a model's response to equivalent surface forms of these items
     "partial_input_accuracy": "dataset",         # solvability without the input; estimated with a model, owned by the data
-    "label_prior_skew": "model_x_benchmark",     # model marginal vs label marginal (label-vs-uniform inside it is dataset-level)
+    "label_prior_skew": "model_x_benchmark",     # auxiliary, not in the profile: its dataset half is reported inside partial_input_accuracy
     "retrieval_dominance": "dataset",            # a non-parametric baseline vs the split; the ratio to an LLM is model x benchmark
     "semantic_validity_gap": "protocol",         # a decoding protocol's effect on two metrics; forced_rate needs no model at all
     "abstention_failure": "model_x_benchmark",
@@ -125,7 +125,18 @@ def partial_input_from_runs(runs: list[Run], bench: Benchmark) -> Signal:
             best = (run.rendering, acc - chance)
     note = "" if bench.task == "choice" else "free-form task: chance is 0, interpret excess as raw accuracy"
     return Signal("partial_input_accuracy", best[1] if best else None,
-                  details={"chance": chance, "per_mode": per, "worst_mode": best[0] if best else None}, note=note)
+                  details={"chance": chance, "per_mode": per, "worst_mode": best[0] if best else None,
+                           "label_marginal": label_marginal(bench)}, note=note)
+
+
+def label_marginal(bench: Benchmark) -> dict:
+    """Dataset-level label prior: the marginal and its TV distance from uniform. Reported inside
+    partial_input_accuracy, since a prior only matters if a model can exploit it without the input."""
+    items = bench.in_distribution()
+    space = bench.label_space()
+    n = max(1, len(items))
+    m = {c: sum(1 for i in items if i.label == c) / n for c in space}
+    return {"marginal": m, "tv_vs_uniform": tv_distance(m, {c: 1.0 / len(space) for c in space}) if space else 0.0}
 
 
 def partial_input_accuracy(model, bench: Benchmark, judge: Judge = exact_match, renderings: list[Rendering] | None = None,
@@ -135,7 +146,7 @@ def partial_input_accuracy(model, bench: Benchmark, judge: Judge = exact_match, 
     return partial_input_from_runs(runs, bench)
 
 
-# --- 3. label-prior skew ------------------------------------------------------------------
+# --- auxiliary: label-prior skew (library only; not one of the five profile signals) -----------
 
 
 def label_prior_skew(bench: Benchmark, run: Run) -> Signal:
@@ -330,7 +341,6 @@ def compute_profile(
     est, lo, hi = _acc_ci(base, bench, n_boot, seed)
     fs.details["baseline_accuracy"] = {"value": est, "ci": [lo, hi]}
     signals["partial_input_accuracy"] = partial_input_accuracy(model, bench, judge, cache=cache)
-    signals["label_prior_skew"] = label_prior_skew(bench, base)
     if train is not None:
         signals["retrieval_dominance"] = retrieval_dominance(train, bench, base)
     else:

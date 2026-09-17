@@ -28,8 +28,7 @@ below is a protocol demonstration and is labelled retrospective by the scorer.
 | signal | level | value | note |
 |---|---|---:|---|
 | format_sensitivity | model_x_benchmark | n/a | single prompt in the cached run; needs a live re-run under standard_renderings |
-| partial_input_accuracy | dataset | 0.108 | proxy from the label prior, not a model run |
-| label_prior_skew | model_x_benchmark | 0.273 |  | model top: Infectious=0.17, Digestive=0.12, Circulatory=0.11; label-vs-uniform=0.408 |
+| partial_input_accuracy | dataset | 0.108 | proxy from the label prior, not a model run | label-vs-uniform=0.408 |
 | retrieval_dominance | dataset | 1.262 |  | corr=+0.055, gap=-0.147, best=char3 |
 | semantic_validity_gap | protocol | 0.003 |  | cg=+0.003, sg=+0.000 |
 | abstention_failure | model_x_benchmark | n/a | no unanswerable probes in the cached run; interventions.make_unanswerable for a live run |
@@ -39,8 +38,7 @@ below is a protocol demonstration and is labelled retrospective by the scorer.
 | signal | level | value | note |
 |---|---|---:|---|
 | format_sensitivity | model_x_benchmark | n/a | single prompt in the cached run; needs a live re-run under standard_renderings |
-| partial_input_accuracy | dataset | 0.108 | proxy from the label prior, not a model run |
-| label_prior_skew | model_x_benchmark | 0.187 |  | model top: Digestive=0.16, Infectious=0.15, Circulatory=0.10; label-vs-uniform=0.408 |
+| partial_input_accuracy | dataset | 0.108 | proxy from the label prior, not a model run | label-vs-uniform=0.408 |
 | retrieval_dominance | dataset | 1.060 |  | corr=-0.047, gap=-0.040, best=char3 |
 | semantic_validity_gap | protocol | 0.000 |  | cg=+0.000, sg=+0.000 |
 | abstention_failure | model_x_benchmark | n/a | no unanswerable probes in the cached run; interventions.make_unanswerable for a live run |
@@ -50,8 +48,7 @@ below is a protocol demonstration and is labelled retrospective by the scorer.
 | signal | level | value | note |
 |---|---|---:|---|
 | format_sensitivity | model_x_benchmark | 0.137 | SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse | naive=0.000, prompted=0.325, prompt_tuned=0.237; truth-value SD=0.188 |
-| partial_input_accuracy (GATED) | dataset | 0.050 | proxy from the label prior, not a model run; gated: format sensitivity 0.137 > 0.03 |
-| label_prior_skew (GATED) | model_x_benchmark | 0.550 | gated: format sensitivity 0.137 > 0.03 | model top: TRUE=1.00, FALSE=0.00; label-vs-uniform=0.050 |
+| partial_input_accuracy (GATED) | dataset | 0.050 | proxy from the label prior, not a model run; gated: format sensitivity 0.137 > 0.03 | label-vs-uniform=0.050; model truth dist: TRUE=80 |
 | retrieval_dominance (GATED) | dataset | 1.778 | gated: format sensitivity 0.137 > 0.03 | corr=+0.389, gap=-0.350, best=loo-char3 |
 | semantic_validity_gap (GATED) | protocol | 0.125 | EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.137 > 0.03 | cg=+0.312, sg=+0.187, forced_rate=0.312 |
 | abstention_failure (GATED) | model_x_benchmark | 1.000 | gated: format sensitivity 0.137 > 0.03 | naive=1.00, prompted=1.00, prompt_tuned=1.00, constrained=1.00, constrained_tuned=1.00 |
@@ -61,8 +58,7 @@ below is a protocol demonstration and is labelled retrospective by the scorer.
 | signal | level | value | note |
 |---|---|---:|---|
 | format_sensitivity | model_x_benchmark | 0.142 | SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse | naive=0.000, prompted=0.338, prompt_tuned=0.237; truth-value SD=0.190 |
-| partial_input_accuracy (GATED) | dataset | 0.050 | proxy from the label prior, not a model run; gated: format sensitivity 0.142 > 0.03 |
-| label_prior_skew (GATED) | model_x_benchmark | 0.550 | gated: format sensitivity 0.142 > 0.03 | model top: TRUE=1.00, FALSE=0.00; label-vs-uniform=0.050 |
+| partial_input_accuracy (GATED) | dataset | 0.050 | proxy from the label prior, not a model run; gated: format sensitivity 0.142 > 0.03 | label-vs-uniform=0.050; model truth dist: TRUE=80 |
 | retrieval_dominance (GATED) | dataset | 1.778 | gated: format sensitivity 0.142 > 0.03 | corr=+0.389, gap=-0.350, best=loo-char3 |
 | semantic_validity_gap (GATED) | protocol | 0.112 | EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.142 > 0.03 | cg=+0.112, sg=+0.000, forced_rate=0.000 |
 | abstention_failure (GATED) | model_x_benchmark | 1.000 | gated: format sensitivity 0.142 > 0.03 | naive=1.00, prompted=1.00, prompt_tuned=1.00, constrained=1.00, constrained_tuned=1.00 |
@@ -72,8 +68,7 @@ below is a protocol demonstration and is labelled retrospective by the scorer.
 | signal | level | value | note |
 |---|---|---:|---|
 | format_sensitivity | model_x_benchmark | 0.130 | SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse | naive=0.312, prompted=0.100, prompt_tuned=0.000; truth-value SD=0.095 |
-| partial_input_accuracy (GATED) | dataset | 0.050 | proxy from the label prior, not a model run; gated: format sensitivity 0.130 > 0.03 |
-| label_prior_skew (GATED) | model_x_benchmark | 0.386 | gated: format sensitivity 0.130 > 0.03 | model top: FALSE=0.94, TRUE=0.06; label-vs-uniform=0.050 |
+| partial_input_accuracy (GATED) | dataset | 0.050 | proxy from the label prior, not a model run; gated: format sensitivity 0.130 > 0.03 | label-vs-uniform=0.050; model truth dist: FALSE=73, TRUE=5, =2 |
 | retrieval_dominance (GATED) | dataset | 1.600 | gated: format sensitivity 0.130 > 0.03 | corr=-0.401, gap=-0.300, best=loo-char3 |
 | semantic_validity_gap (GATED) | protocol | 0.400 | EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.130 > 0.03 | cg=+0.550, sg=+0.150, forced_rate=0.312 |
 | abstention_failure (GATED) | model_x_benchmark | 1.000 | gated: format sensitivity 0.130 > 0.03 | naive=1.00, prompted=1.00, prompt_tuned=1.00, constrained=1.00, constrained_tuned=1.00 |
@@ -83,8 +78,7 @@ below is a protocol demonstration and is labelled retrospective by the scorer.
 | signal | level | value | note |
 |---|---|---:|---|
 | format_sensitivity | model_x_benchmark | 0.135 | SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse | naive=0.312, prompted=0.062, prompt_tuned=0.000; truth-value SD=0.084 |
-| partial_input_accuracy (GATED) | dataset | 0.050 | proxy from the label prior, not a model run; gated: format sensitivity 0.135 > 0.03 |
-| label_prior_skew (GATED) | model_x_benchmark | 0.359 | gated: format sensitivity 0.135 > 0.03 | model top: FALSE=0.91, TRUE=0.09; label-vs-uniform=0.050 |
+| partial_input_accuracy (GATED) | dataset | 0.050 | proxy from the label prior, not a model run; gated: format sensitivity 0.135 > 0.03 | label-vs-uniform=0.050; model truth dist: FALSE=70, TRUE=7, =3 |
 | retrieval_dominance (GATED) | dataset | 1.778 | gated: format sensitivity 0.135 > 0.03 | corr=-0.363, gap=-0.350, best=loo-char3 |
 | semantic_validity_gap (GATED) | protocol | 0.388 | EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.135 > 0.03 | cg=+0.400, sg=+0.013, forced_rate=0.000 |
 | abstention_failure (GATED) | model_x_benchmark | 1.000 | gated: format sensitivity 0.135 > 0.03 | naive=1.00, prompted=1.00, prompt_tuned=1.00, constrained=1.00, constrained_tuned=1.00 |
