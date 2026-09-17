@@ -67,6 +67,17 @@ def cmd_ledger(a: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_paper12(a: argparse.Namespace) -> int:
+    from pathlib import Path
+
+    from .paper12 import run_all
+
+    res = run_all(Path(a.out))
+    print(res["report"] if a.report else res["report"].split("## Ledger score")[0][-1200:])
+    print(f"wrote {a.out}/profiles.json, results.json, ledger_score.json, RESULTS_offline.md")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="artifact-signals")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -101,6 +112,11 @@ def main(argv: list[str] | None = None) -> int:
     l.add_argument("--void", nargs="*", help="prediction ids voided by a failed invariance check")
     l.add_argument("--out")
     l.set_defaults(fn=cmd_ledger)
+
+    q = sub.add_parser("paper12", help="offline Phase 1 on papers 1 and 2 from cached outputs")
+    q.add_argument("--out", default="outputs/paper12")
+    q.add_argument("--report", action="store_true", help="print the full markdown report")
+    q.set_defaults(fn=cmd_paper12)
 
     a = p.parse_args(argv)
     if a.cmd == "ledger" and a.action == "score" and not a.results:

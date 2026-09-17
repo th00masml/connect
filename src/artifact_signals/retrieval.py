@@ -88,7 +88,22 @@ class BM25:
         return out
 
 
+def char3_sim(a: str, b: str, n: int = 3) -> float:
+    """Set-based char-n-gram cosine, letters only: the exact similarity used by paper 1's
+    fuzzy dictionary baseline and its HARD/novel split (best dictionary similarity < 0.5)."""
+    def grams(s: str) -> set[str]:
+        s = re.sub(r"[^a-z]", "", (s or "").lower())
+        if len(s) < n:
+            return {s} if s else set()
+        return {s[i:i + n] for i in range(len(s) - n + 1)}
+    A, B = grams(a), grams(b)
+    if not A or not B:
+        return 0.0
+    return len(A & B) / (len(A) ** 0.5 * len(B) ** 0.5)
+
+
 METHODS = ("fuzzy", "tfidf", "bm25")
+ALL_METHODS = METHODS + ("char3",)
 
 
 def nearest_neighbor(
@@ -98,6 +113,8 @@ def nearest_neighbor(
         return [""] * len(test_texts), [0.0] * len(test_texts)
     if method == "fuzzy":
         sims_fn = lambda q: [fuzzy_sim(q, d) for d in train_texts]  # noqa: E731
+    elif method == "char3":
+        sims_fn = lambda q: [char3_sim(q, d) for d in train_texts]  # noqa: E731
     elif method == "tfidf":
         idx = CharTfidf(train_texts)
         sims_fn = idx.query

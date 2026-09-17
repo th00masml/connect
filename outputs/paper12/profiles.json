@@ -1,0 +1,1274 @@
+{
+ "cause_of_death@qwen2.5:14b": {
+  "benchmark": "cause_of_death",
+  "model": "qwen2.5:14b",
+  "fs_gate": 0.03,
+  "gated": false,
+  "vector": {
+   "format_sensitivity": null,
+   "partial_input_accuracy": 0.10787878787878787,
+   "label_prior_skew": 0.2733333333333333,
+   "retrieval_dominance": 1.2619047619047619,
+   "semantic_validity_gap": 0.0033333333333334103,
+   "abstention_failure": null
+  },
+  "signals": {
+   "format_sensitivity": {
+    "name": "format_sensitivity",
+    "value": null,
+    "ci": null,
+    "gated": false,
+    "note": "single prompt in the cached run; needs a live re-run under standard_renderings",
+    "details": {}
+   },
+   "partial_input_accuracy": {
+    "name": "partial_input_accuracy",
+    "value": 0.10787878787878787,
+    "ci": null,
+    "gated": false,
+    "note": "proxy from the label prior, not a model run",
+    "details": {
+     "proxy": "majority-class baseline stands in for options-only input (no premises exist to withhold)",
+     "majority_accuracy": 0.15333333333333332,
+     "chance": 0.045454545454545456
+    }
+   },
+   "label_prior_skew": {
+    "name": "label_prior_skew",
+    "value": 0.2733333333333333,
+    "ci": null,
+    "gated": false,
+    "note": "",
+    "details": {
+     "label_marginal": {
+      "Infectious": 0.15333333333333332,
+      "Neoplasm": 0.09333333333333334,
+      "Blood": 0.0033333333333333335,
+      "Endocrine/metabolic": 0.01,
+      "Mental": 0.013333333333333334,
+      "Nervous": 0.04666666666666667,
+      "Eye": 0.0,
+      "Ear": 0.01,
+      "Circulatory": 0.08,
+      "Respiratory": 0.05,
+      "Digestive": 0.08666666666666667,
+      "Skin": 0.043333333333333335,
+      "Musculoskeletal": 0.043333333333333335,
+      "Genitourinary": 0.08,
+      "Pregnancy": 0.02,
+      "Perinatal": 0.023333333333333334,
+      "Congenital": 0.016666666666666666,
+      "Ill-defined": 0.10333333333333333,
+      "Injury": 0.0,
+      "ExternalCause": 0.12333333333333334,
+      "Factors": 0.0,
+      "Special": 0.0
+     },
+     "model_marginal": {
+      "Infectious": 0.16666666666666666,
+      "Neoplasm": 0.07333333333333333,
+      "Blood": 0.01,
+      "Endocrine/metabolic": 0.023333333333333334,
+      "Mental": 0.023333333333333334,
+      "Nervous": 0.06333333333333334,
+      "Eye": 0.0,
+      "Ear": 0.01,
+      "Circulatory": 0.11,
+      "Respiratory": 0.08,
+      "Digestive": 0.12333333333333334,
+      "Skin": 0.02,
+      "Musculoskeletal": 0.04,
+      "Genitourinary": 0.06333333333333334,
+      "Pregnancy": 0.03333333333333333,
+      "Perinatal": 0.006666666666666667,
+      "Congenital": 0.016666666666666666,
+      "Ill-defined": 0.03,
+      "Injury": 0.10333333333333333,
+      "ExternalCause": 0.0033333333333333335,
+      "Factors": 0.0,
+      "Special": 0.0
+     },
+     "tv_label_vs_uniform": 0.4075757575757576,
+     "tv_model_vs_uniform": 0.41969696969696957,
+     "invalid_rate": 0.0
+    }
+   },
+   "retrieval_dominance": {
+    "name": "retrieval_dominance",
+    "value": 1.2619047619047619,
+    "ci": null,
+    "gated": false,
+    "note": "",
+    "details": {
+     "llm_accuracy": 0.56,
+     "best_method": "char3",
+     "per_method": {
+      "char3": {
+       "accuracy": 0.7066666666666667,
+       "ratio": 1.2619047619047619,
+       "gap": -0.1466666666666666,
+       "sim_correctness_corr": 0.055017746205341604,
+       "mean_max_similarity": 0.6867835454638198,
+       "agreement_with_llm": 0.5933333333333334
+      },
+      "bm25": {
+       "accuracy": 0.6566666666666666,
+       "ratio": 1.1726190476190474,
+       "gap": -0.09666666666666657,
+       "sim_correctness_corr": -0.0888856389913069,
+       "mean_max_similarity": 7.763733251687367,
+       "agreement_with_llm": 0.5433333333333333
+      }
+     },
+     "sim_correctness_corr": 0.055017746205341604,
+     "gap": -0.1466666666666666
+    }
+   },
+   "semantic_validity_gap": {
+    "name": "semantic_validity_gap",
+    "value": 0.0033333333333334103,
+    "ci": null,
+    "gated": false,
+    "note": "",
+    "details": {
+     "em_free": 0.5566666666666666,
+     "em_constrained": 0.56,
+     "sem_free": 0.56,
+     "sem_constrained": 0.56,
+     "constraint_gain": 0.0033333333333334103,
+     "semantic_gain": 0.0,
+     "mcnemar_em": {
+      "a_only": 0,
+      "b_only": 1,
+      "n_discordant": 1,
+      "p": 1.0
+     },
+     "mcnemar_sem": {
+      "a_only": 0,
+      "b_only": 0,
+      "n_discordant": 0,
+      "p": 1.0
+     },
+     "dissociation_rate": 0.0033333333333333335,
+     "invalid_free": 0.006666666666666667,
+     "invalid_constrained": 0.0
+    }
+   },
+   "abstention_failure": {
+    "name": "abstention_failure",
+    "value": null,
+    "ci": null,
+    "gated": false,
+    "note": "no unanswerable probes in the cached run; interventions.make_unanswerable for a live run",
+    "details": {}
+   }
+  }
+ },
+ "cause_of_death@claude-sonnet-5": {
+  "benchmark": "cause_of_death",
+  "model": "claude-sonnet-5",
+  "fs_gate": 0.03,
+  "gated": false,
+  "vector": {
+   "format_sensitivity": null,
+   "partial_input_accuracy": 0.10787878787878787,
+   "label_prior_skew": 0.1866666666666667,
+   "retrieval_dominance": 1.06,
+   "semantic_validity_gap": 0.0,
+   "abstention_failure": null
+  },
+  "signals": {
+   "format_sensitivity": {
+    "name": "format_sensitivity",
+    "value": null,
+    "ci": null,
+    "gated": false,
+    "note": "single prompt in the cached run; needs a live re-run under standard_renderings",
+    "details": {}
+   },
+   "partial_input_accuracy": {
+    "name": "partial_input_accuracy",
+    "value": 0.10787878787878787,
+    "ci": null,
+    "gated": false,
+    "note": "proxy from the label prior, not a model run",
+    "details": {
+     "proxy": "majority-class baseline stands in for options-only input (no premises exist to withhold)",
+     "majority_accuracy": 0.15333333333333332,
+     "chance": 0.045454545454545456
+    }
+   },
+   "label_prior_skew": {
+    "name": "label_prior_skew",
+    "value": 0.1866666666666667,
+    "ci": null,
+    "gated": false,
+    "note": "",
+    "details": {
+     "label_marginal": {
+      "Infectious": 0.15333333333333332,
+      "Neoplasm": 0.09333333333333334,
+      "Blood": 0.0033333333333333335,
+      "Endocrine/metabolic": 0.01,
+      "Mental": 0.013333333333333334,
+      "Nervous": 0.04666666666666667,
+      "Eye": 0.0,
+      "Ear": 0.01,
+      "Circulatory": 0.08,
+      "Respiratory": 0.05,
+      "Digestive": 0.08666666666666667,
+      "Skin": 0.043333333333333335,
+      "Musculoskeletal": 0.043333333333333335,
+      "Genitourinary": 0.08,
+      "Pregnancy": 0.02,
+      "Perinatal": 0.023333333333333334,
+      "Congenital": 0.016666666666666666,
+      "Ill-defined": 0.10333333333333333,
+      "Injury": 0.0,
+      "ExternalCause": 0.12333333333333334,
+      "Factors": 0.0,
+      "Special": 0.0
+     },
+     "model_marginal": {
+      "Infectious": 0.15333333333333332,
+      "Neoplasm": 0.08666666666666667,
+      "Blood": 0.006666666666666667,
+      "Endocrine/metabolic": 0.013333333333333334,
+      "Mental": 0.01,
+      "Nervous": 0.07333333333333333,
+      "Eye": 0.0,
+      "Ear": 0.013333333333333334,
+      "Circulatory": 0.09666666666666666,
+      "Respiratory": 0.05333333333333334,
+      "Digestive": 0.16333333333333333,
+      "Skin": 0.023333333333333334,
+      "Musculoskeletal": 0.03666666666666667,
+      "Genitourinary": 0.06666666666666667,
+      "Pregnancy": 0.02,
+      "Perinatal": 0.016666666666666666,
+      "Congenital": 0.02,
+      "Ill-defined": 0.02666666666666667,
+      "Injury": 0.05,
+      "ExternalCause": 0.07,
+      "Factors": 0.0,
+      "Special": 0.0
+     },
+     "tv_label_vs_uniform": 0.4075757575757576,
+     "tv_model_vs_uniform": 0.4042424242424242,
+     "invalid_rate": 0.0
+    }
+   },
+   "retrieval_dominance": {
+    "name": "retrieval_dominance",
+    "value": 1.06,
+    "ci": null,
+    "gated": false,
+    "note": "",
+    "details": {
+     "llm_accuracy": 0.6666666666666666,
+     "best_method": "char3",
+     "per_method": {
+      "char3": {
+       "accuracy": 0.7066666666666667,
+       "ratio": 1.06,
+       "gap": -0.040000000000000036,
+       "sim_correctness_corr": -0.04650909515710018,
+       "mean_max_similarity": 0.6867835454638198,
+       "agreement_with_llm": 0.62
+      },
+      "bm25": {
+       "accuracy": 0.6566666666666666,
+       "ratio": 0.985,
+       "gap": 0.010000000000000009,
+       "sim_correctness_corr": -0.015931642170892952,
+       "mean_max_similarity": 7.763733251687367,
+       "agreement_with_llm": 0.6166666666666667
+      }
+     },
+     "sim_correctness_corr": -0.04650909515710018,
+     "gap": -0.040000000000000036
+    }
+   },
+   "semantic_validity_gap": {
+    "name": "semantic_validity_gap",
+    "value": 0.0,
+    "ci": null,
+    "gated": false,
+    "note": "",
+    "details": {
+     "em_free": 0.6666666666666666,
+     "em_constrained": 0.6666666666666666,
+     "sem_free": 0.6666666666666666,
+     "sem_constrained": 0.6666666666666666,
+     "constraint_gain": 0.0,
+     "semantic_gain": 0.0,
+     "mcnemar_em": {
+      "a_only": 0,
+      "b_only": 0,
+      "n_discordant": 0,
+      "p": 1.0
+     },
+     "mcnemar_sem": {
+      "a_only": 0,
+      "b_only": 0,
+      "n_discordant": 0,
+      "p": 1.0
+     },
+     "dissociation_rate": 0.0,
+     "invalid_free": 0.0,
+     "invalid_constrained": 0.0
+    }
+   },
+   "abstention_failure": {
+    "name": "abstention_failure",
+    "value": null,
+    "ci": null,
+    "gated": false,
+    "note": "no unanswerable probes in the cached run; interventions.make_unanswerable for a live run",
+    "details": {}
+   }
+  }
+ },
+ "kripke@gold@0.5B": {
+  "benchmark": "kripke@gold",
+  "model": "0.5B",
+  "fs_gate": 0.03,
+  "gated": true,
+  "vector": {
+   "format_sensitivity": 0.13731047544403402,
+   "partial_input_accuracy": 0.050000000000000044,
+   "label_prior_skew": 0.55,
+   "retrieval_dominance": 1.777777777777778,
+   "semantic_validity_gap": 0.125,
+   "abstention_failure": 1.0
+  },
+  "signals": {
+   "format_sensitivity": {
+    "name": "format_sensitivity",
+    "value": 0.13731047544403402,
+    "ci": [
+     0.10051948401512348,
+     0.1826692518065248
+    ],
+    "gated": false,
+    "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
+    "details": {
+     "per_rendering": {
+      "naive": {
+       "accuracy": 0.0,
+       "invalid_rate": 0.0
+      },
+      "prompted": {
+       "accuracy": 0.325,
+       "invalid_rate": 0.0
+      },
+      "prompt_tuned": {
+       "accuracy": 0.2375,
+       "invalid_rate": 0.0
+      }
+     },
+     "range": 0.325,
+     "item_agreement": 0.6625,
+     "mcnemar_vs_baseline": {
+      "prompted": {
+       "a_only": 0,
+       "b_only": 26,
+       "n_discordant": 26,
+       "p": 2.980232238769535e-08
+      },
+      "prompt_tuned": {
+       "a_only": 0,
+       "b_only": 19,
+       "n_discordant": 19,
+       "p": 3.814697265625e-06
+      }
+     },
+     "lenient": {
+      "value": 0.14719601443879743,
+      "per_rendering": {
+       "naive": {
+        "accuracy": 0.0,
+        "invalid_rate": 0.0
+       },
+       "prompted": {
+        "accuracy": 0.35,
+        "invalid_rate": 0.0
+       },
+       "prompt_tuned": {
+        "accuracy": 0.25,
+        "invalid_rate": 0.0
+       }
+      }
+     },
+     "truth_value": {
+      "value": 0.18828539212825005,
+      "per_rendering": {
+       "naive": {
+        "accuracy": 0.0,
+        "invalid_rate": 0.0
+       },
+       "prompted": {
+        "accuracy": 0.45,
+        "invalid_rate": 0.0
+       },
+       "prompt_tuned": {
+        "accuracy": 0.3125,
+        "invalid_rate": 0.0
+       }
+      }
+     }
+    }
+   },
+   "partial_input_accuracy": {
+    "name": "partial_input_accuracy",
+    "value": 0.050000000000000044,
+    "ci": null,
+    "gated": true,
+    "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.137 > 0.03",
+    "details": {
+     "proxy": "majority truth value over the 80 in-language fixtures",
+     "majority_accuracy": 0.55,
+     "chance": 0.5,
+     "gold_truth_dist": {
+      "FALSE": 44,
+      "TRUE": 36
+     },
+     "model_truth_dist_prompted": {
+      "TRUE": 80
+     }
+    }
+   },
+   "label_prior_skew": {
+    "name": "label_prior_skew",
+    "value": 0.55,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.137 > 0.03",
+    "details": {
+     "label_marginal": {
+      "TRUE": 0.45,
+      "FALSE": 0.55
+     },
+     "model_marginal": {
+      "TRUE": 1.0,
+      "FALSE": 0.0
+     },
+     "tv_label_vs_uniform": 0.05000000000000002,
+     "tv_model_vs_uniform": 0.5,
+     "invalid_rate": 0.0
+    }
+   },
+   "retrieval_dominance": {
+    "name": "retrieval_dominance",
+    "value": 1.777777777777778,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.137 > 0.03",
+    "details": {
+     "llm_accuracy": 0.45,
+     "best_method": "loo-char3",
+     "per_method": {
+      "loo-char3": {
+       "accuracy": 0.8,
+       "ratio": 1.777777777777778,
+       "gap": -0.35000000000000003,
+       "sim_correctness_corr": 0.38948109927893354,
+       "mean_max_similarity": 1.0,
+       "agreement_with_llm": 0.45
+      }
+     },
+     "sim_correctness_corr": 0.38948109927893354,
+     "gap": -0.35000000000000003,
+     "note": "leave-one-out over the 80 in-language fixtures; no separate training split exists"
+    }
+   },
+   "semantic_validity_gap": {
+    "name": "semantic_validity_gap",
+    "value": 0.125,
+    "ci": null,
+    "gated": true,
+    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.137 > 0.03",
+    "details": {
+     "em_free": 0.325,
+     "em_constrained": 0.6375,
+     "sem_free": 0.45,
+     "sem_constrained": 0.6375,
+     "constraint_gain": 0.31249999999999994,
+     "semantic_gain": 0.18749999999999994,
+     "mcnemar_em": {
+      "a_only": 0,
+      "b_only": 25,
+      "n_discordant": 25,
+      "p": 5.96046447753906e-08
+     },
+     "mcnemar_sem": {
+      "a_only": 0,
+      "b_only": 15,
+      "n_discordant": 15,
+      "p": 6.103515625000003e-05
+     },
+     "dissociation_rate": 0.125,
+     "invalid_free": 0.0,
+     "invalid_constrained": 0.0,
+     "forced_rate": 0.3125,
+     "forced_subset": {
+      "n": 25,
+      "em_free": 0.4,
+      "em_constrained": 1.0,
+      "sem_free": 0.4,
+      "sem_constrained": 1.0,
+      "mcnemar_sem": {
+       "a_only": 0,
+       "b_only": 15,
+       "n_discordant": 15,
+       "p": 6.103515625000003e-05
+      }
+     },
+     "free_subset": {
+      "n": 55,
+      "em_free": 0.2909090909090909,
+      "em_constrained": 0.4727272727272727,
+      "sem_free": 0.4727272727272727,
+      "sem_constrained": 0.4727272727272727,
+      "mcnemar_sem": {
+       "a_only": 0,
+       "b_only": 0,
+       "n_discordant": 0,
+       "p": 1.0
+      }
+     },
+     "lenient_exact_as_semantic": {
+      "sem_free": 0.35,
+      "sem_constrained": 0.6375,
+      "semantic_gain": 0.2875
+     },
+     "allowed_set_mode": "gold"
+    }
+   },
+   "abstention_failure": {
+    "name": "abstention_failure",
+    "value": 1.0,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.137 > 0.03",
+    "details": {
+     "n_ood": 80,
+     "ood_answered_rate": 1.0,
+     "false_abstention_rate": 0.0,
+     "ood_invalid_rate": 0.0,
+     "in_dist_accuracy": 0.325,
+     "risk_coverage_auc": null,
+     "p_vs_half": 8.271806125530277e-25,
+     "per_arm": {
+      "naive": 1.0,
+      "prompted": 1.0,
+      "prompt_tuned": 1.0,
+      "constrained": 1.0,
+      "constrained_tuned": 1.0
+     }
+    }
+   }
+  }
+ },
+ "kripke@product@0.5B": {
+  "benchmark": "kripke@product",
+  "model": "0.5B",
+  "fs_gate": 0.03,
+  "gated": true,
+  "vector": {
+   "format_sensitivity": 0.14154406459552524,
+   "partial_input_accuracy": 0.050000000000000044,
+   "label_prior_skew": 0.55,
+   "retrieval_dominance": 1.777777777777778,
+   "semantic_validity_gap": 0.11249999999999999,
+   "abstention_failure": 1.0
+  },
+  "signals": {
+   "format_sensitivity": {
+    "name": "format_sensitivity",
+    "value": 0.14154406459552524,
+    "ci": [
+     0.10358169078880045,
+     0.18605927968138422
+    ],
+    "gated": false,
+    "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
+    "details": {
+     "per_rendering": {
+      "naive": {
+       "accuracy": 0.0,
+       "invalid_rate": 0.0
+      },
+      "prompted": {
+       "accuracy": 0.3375,
+       "invalid_rate": 0.0
+      },
+      "prompt_tuned": {
+       "accuracy": 0.2375,
+       "invalid_rate": 0.0
+      }
+     },
+     "range": 0.3375,
+     "item_agreement": 0.65,
+     "mcnemar_vs_baseline": {
+      "prompted": {
+       "a_only": 0,
+       "b_only": 27,
+       "n_discordant": 27,
+       "p": 1.4901161193847648e-08
+      },
+      "prompt_tuned": {
+       "a_only": 0,
+       "b_only": 19,
+       "n_discordant": 19,
+       "p": 3.814697265625e-06
+      }
+     },
+     "lenient": {
+      "value": 0.151497158022482,
+      "per_rendering": {
+       "naive": {
+        "accuracy": 0.0,
+        "invalid_rate": 0.0
+       },
+       "prompted": {
+        "accuracy": 0.3625,
+        "invalid_rate": 0.0
+       },
+       "prompt_tuned": {
+        "accuracy": 0.25,
+        "invalid_rate": 0.0
+       }
+      }
+     },
+     "truth_value": {
+      "value": 0.1896634446123507,
+      "per_rendering": {
+       "naive": {
+        "accuracy": 0.0,
+        "invalid_rate": 0.0
+       },
+       "prompted": {
+        "accuracy": 0.45,
+        "invalid_rate": 0.0
+       },
+       "prompt_tuned": {
+        "accuracy": 0.325,
+        "invalid_rate": 0.0
+       }
+      }
+     }
+    }
+   },
+   "partial_input_accuracy": {
+    "name": "partial_input_accuracy",
+    "value": 0.050000000000000044,
+    "ci": null,
+    "gated": true,
+    "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.142 > 0.03",
+    "details": {
+     "proxy": "majority truth value over the 80 in-language fixtures",
+     "majority_accuracy": 0.55,
+     "chance": 0.5,
+     "gold_truth_dist": {
+      "FALSE": 44,
+      "TRUE": 36
+     },
+     "model_truth_dist_prompted": {
+      "TRUE": 80
+     }
+    }
+   },
+   "label_prior_skew": {
+    "name": "label_prior_skew",
+    "value": 0.55,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.142 > 0.03",
+    "details": {
+     "label_marginal": {
+      "TRUE": 0.45,
+      "FALSE": 0.55
+     },
+     "model_marginal": {
+      "TRUE": 1.0,
+      "FALSE": 0.0
+     },
+     "tv_label_vs_uniform": 0.05000000000000002,
+     "tv_model_vs_uniform": 0.5,
+     "invalid_rate": 0.0
+    }
+   },
+   "retrieval_dominance": {
+    "name": "retrieval_dominance",
+    "value": 1.777777777777778,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.142 > 0.03",
+    "details": {
+     "llm_accuracy": 0.45,
+     "best_method": "loo-char3",
+     "per_method": {
+      "loo-char3": {
+       "accuracy": 0.8,
+       "ratio": 1.777777777777778,
+       "gap": -0.35000000000000003,
+       "sim_correctness_corr": 0.38948109927893354,
+       "mean_max_similarity": 1.0,
+       "agreement_with_llm": 0.45
+      }
+     },
+     "sim_correctness_corr": 0.38948109927893354,
+     "gap": -0.35000000000000003,
+     "note": "leave-one-out over the 80 in-language fixtures; no separate training split exists"
+    }
+   },
+   "semantic_validity_gap": {
+    "name": "semantic_validity_gap",
+    "value": 0.11249999999999999,
+    "ci": null,
+    "gated": true,
+    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.142 > 0.03",
+    "details": {
+     "em_free": 0.3375,
+     "em_constrained": 0.45,
+     "sem_free": 0.45,
+     "sem_constrained": 0.45,
+     "constraint_gain": 0.11249999999999999,
+     "semantic_gain": 0.0,
+     "mcnemar_em": {
+      "a_only": 0,
+      "b_only": 9,
+      "n_discordant": 9,
+      "p": 0.00390625
+     },
+     "mcnemar_sem": {
+      "a_only": 0,
+      "b_only": 0,
+      "n_discordant": 0,
+      "p": 1.0
+     },
+     "dissociation_rate": 0.1125,
+     "invalid_free": 0.0,
+     "invalid_constrained": 0.0,
+     "forced_rate": 0.0,
+     "free_subset": {
+      "n": 80,
+      "em_free": 0.3375,
+      "em_constrained": 0.45,
+      "sem_free": 0.45,
+      "sem_constrained": 0.45,
+      "mcnemar_sem": {
+       "a_only": 0,
+       "b_only": 0,
+       "n_discordant": 0,
+       "p": 1.0
+      }
+     },
+     "lenient_exact_as_semantic": {
+      "sem_free": 0.3625,
+      "sem_constrained": 0.45,
+      "semantic_gain": 0.08750000000000002
+     },
+     "allowed_set_mode": "product"
+    }
+   },
+   "abstention_failure": {
+    "name": "abstention_failure",
+    "value": 1.0,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.142 > 0.03",
+    "details": {
+     "n_ood": 80,
+     "ood_answered_rate": 1.0,
+     "false_abstention_rate": 0.0,
+     "ood_invalid_rate": 0.0,
+     "in_dist_accuracy": 0.3375,
+     "risk_coverage_auc": null,
+     "p_vs_half": 8.271806125530277e-25,
+     "per_arm": {
+      "naive": 1.0,
+      "prompted": 1.0,
+      "prompt_tuned": 1.0,
+      "constrained": 1.0,
+      "constrained_tuned": 1.0
+     }
+    }
+   }
+  }
+ },
+ "kripke@gold@1.5B": {
+  "benchmark": "kripke@gold",
+  "model": "1.5B",
+  "fs_gate": 0.03,
+  "gated": true,
+  "vector": {
+   "format_sensitivity": 0.13030413142593242,
+   "partial_input_accuracy": 0.050000000000000044,
+   "label_prior_skew": 0.38589743589743586,
+   "retrieval_dominance": 1.6,
+   "semantic_validity_gap": 0.4,
+   "abstention_failure": 1.0
+  },
+  "signals": {
+   "format_sensitivity": {
+    "name": "format_sensitivity",
+    "value": 0.13030413142593242,
+    "ci": [
+     0.08720187306856812,
+     0.1739053062892434
+    ],
+    "gated": false,
+    "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
+    "details": {
+     "per_rendering": {
+      "naive": {
+       "accuracy": 0.3125,
+       "invalid_rate": 0.0
+      },
+      "prompted": {
+       "accuracy": 0.1,
+       "invalid_rate": 0.0
+      },
+      "prompt_tuned": {
+       "accuracy": 0.0,
+       "invalid_rate": 0.0
+      }
+     },
+     "range": 0.3125,
+     "item_agreement": 0.6875,
+     "mcnemar_vs_baseline": {
+      "prompted": {
+       "a_only": 17,
+       "b_only": 0,
+       "n_discordant": 17,
+       "p": 1.5258789062500003e-05
+      },
+      "prompt_tuned": {
+       "a_only": 25,
+       "b_only": 0,
+       "n_discordant": 25,
+       "p": 5.96046447753906e-08
+      }
+     },
+     "lenient": {
+      "value": 0.09483172230617537,
+      "per_rendering": {
+       "naive": {
+        "accuracy": 0.525,
+        "invalid_rate": 0.0
+       },
+       "prompted": {
+        "accuracy": 0.5,
+        "invalid_rate": 0.0
+       },
+       "prompt_tuned": {
+        "accuracy": 0.3125,
+        "invalid_rate": 0.0
+       }
+      }
+     },
+     "truth_value": {
+      "value": 0.09483172230617537,
+      "per_rendering": {
+       "naive": {
+        "accuracy": 0.525,
+        "invalid_rate": 0.0
+       },
+       "prompted": {
+        "accuracy": 0.5,
+        "invalid_rate": 0.0
+       },
+       "prompt_tuned": {
+        "accuracy": 0.3125,
+        "invalid_rate": 0.0
+       }
+      }
+     }
+    }
+   },
+   "partial_input_accuracy": {
+    "name": "partial_input_accuracy",
+    "value": 0.050000000000000044,
+    "ci": null,
+    "gated": true,
+    "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.130 > 0.03",
+    "details": {
+     "proxy": "majority truth value over the 80 in-language fixtures",
+     "majority_accuracy": 0.55,
+     "chance": 0.5,
+     "gold_truth_dist": {
+      "FALSE": 44,
+      "TRUE": 36
+     },
+     "model_truth_dist_prompted": {
+      "FALSE": 73,
+      "TRUE": 5,
+      "": 2
+     }
+    }
+   },
+   "label_prior_skew": {
+    "name": "label_prior_skew",
+    "value": 0.38589743589743586,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.130 > 0.03",
+    "details": {
+     "label_marginal": {
+      "TRUE": 0.45,
+      "FALSE": 0.55
+     },
+     "model_marginal": {
+      "TRUE": 0.0641025641025641,
+      "FALSE": 0.9358974358974359
+     },
+     "tv_label_vs_uniform": 0.05000000000000002,
+     "tv_model_vs_uniform": 0.4358974358974359,
+     "invalid_rate": 0.025000000000000022
+    }
+   },
+   "retrieval_dominance": {
+    "name": "retrieval_dominance",
+    "value": 1.6,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.130 > 0.03",
+    "details": {
+     "llm_accuracy": 0.5,
+     "best_method": "loo-char3",
+     "per_method": {
+      "loo-char3": {
+       "accuracy": 0.8,
+       "ratio": 1.6,
+       "gap": -0.30000000000000004,
+       "sim_correctness_corr": -0.40089186286863654,
+       "mean_max_similarity": 1.0,
+       "agreement_with_llm": 0.475
+      }
+     },
+     "sim_correctness_corr": -0.40089186286863654,
+     "gap": -0.30000000000000004,
+     "note": "leave-one-out over the 80 in-language fixtures; no separate training split exists"
+    }
+   },
+   "semantic_validity_gap": {
+    "name": "semantic_validity_gap",
+    "value": 0.4,
+    "ci": null,
+    "gated": true,
+    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.130 > 0.03",
+    "details": {
+     "em_free": 0.1,
+     "em_constrained": 0.65,
+     "sem_free": 0.5,
+     "sem_constrained": 0.65,
+     "constraint_gain": 0.55,
+     "semantic_gain": 0.15000000000000002,
+     "mcnemar_em": {
+      "a_only": 0,
+      "b_only": 44,
+      "n_discordant": 44,
+      "p": 1.1368683772161599e-13
+     },
+     "mcnemar_sem": {
+      "a_only": 2,
+      "b_only": 14,
+      "n_discordant": 16,
+      "p": 0.004180908203124994
+     },
+     "dissociation_rate": 0.4,
+     "invalid_free": 0.0,
+     "invalid_constrained": 0.0,
+     "forced_rate": 0.3125,
+     "forced_subset": {
+      "n": 25,
+      "em_free": 0.04,
+      "em_constrained": 1.0,
+      "sem_free": 0.52,
+      "sem_constrained": 1.0,
+      "mcnemar_sem": {
+       "a_only": 0,
+       "b_only": 12,
+       "n_discordant": 12,
+       "p": 0.0004882812500000003
+      }
+     },
+     "free_subset": {
+      "n": 55,
+      "em_free": 0.12727272727272726,
+      "em_constrained": 0.4909090909090909,
+      "sem_free": 0.4909090909090909,
+      "sem_constrained": 0.4909090909090909,
+      "mcnemar_sem": {
+       "a_only": 2,
+       "b_only": 2,
+       "n_discordant": 4,
+       "p": 0.9999999999999996
+      }
+     },
+     "lenient_exact_as_semantic": {
+      "sem_free": 0.5,
+      "sem_constrained": 0.65,
+      "semantic_gain": 0.15000000000000002
+     },
+     "allowed_set_mode": "gold"
+    }
+   },
+   "abstention_failure": {
+    "name": "abstention_failure",
+    "value": 1.0,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.130 > 0.03",
+    "details": {
+     "n_ood": 80,
+     "ood_answered_rate": 1.0,
+     "false_abstention_rate": 0.0,
+     "ood_invalid_rate": 0.0,
+     "in_dist_accuracy": 0.1,
+     "risk_coverage_auc": null,
+     "p_vs_half": 8.271806125530277e-25,
+     "per_arm": {
+      "naive": 1.0,
+      "prompted": 1.0,
+      "prompt_tuned": 1.0,
+      "constrained": 1.0,
+      "constrained_tuned": 1.0
+     }
+    }
+   }
+  }
+ },
+ "kripke@product@1.5B": {
+  "benchmark": "kripke@product",
+  "model": "1.5B",
+  "fs_gate": 0.03,
+  "gated": true,
+  "vector": {
+   "format_sensitivity": 0.13501543121683043,
+   "partial_input_accuracy": 0.050000000000000044,
+   "label_prior_skew": 0.35909090909090907,
+   "retrieval_dominance": 1.777777777777778,
+   "semantic_validity_gap": 0.3875,
+   "abstention_failure": 1.0
+  },
+  "signals": {
+   "format_sensitivity": {
+    "name": "format_sensitivity",
+    "value": 0.13501543121683043,
+    "ci": [
+     0.08897565210026093,
+     0.181429508808977
+    ],
+    "gated": false,
+    "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
+    "details": {
+     "per_rendering": {
+      "naive": {
+       "accuracy": 0.3125,
+       "invalid_rate": 0.0
+      },
+      "prompted": {
+       "accuracy": 0.0625,
+       "invalid_rate": 0.0
+      },
+      "prompt_tuned": {
+       "accuracy": 0.0,
+       "invalid_rate": 0.0
+      }
+     },
+     "range": 0.3125,
+     "item_agreement": 0.6875,
+     "mcnemar_vs_baseline": {
+      "prompted": {
+       "a_only": 20,
+       "b_only": 0,
+       "n_discordant": 20,
+       "p": 1.9073486328125e-06
+      },
+      "prompt_tuned": {
+       "a_only": 25,
+       "b_only": 0,
+       "n_discordant": 25,
+       "p": 5.96046447753906e-08
+      }
+     },
+     "lenient": {
+      "value": 0.08917056066263623,
+      "per_rendering": {
+       "naive": {
+        "accuracy": 0.5125,
+        "invalid_rate": 0.0
+       },
+       "prompted": {
+        "accuracy": 0.45,
+        "invalid_rate": 0.0
+       },
+       "prompt_tuned": {
+        "accuracy": 0.3,
+        "invalid_rate": 0.0
+       }
+      }
+     },
+     "truth_value": {
+      "value": 0.08354140689901424,
+      "per_rendering": {
+       "naive": {
+        "accuracy": 0.5125,
+        "invalid_rate": 0.0
+       },
+       "prompted": {
+        "accuracy": 0.45,
+        "invalid_rate": 0.0
+       },
+       "prompt_tuned": {
+        "accuracy": 0.3125,
+        "invalid_rate": 0.0
+       }
+      }
+     }
+    }
+   },
+   "partial_input_accuracy": {
+    "name": "partial_input_accuracy",
+    "value": 0.050000000000000044,
+    "ci": null,
+    "gated": true,
+    "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.135 > 0.03",
+    "details": {
+     "proxy": "majority truth value over the 80 in-language fixtures",
+     "majority_accuracy": 0.55,
+     "chance": 0.5,
+     "gold_truth_dist": {
+      "FALSE": 44,
+      "TRUE": 36
+     },
+     "model_truth_dist_prompted": {
+      "FALSE": 70,
+      "TRUE": 7,
+      "": 3
+     }
+    }
+   },
+   "label_prior_skew": {
+    "name": "label_prior_skew",
+    "value": 0.35909090909090907,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.135 > 0.03",
+    "details": {
+     "label_marginal": {
+      "TRUE": 0.45,
+      "FALSE": 0.55
+     },
+     "model_marginal": {
+      "TRUE": 0.09090909090909091,
+      "FALSE": 0.9090909090909091
+     },
+     "tv_label_vs_uniform": 0.05000000000000002,
+     "tv_model_vs_uniform": 0.40909090909090906,
+     "invalid_rate": 0.03749999999999998
+    }
+   },
+   "retrieval_dominance": {
+    "name": "retrieval_dominance",
+    "value": 1.777777777777778,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.135 > 0.03",
+    "details": {
+     "llm_accuracy": 0.45,
+     "best_method": "loo-char3",
+     "per_method": {
+      "loo-char3": {
+       "accuracy": 0.8,
+       "ratio": 1.777777777777778,
+       "gap": -0.35000000000000003,
+       "sim_correctness_corr": -0.3626203338114213,
+       "mean_max_similarity": 1.0,
+       "agreement_with_llm": 0.425
+      }
+     },
+     "sim_correctness_corr": -0.3626203338114213,
+     "gap": -0.35000000000000003,
+     "note": "leave-one-out over the 80 in-language fixtures; no separate training split exists"
+    }
+   },
+   "semantic_validity_gap": {
+    "name": "semantic_validity_gap",
+    "value": 0.3875,
+    "ci": null,
+    "gated": true,
+    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.135 > 0.03",
+    "details": {
+     "em_free": 0.0625,
+     "em_constrained": 0.4625,
+     "sem_free": 0.45,
+     "sem_constrained": 0.4625,
+     "constraint_gain": 0.4,
+     "semantic_gain": 0.012500000000000011,
+     "mcnemar_em": {
+      "a_only": 0,
+      "b_only": 32,
+      "n_discordant": 32,
+      "p": 4.656612873077396e-10
+     },
+     "mcnemar_sem": {
+      "a_only": 3,
+      "b_only": 4,
+      "n_discordant": 7,
+      "p": 1.0
+     },
+     "dissociation_rate": 0.3875,
+     "invalid_free": 0.0,
+     "invalid_constrained": 0.0,
+     "forced_rate": 0.0,
+     "free_subset": {
+      "n": 80,
+      "em_free": 0.0625,
+      "em_constrained": 0.4625,
+      "sem_free": 0.45,
+      "sem_constrained": 0.4625,
+      "mcnemar_sem": {
+       "a_only": 3,
+       "b_only": 4,
+       "n_discordant": 7,
+       "p": 1.0
+      }
+     },
+     "lenient_exact_as_semantic": {
+      "sem_free": 0.45,
+      "sem_constrained": 0.4625,
+      "semantic_gain": 0.012500000000000011
+     },
+     "allowed_set_mode": "product"
+    }
+   },
+   "abstention_failure": {
+    "name": "abstention_failure",
+    "value": 1.0,
+    "ci": null,
+    "gated": true,
+    "note": "gated: format sensitivity 0.135 > 0.03",
+    "details": {
+     "n_ood": 80,
+     "ood_answered_rate": 1.0,
+     "false_abstention_rate": 0.0,
+     "ood_invalid_rate": 0.0,
+     "in_dist_accuracy": 0.0625,
+     "risk_coverage_auc": null,
+     "p_vs_half": 8.271806125530277e-25,
+     "per_arm": {
+      "naive": 1.0,
+      "prompted": 1.0,
+      "prompt_tuned": 1.0,
+      "constrained": 1.0,
+      "constrained_tuned": 1.0
+     }
+    }
+   }
+  }
+ }
+}

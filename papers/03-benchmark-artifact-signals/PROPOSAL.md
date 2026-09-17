@@ -46,7 +46,7 @@ The naive-predictor clause is the load-bearing part. Almost every intervention r
 
 ## E. Sub-hypotheses
 
-**H1 (retrieval dominance predicts leakage collapse).** Where a fuzzy or BM25 nearest-neighbour baseline reaches a high fraction of LLM accuracy, and where item-level correctness correlates with nearest-neighbour similarity, leakage-aware resplitting will reduce LLM accuracy substantially more than it reduces the retrieval baseline's *relative* position. Formally: retrieval dominance measured before intervention predicts the post-intervention change in the LLM-minus-retrieval gap, with the gap widening on genuinely generalizing benchmarks and staying flat on retrieval-driven ones.
+**H1 (retrieval dominance predicts where the gap opens).** Where a fuzzy or BM25 nearest-neighbour baseline reaches a high fraction of LLM accuracy, leakage-aware resplitting will collapse the baseline and widen the LLM-minus-retrieval gap; the LLM's own score may rise, fall or hold, and H1 makes no claim about it. The similarity-correctness correlation is the mechanism check: on retrieval-driven benchmarks it is positive before the resplit and near zero after. (The offline run on cause-of-death is what forced this wording: the LLM's own accuracy *rose* on the novel slice, the gap widened by 0.43.)
 
 **H2 (the semantic-validity gap is a property of the benchmark, not the model).** Where constrained decoding produces a large exact-match gain and a near-zero semantic-correctness gain, that dissociation will be stable across model scales and will not shrink as base capability rises. If the gap is instead a model deficiency, it should close with capability. This is the cleanest discriminating test in the study, because the two accounts make opposite predictions about the model-size trend.
 
@@ -69,6 +69,45 @@ Specific citation is deferred to the full write-up, with two exceptions worth na
 ---
 
 ## G. Experimental design
+
+### G.0 Phase 1 on benchmarks A and B is already done, offline
+
+Both source repositories ship their cached model outputs (`cause-of-death-coding/outputs/`,
+`kripke-modal-accessibility/outputs/{gold,product}/`). The instrument reads them directly
+(`artifact-signals paper12`), reproduces every published number to the item, and computes
+the profile and the offline-computable interventions without a model call. The full report is
+`outputs/paper12/RESULTS_offline.md`. What it already settles:
+
+- **Kripke fails the format-sensitivity gate by a factor of four.** Strict exact match across the
+  three unconstrained prompt arms has SD 0.13 to 0.14 for both models (gate: 0.03); even the
+  truth-value judge that reads through format noise gives SD 0.08 to 0.19. Every other signal on
+  that benchmark is reported gated. H4 is not a hypothesis there, it is the observed regime.
+- **The constraint leak is measurable before the repair.** With the admissible set built from
+  gold judgements, 25 of 80 fixtures admit only one truth value. The instrument reports this as
+  `forced_rate` = 0.312 inside the semantic-validity-gap signal, computed from the constraint and
+  the fixtures alone, no model needed. The leak-free replication has `forced_rate` = 0 and the
+  55 unaffected fixtures come back byte-identical, which is the manipulation check passing.
+- **The semantic-validity gap survives the repair.** On the leak-free run the 1.5B model's exact
+  match rises by 40 points under the constraint while its truth-value accuracy moves by 1.3
+  points (SVG = 0.39). Registered predictions P04 and P05 both hold.
+- **Retrieval dominance on cause-of-death predicts the gap, not the LLM's own delta.** Prediction
+  P01 (LLM accuracy falls by more than 8 points on the novel slice) fails: it rises by 9 points.
+  P02 (the LLM-minus-retrieval gap widens by at least 5 points) holds with room to spare
+  (+0.43). The artifact inflates the *baseline*, and a directional prediction about the LLM's
+  own score was the naive predictor's mistake, not a diagnostic's. H1 is restated below
+  accordingly.
+- **Nobody abstains, in 1,600 outputs.** Abstention failure is 1.00 in every arm of every model,
+  including the arms whose prompt says to output empty on out-of-language atoms.
+- **Cause-of-death has no format artifact.** Strict decoding and the paper's lenient parser agree
+  on all 300 outputs of both models; SVG = 0. The memorization probe is 0.00. Its artifact is
+  the lexical one only, and the leakage sweep shows it cleanly: as the dictionary-similarity cap
+  drops from 0.8 to 0.4 the retrieval baseline falls from 0.64 to 0.19 while the LLM climbs from
+  0.66 to 0.88.
+
+The ledger scores 4 of 5 scorable predictions (P06 needs a third model size, the rest need
+benchmarks C to E). The honest caveat is in the report: the ledger's wording predates reading the
+cached outputs, but the mapping from prediction to concrete cached quantity was fixed while
+building the report. The full study fixes both in advance.
 
 ### G.1 Materials
 
@@ -124,7 +163,7 @@ Six signals, each with a cheap estimator and a stated clean value.
 
 **4. Retrieval dominance (RD).** Accuracy of a non-parametric baseline (character n-gram TF-IDF plus token-set fuzzy match, and BM25) divided by LLM accuracy, reported alongside the point-biserial correlation between nearest-neighbour similarity and item-level LLM correctness. The correlation matters more than the ratio: a strong baseline is suggestive, but correctness tracking lexical proximity is the actual shortcut evidence.
 
-**5. Constraint gain and semantic-validity gap (CG, SVG).** CG = EM(constrained) - EM(free). SVG = CG - (Sem(constrained) - Sem(free)). A large positive SVG says the constraint bought form and not content. This signal is Paper 2's finding, promoted to an instrument.
+**5. Constraint gain and semantic-validity gap (CG, SVG), with forced-answer rate.** CG = EM(constrained) - EM(free). SVG = CG - (Sem(constrained) - Sem(free)). A large positive SVG says the constraint bought form and not content. Alongside it, the *forced-answer rate*: the fraction of items on which the admissible set contains exactly one answer, computed from the constraint and the items before any model runs. Paper 2's leak was a forced rate of 0.31; a constraint with a non-zero forced rate is answering the benchmark itself. This signal is Paper 2's finding, promoted to an instrument.
 
 **6. Abstention failure (AF).** Fraction of unanswerable or out-of-distribution probes answered rather than declined, measured with an explicit abstention option present in the prompt. Complemented by the risk-coverage AUC when the model's own confidence is used to trigger abstention.
 

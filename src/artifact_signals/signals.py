@@ -49,14 +49,11 @@ def _acc_ci(run: Run, bench: Benchmark, n_boot: int, seed: int) -> tuple[float, 
 # --- 1. format sensitivity ------------------------------------------------------------
 
 
-def format_sensitivity(model, bench: Benchmark, judge: Judge = exact_match, renderings: list[Rendering] | None = None,
-                       *, n_boot: int = 500, seed: int = 0, cache: Cache | None = None) -> tuple[Signal, list[Run]]:
-    renderings = renderings or standard_renderings(seed)
-    runs = [run_model(model, bench, r, judge, cache=cache) for r in renderings]
+def format_sensitivity_from_runs(runs: list[Run], bench: Benchmark, *, n_boot: int = 500, seed: int = 0) -> Signal:
+    """SD of in-distribution accuracy across runs that differ only in surface form."""
     ids = _ids(bench)
     accs = [r.accuracy_on(ids) for r in runs]
     sd = pstdev(accs)
-    # bootstrap the SD over item clusters
     items = bench.in_distribution()
     clusters = [i.cluster for i in items]
     mats = [[1.0 if r.correct[i.id] else 0.0 for i in items] for r in runs]
@@ -81,31 +78,41 @@ def format_sensitivity(model, bench: Benchmark, judge: Judge = exact_match, rend
         "mcnemar_vs_baseline": {r.rendering: mcnemar([base.correct[i] for i in ids], [r.correct[i] for i in ids])
                                 for r in runs[1:]},
     }
-    return Signal("format_sensitivity", sd, ci, details), runs
+    return Signal("format_sensitivity", sd, ci, details)
+
+
+def format_sensitivity(model, bench: Benchmark, judge: Judge = exact_match, renderings: list[Rendering] | None = None,
+                       *, n_boot: int = 500, seed: int = 0, cache: Cache | None = None) -> tuple[Signal, list[Run]]:
+    renderings = renderings or standard_renderings(seed)
+    runs = [run_model(model, bench, r, judge, cache=cache) for r in renderings]
+    return format_sensitivity_from_runs(runs, bench, n_boot=n_boot, seed=seed), runs
 
 
 # --- 2. partial-input accuracy ----------------------------------------------------------
 
 
-def partial_input_accuracy(model, bench: Benchmark, judge: Judge = exact_match, renderings: list[Rendering] | None = None,
-                           *, cache: Cache | None = None) -> Signal:
-    renderings = renderings or partial_input_renderings(bench.task)
+def partial_input_from_runs(runs: list[Run], bench: Benchmark) -> Signal:
     ids = _ids(bench)
     items = bench.in_distribution()
     chance = mean([1.0 / len(i.options) if i.options else 0.0 for i in items])
-    per = {}
-    best = None
-    for r in renderings:
-        run = run_model(model, bench, r, judge, cache=cache)
+    per, best = {}, None
+    for run in runs:
         acc = run.accuracy_on(ids)
         k = sum(1 for i in ids if run.correct[i])
-        per[r.name] = {"accuracy": acc, "excess_over_chance": acc - chance,
-                       "p_vs_chance": binom_test(k, len(ids), chance, "greater") if chance > 0 else None}
+        per[run.rendering] = {"accuracy": acc, "excess_over_chance": acc - chance,
+                              "p_vs_chance": binom_test(k, len(ids), chance, "greater") if chance > 0 else None}
         if best is None or acc - chance > best[1]:
-            best = (r.name, acc - chance)
+            best = (run.rendering, acc - chance)
     note = "" if bench.task == "choice" else "free-form task: chance is 0, interpret excess as raw accuracy"
     return Signal("partial_input_accuracy", best[1] if best else None,
                   details={"chance": chance, "per_mode": per, "worst_mode": best[0] if best else None}, note=note)
+
+
+def partial_input_accuracy(model, bench: Benchmark, judge: Judge = exact_match, renderings: list[Rendering] | None = None,
+                           *, cache: Cache | None = None) -> Signal:
+    renderings = renderings or partial_input_renderings(bench.task)
+    runs = [run_model(model, bench, r, judge, cache=cache) for r in renderings]
+    return partial_input_from_runs(runs, bench)
 
 
 # --- 3. label-prior skew ------------------------------------------------------------------
@@ -158,38 +165,56 @@ def retrieval_dominance(train: Benchmark, test: Benchmark, llm_run: Run, methods
 # --- 5. constraint gain and semantic-validity gap ----------------------------------------------
 
 
-def constraint_gain(model, bench: Benchmark, rendering: Rendering | None = None, *, em_judge: Judge = exact_match,
-                    sem_judge: Judge, cache: Cache | None = None) -> tuple[Signal, dict[str, Run]]:
-    rendering = rendering or baseline_rendering()
+def constraint_gain_from_runs(free: Run, con: Run, bench: Benchmark, *, sem_judge: Judge,
+                              forced_ids: set[str] | None = None) -> Signal:
+    """EM gain minus semantic gain between an unconstrained and a constrained run judged strictly.
+    `forced_ids` marks items on which the constraint admits only one answer (constraint leakage);
+    the gain is then reported on forced and free subsets separately."""
     ids = _ids(bench)
-    free = run_model(model, bench, rendering, em_judge, constrained=False, cache=cache)
-    con = run_model(model, bench, rendering, em_judge, constrained=True, cache=cache)
     sem_free, sem_con = free.rejudge(bench, sem_judge), con.rejudge(bench, sem_judge)
     em_f, em_c = free.accuracy_on(ids), con.accuracy_on(ids)
     s_f, s_c = sem_free.accuracy_on(ids), sem_con.accuracy_on(ids)
     cg, sg = em_c - em_f, s_c - s_f
     dissoc = mean([1.0 if (free.correct[i] != sem_free.correct[i] or con.correct[i] != sem_con.correct[i]) else 0.0 for i in ids])
-    sig = Signal("semantic_validity_gap", cg - sg, details={
+    details = {
         "em_free": em_f, "em_constrained": em_c, "sem_free": s_f, "sem_constrained": s_c,
         "constraint_gain": cg, "semantic_gain": sg,
         "mcnemar_em": mcnemar([free.correct[i] for i in ids], [con.correct[i] for i in ids]),
         "mcnemar_sem": mcnemar([sem_free.correct[i] for i in ids], [sem_con.correct[i] for i in ids]),
         "dissociation_rate": dissoc,
         "invalid_free": free.invalid_rate(), "invalid_constrained": con.invalid_rate(),
-    })
-    return sig, {"em_free": free, "em_constrained": con, "sem_free": sem_free, "sem_constrained": sem_con}
+    }
+    if forced_ids is not None:
+        forced = [i for i in ids if i in forced_ids]
+        free_ids = [i for i in ids if i not in forced_ids]
+        details["forced_rate"] = len(forced) / len(ids) if ids else 0.0
+        for name, sub in (("forced", forced), ("free", free_ids)):
+            if sub:
+                details[f"{name}_subset"] = {
+                    "n": len(sub), "em_free": free.accuracy_on(sub), "em_constrained": con.accuracy_on(sub),
+                    "sem_free": sem_free.accuracy_on(sub), "sem_constrained": sem_con.accuracy_on(sub),
+                    "mcnemar_sem": mcnemar([sem_free.correct[i] for i in sub], [sem_con.correct[i] for i in sub]),
+                }
+    return Signal("semantic_validity_gap", cg - sg, details=details)
+
+
+def constraint_gain(model, bench: Benchmark, rendering: Rendering | None = None, *, em_judge: Judge = exact_match,
+                    sem_judge: Judge, cache: Cache | None = None) -> tuple[Signal, dict[str, Run]]:
+    rendering = rendering or baseline_rendering()
+    free = run_model(model, bench, rendering, em_judge, constrained=False, cache=cache)
+    con = run_model(model, bench, rendering, em_judge, constrained=True, cache=cache)
+    sig = constraint_gain_from_runs(free, con, bench, sem_judge=sem_judge)
+    return sig, {"em_free": free, "em_constrained": con, "sem_free": free.rejudge(bench, sem_judge),
+                 "sem_constrained": con.rejudge(bench, sem_judge)}
 
 
 # --- 6. abstention failure ---------------------------------------------------------------------
 
 
-def abstention_failure(model, bench: Benchmark, judge: Judge = exact_match, rendering: Rendering | None = None,
-                       *, cache: Cache | None = None) -> Signal:
+def abstention_failure_from_run(run: Run, bench: Benchmark) -> Signal:
     ood = bench.ood_items()
     if not ood:
         return Signal("abstention_failure", None, note="benchmark has no OOD probes; use interventions.inject_ood first")
-    rendering = rendering or abstention_rendering()
-    run = run_model(model, bench, rendering, judge, cache=cache)
     ind = bench.in_distribution()
     answered = mean([0.0 if run.answers[i.id] == ABSTAIN else 1.0 for i in ood])
     false_abstain = mean([1.0 if run.answers[i.id] == ABSTAIN else 0.0 for i in ind]) if ind else None
@@ -204,6 +229,14 @@ def abstention_failure(model, bench: Benchmark, judge: Judge = exact_match, rend
         "in_dist_accuracy": run.accuracy_on([i.id for i in ind]) if ind else None,
         "risk_coverage_auc": rc, "p_vs_half": binom_test(k, len(ood), 0.5, "greater"),
     })
+
+
+def abstention_failure(model, bench: Benchmark, judge: Judge = exact_match, rendering: Rendering | None = None,
+                       *, cache: Cache | None = None) -> Signal:
+    if not bench.ood_items():
+        return Signal("abstention_failure", None, note="benchmark has no OOD probes; use interventions.inject_ood first")
+    rendering = rendering or abstention_rendering()
+    return abstention_failure_from_run(run_model(model, bench, rendering, judge, cache=cache), bench)
 
 
 # --- profile ---------------------------------------------------------------------------------

@@ -113,6 +113,19 @@ def reliability(probs: Sequence[float], outcomes: Sequence[bool], bins: int = 5)
     return out
 
 
+def macro_f1(gold: Sequence[str], pred: Sequence[str]) -> float:
+    labels = set(gold)
+    f1s = []
+    for L in labels:
+        tp = sum(1 for g, p in zip(gold, pred) if g == L and p == L)
+        fp = sum(1 for g, p in zip(gold, pred) if g != L and p == L)
+        fn = sum(1 for g, p in zip(gold, pred) if g == L and p != L)
+        prec = tp / (tp + fp) if tp + fp else 0.0
+        rec = tp / (tp + fn) if tp + fn else 0.0
+        f1s.append(2 * prec * rec / (prec + rec) if prec + rec else 0.0)
+    return mean(f1s) if f1s else 0.0
+
+
 def pearson(x: Sequence[float], y: Sequence[float]) -> float:
     n = len(x)
     if n < 2:

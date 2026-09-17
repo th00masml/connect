@@ -48,6 +48,21 @@ class Run:
         r.correct = {i: judge(by[i], self.answers[i], self.raw[i]) for i in self.answers if i in by}
         return r
 
+    @classmethod
+    def from_answers(cls, model: str, bench: Benchmark, answers: dict[str, str], judge: Judge = exact_match, *,
+                     raw: dict[str, str] | None = None, rendering: str = "cached", constrained: bool = False,
+                     confidence: dict[str, float | None] | None = None) -> "Run":
+        """A Run over cached outputs: what an offline re-analysis of a finished experiment starts from."""
+        raw = raw or {}
+        r = cls(model, bench.name, rendering, constrained, ood={i.id for i in bench if i.ood})
+        for it in bench:
+            a = answers.get(it.id, "")
+            rw = raw.get(it.id, a)
+            r.answers[it.id], r.raw[it.id] = a, rw
+            r.confidence[it.id] = (confidence or {}).get(it.id)
+            r.correct[it.id] = bool(judge(it, a, rw))
+        return r
+
     def to_dict(self) -> dict:
         return {"model": self.model, "benchmark": self.benchmark, "rendering": self.rendering,
                 "constrained": self.constrained, "accuracy": self.accuracy, "accuracy_all": self.accuracy_all,
