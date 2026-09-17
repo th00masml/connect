@@ -1,0 +1,89 @@
+{
+  "title": "Prospective ledger for the test set (FOLIO, LogiQA, SynthModal-Control): TEMPLATE, unfrozen",
+  "created": "2026-09-17T00:00:00+00:00",
+  "meta": {
+    "status": "retrospective",
+    "freeze_procedure": "1. expand to 40-60 atomic predictions whose quantity paths all exist in a Phase 1 results.json of the development set; 2. set meta.status = prospective; 3. artifact-signals ledger hash --stamp; 4. git tag + OSF deposit of file and hash; 5. only then run any model on a test-set benchmark. Until step 2 this file scores as retrospective.",
+    "quantities": "results[benchmark][intervention][quantity]; *.delta = after - before on the evaluation split",
+    "voiding_rule": "a prediction is voided, not scored, when its intervention fails the invariance check (cross-model difficulty agreement on survivors < 0.6)"
+  },
+  "predictions": [
+    {
+      "id": "P07",
+      "benchmark": "folio",
+      "intervention": "none",
+      "quantity": "partial_input_accuracy.excess_over_chance",
+      "direction": "above",
+      "threshold": 0.1,
+      "confidence": 0.65,
+      "family": "direction",
+      "note": "partial-input accuracy exceeds chance by more than 10 points before intervention"
+    },
+    {
+      "id": "P08",
+      "benchmark": "folio",
+      "intervention": "rebalance_and_filter",
+      "quantity": "llm.accuracy.delta",
+      "direction": "down",
+      "threshold": 0.0,
+      "confidence": 0.75,
+      "family": "direction",
+      "note": "headline accuracy falls"
+    },
+    {
+      "id": "P09",
+      "benchmark": "folio",
+      "intervention": "rebalance_and_filter",
+      "quantity": "invariance.agreement_after",
+      "direction": "above",
+      "threshold": 0.6,
+      "confidence": 0.6,
+      "family": "other",
+      "note": "cross-model Spearman of item difficulty on survivors stays above 0.6"
+    },
+    {
+      "id": "P10",
+      "benchmark": "logiqa",
+      "intervention": "none",
+      "quantity": "format_sensitivity.value",
+      "direction": "above",
+      "threshold": 0.03,
+      "confidence": 0.5,
+      "family": "specificity",
+      "note": "format sensitivity exceeds the gate; RD and SVG reported as ungated"
+    },
+    {
+      "id": "P11",
+      "benchmark": "synthmodal_control",
+      "intervention": "leakage_resplit",
+      "quantity": "llm.accuracy.delta",
+      "direction": "flat",
+      "threshold": 0.03,
+      "confidence": 0.85,
+      "family": "specificity",
+      "note": "control: no change beyond re-run noise"
+    },
+    {
+      "id": "P12",
+      "benchmark": "synthmodal_control",
+      "intervention": "rebalance_and_filter",
+      "quantity": "llm.accuracy.delta",
+      "direction": "flat",
+      "threshold": 0.03,
+      "confidence": 0.85,
+      "family": "specificity",
+      "note": "control: no change beyond re-run noise"
+    },
+    {
+      "id": "P13",
+      "benchmark": "synthmodal_control",
+      "intervention": "surface_rerender",
+      "quantity": "llm.accuracy.delta",
+      "direction": "flat",
+      "threshold": 0.03,
+      "confidence": 0.85,
+      "family": "specificity",
+      "note": "control: no change beyond re-run noise"
+    }
+  ]
+}

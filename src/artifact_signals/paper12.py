@@ -15,7 +15,7 @@ from pathlib import Path
 from .benchmarks import cod, kripke
 from .ledger import Ledger, format_score, score_ledger
 
-LEDGER = Path(__file__).resolve().parents[2] / "ledger" / "paper3_ledger.json"
+LEDGER = Path(__file__).resolve().parents[2] / "ledger" / "retrospective_papers12.json"
 
 
 def run_all(out_dir: Path, ledger_path: Path = LEDGER) -> dict:
@@ -52,8 +52,10 @@ def _f(x, d=3):
 
 
 def render_report(profiles: dict, results: dict, score: dict) -> str:
-    L = ["# Paper 3, Phase 1 on papers 1 and 2: offline diagnostics from cached outputs", "",
-         "Recomputed by `artifact-signals paper12` from `data/external/`. No model was run.", "",
+    L = ["# Development set: retrospective reconstruction on papers 1 and 2", "",
+         "Recomputed by `artifact-signals paper12` from `data/external/`. No model was run. Papers 1 and 2 are the",
+         "development set: the instrument was built by inspecting them, so nothing here validates it. The ledger",
+         "below is a protocol demonstration and is labelled retrospective by the scorer.", "",
          "## Reproduction check (published vs recomputed)", "",
          "| quantity | published | recomputed |", "|---|---:|---:|"]
     pub = cod.published()["metrics"]
@@ -75,7 +77,7 @@ def render_report(profiles: dict, results: dict, score: dict) -> str:
         L.append(f"| Kripke {kripke.SHORT[m]} product: strict exact constrained | {pp['constrained']['strict_exact']} | {round(kp['em']['constrained'] * 80)} |")
     L += ["", "## Artifact Risk Profiles", ""]
     for name, p in profiles.items():
-        L += [f"### {name}", "", "| signal | value | note |", "|---|---:|---|"]
+        L += [f"### {name}", "", "| signal | level | value | note |", "|---|---|---:|---|"]
         for k, s in p["signals"].items():
             extra = ""
             d = s["details"]
@@ -94,7 +96,7 @@ def render_report(profiles: dict, results: dict, score: dict) -> str:
                 extra = ", ".join(f"{a}={v:.2f}" for a, v in d["per_arm"].items())
             note = (s.get("note") or "") + ((" | " + extra) if extra else "")
             flag = " (GATED)" if s["gated"] else ""
-            L.append(f"| {k}{flag} | {_f(s['value'])} | {note} |")
+            L.append(f"| {k}{flag} | {s['level']} | {_f(s['value'])} | {note} |")
         L.append("")
     L += ["## Interventions", ""]
     c = results["cause_of_death"]
@@ -127,7 +129,7 @@ def render_report(profiles: dict, results: dict, score: dict) -> str:
               + "; truth-value accuracy " + ", ".join(f"{a}={v:.3f}" for a, v in k["surface_rerender"]["truth_value"]["per_arm"].items()) + ".",
               f"Abstention on the 80 out-of-language fixtures, answered rate per arm: " + ", ".join(f"{a}={v:.2f}" for a, v in k["abstention_enabled"]["ood_answered_rate"].items()) + ".", ""]
     L += ["## Ledger score", "", "```", format_score(score), "```", "",
-          "Quantity mapping note: the ledger was written from the two papers' stated findings before the cached outputs were "
-          "inspected, but the mapping from each prediction to a concrete cached quantity (which model, which run, which judge) "
-          "was fixed while building this report. A real pre-registration fixes both in advance.", ""]
+          "Status: retrospective. The ledger's wording predates inspecting the cached outputs, but the papers' results were "
+          "public and the mapping from each prediction to a concrete cached quantity (model, run, judge) was fixed while building "
+          "this report. The prospective ledger for the test set is `ledger/prospective_template.json`; its freeze procedure is in its meta.", ""]
     return "\n".join(L)

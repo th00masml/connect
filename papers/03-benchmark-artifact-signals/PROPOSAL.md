@@ -4,6 +4,13 @@
 
 Workshop-ready research proposal. Paper 3 of the research program *Reliable Evaluation of Reasoning in Language Models*.
 
+**One question.** Does measuring a benchmark before repairing it predict the direction and the
+metric-specific pattern of what the repair does to scores? Everything else in this document
+(six diagnostics, five interventions, a synthetic control, a software package) is
+operationalization. The result of the paper is one number with a calibration curve: the
+prospective hit rate on benchmarks whose outcomes were unknown when the predictions were frozen,
+against the naive predictor that says every score drops.
+
 ---
 
 ## A. Title
@@ -17,6 +24,49 @@ The obvious alternative, *Diagnostic Signals of Benchmark Artifacts in Language 
 ## B. Abstract (200 words)
 
 Benchmark artifacts are usually discovered after the fact: a benchmark is published, adopted, and only later shown to be solvable by a partial-input baseline or a lexical nearest neighbour. We ask whether that discovery can be moved earlier. We propose treating artifact diagnostics as forecasting instruments rather than post-hoc descriptions, and we test them by pre-registering predictions about what happens to benchmark scores once artifacts are removed. Six cheap diagnostics (format sensitivity, partial-input accuracy, label-prior skew, retrieval dominance, constrained-decoding gain versus semantic gain, and abstention failure) are measured on five reasoning benchmarks, two of them our own and one a synthetic negative control. Predictions about the direction, the relative magnitude, and the metric-specific pattern of post-intervention score change are registered with stated confidences before any intervention runs. We then apply targeted interventions (leakage-aware resplitting, label rebalancing, surface re-rendering, constraint ablation, abstention-enabled scoring), each with a manipulation check, and score the ledger against a naive predictor by hit rate and by calibration. The contribution is methodological: a reusable protocol, an open instrument, and first evidence on whether artifact diagnostics transfer across benchmark families. All experiments fit on a single 24 GB GPU.
+
+---
+
+## C0. Definitions and scope of claims
+
+**Artifact.** A property of the data, the evaluation protocol, or the metric that systematically
+moves the reported score without a corresponding change in the capability the benchmark claims
+to measure. Three consequences of the definition. Format sensitivity is an artifact only when the
+construct is not "robustness to surface form"; on a prompt-robustness benchmark it is the
+measurand. A strong retrieval baseline is a shortcut only when the construct is generalization
+beyond the lookup table; on a coding-dictionary task it may be the intended solution. A label
+prior is an artifact only when a model can exploit it without the input, which is what the
+partial-input test checks. Every diagnostic below is tied to one named threat to construct
+validity, and a diagnostic with no threat attached is not reported.
+
+**Level.** A diagnostic is a property of one of four things, and the instrument labels each
+value with its level, because "the benchmark's artifact profile" is too broad a phrase for a
+vector that also contains model behaviour:
+
+| level | meaning | diagnostics |
+|---|---|---|
+| dataset | a property of the items and labels; estimated with a model but owned by the data | partial-input accuracy; retrieval baseline accuracy; label-vs-uniform skew |
+| protocol | a property of how outputs are elicited and scored | semantic-validity gap; forced-answer rate (needs no model at all) |
+| model | a property of the model alone | none in this instrument; abstention style would be one |
+| model x benchmark | an interaction | format sensitivity; model-vs-label skew; retrieval dominance ratio; abstention failure |
+
+**Threat mapping.**
+
+| diagnostic | threat to construct validity |
+|---|---|
+| format sensitivity | the score measures surface-form compliance, so any other diagnostic is unstable |
+| partial-input accuracy | the items are solvable without the input the construct requires |
+| label-prior skew | the score rewards a prior the model can hold without reading |
+| retrieval dominance | the split rewards lexical proximity to training data, not generalization |
+| semantic-validity gap, forced rate | the protocol (decoder plus metric) credits form, or the constraint answers the item |
+| abstention failure | the score credits fluent answers to unanswerable items as if they were answers |
+
+**Development set, control, test set.** Papers 1 and 2 are the development set: the instrument
+was built by inspecting them, and nothing computed on them validates it. SynthModal-Control is
+the negative control: a diagnostic that fires there is broken. FOLIO, LogiQA and any further
+external benchmark are the test set, and only if the ledger for them is hashed and deposited
+before a single model runs on them. The word *prospective* is reserved for that ledger; the
+papers 1 and 2 ledger is a *retrospective reconstruction*, labelled as such by the scorer.
 
 ---
 
@@ -104,10 +154,11 @@ the profile and the offline-computable interventions without a model call. The f
   drops from 0.8 to 0.4 the retrieval baseline falls from 0.64 to 0.19 while the LLM climbs from
   0.66 to 0.88.
 
-The ledger scores 4 of 5 scorable predictions (P06 needs a third model size, the rest need
-benchmarks C to E). The honest caveat is in the report: the ledger's wording predates reading the
-cached outputs, but the mapping from prediction to concrete cached quantity was fixed while
-building the report. The full study fixes both in advance.
+The retrospective ledger scores 4 of 5 scorable predictions (P06 needs a third model size). That
+number is a protocol demonstration on the development set and is presented as nothing more: the
+outcomes were published before the predictions existed, and the mapping from prediction to
+cached quantity was fixed while building the report. The paper's result is the prospective
+ledger on the test set, and it does not exist yet.
 
 ### G.1 Materials
 
@@ -171,9 +222,13 @@ The six are reported as a vector, the **Artifact Risk Profile**, and deliberatel
 
 ---
 
-## I. Pre-registered predictions
+## I. Predictions
 
-Illustrative entries from the ledger, each stated with its confidence, each falsifiable.
+Two ledgers with different epistemic status. `ledger/retrospective_papers12.json` holds the
+development-set predictions below (P01 to P06, P14); its outcomes were public when it was
+written, so scoring it demonstrates the protocol and validates nothing. `ledger/prospective_template.json`
+holds the test-set entries (P07 to P13) and stays labelled retrospective until the freeze
+procedure in its metadata is complete. Illustrative entries, each with its confidence:
 
 1. Cause-of-death, leakage-aware resplit: LLM accuracy falls by more than 8 points absolute; the retrieval baseline falls by more, so the LLM-minus-retrieval gap *widens* by at least 5 points. Confidence 0.7. (Paper 1 predicts widening because the LLM advantage was concentrated on novel cases; if the gap narrows instead, H1's causal story is wrong.)
 2. Cause-of-death, the point-biserial correlation between fuzzy similarity and correctness drops below 0.15 after resplitting. Confidence 0.8. This is the manipulation check for intervention 1.

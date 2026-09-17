@@ -21,6 +21,19 @@ from .stats import (binom_test, cluster_bootstrap, mcnemar, mean, point_biserial
 
 FS_GATE_DEFAULT = 0.03
 
+# What a diagnostic is a property of. A profile mixes levels on purpose and labels each one,
+# because "the benchmark's artifact profile" is too broad a phrase for a vector that also
+# contains model behaviour.
+LEVELS = ("dataset", "protocol", "model", "model_x_benchmark")
+SIGNAL_LEVEL = {
+    "format_sensitivity": "model_x_benchmark",   # a model's response to equivalent surface forms of these items
+    "partial_input_accuracy": "dataset",         # solvability without the input; estimated with a model, owned by the data
+    "label_prior_skew": "model_x_benchmark",     # model marginal vs label marginal (label-vs-uniform inside it is dataset-level)
+    "retrieval_dominance": "dataset",            # a non-parametric baseline vs the split; the ratio to an LLM is model x benchmark
+    "semantic_validity_gap": "protocol",         # a decoding protocol's effect on two metrics; forced_rate needs no model at all
+    "abstention_failure": "model_x_benchmark",
+}
+
 
 @dataclass
 class Signal:
@@ -30,9 +43,16 @@ class Signal:
     details: dict = field(default_factory=dict)
     gated: bool = False
     note: str = ""
+    level: str = ""
+
+    def __post_init__(self):
+        if not self.level:
+            self.level = SIGNAL_LEVEL.get(self.name, "model_x_benchmark")
+        if self.level not in LEVELS:
+            raise ValueError(f"level must be one of {LEVELS}")
 
     def to_dict(self) -> dict:
-        return {"name": self.name, "value": self.value, "ci": list(self.ci) if self.ci else None,
+        return {"name": self.name, "level": self.level, "value": self.value, "ci": list(self.ci) if self.ci else None,
                 "gated": self.gated, "note": self.note, "details": self.details}
 
 
@@ -275,7 +295,8 @@ class ArtifactRiskProfile:
             json.dump(self.to_dict(), f, indent=2)
 
     def summary(self) -> str:
-        lines = [f"Artifact Risk Profile: {self.benchmark} / {self.model}  (gate={self.fs_gate}, gated={self.gated})"]
+        lines = [f"Artifact Risk Profile: {self.benchmark} / {self.model}  (gate={self.fs_gate}, gated={self.gated})",
+                 "  levels: dataset | protocol | model | model_x_benchmark"]
         for k, s in self.signals.items():
             v = "n/a" if s.value is None else f"{s.value:.3f}"
             ci = f"  [{s.ci[0]:.3f}, {s.ci[1]:.3f}]" if s.ci else ""
@@ -285,7 +306,7 @@ class ArtifactRiskProfile:
                 extra = f"  corr={s.details['sim_correctness_corr']:+.3f} gap={s.details['gap']:+.3f}"
             if k == "semantic_validity_gap" and "constraint_gain" in s.details:
                 extra = f"  cg={s.details['constraint_gain']:+.3f} sg={s.details['semantic_gain']:+.3f}"
-            lines.append(f"  {k:<26}{v:>8}{ci}{extra}{flag}")
+            lines.append(f"  {k:<26}{v:>8}{ci}  [{s.level}]{extra}{flag}")
         return "\n".join(lines)
 
 

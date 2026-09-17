@@ -17,6 +17,7 @@ from pathlib import Path
 from .stats import binom_test, brier, mcnemar, mean, reliability
 
 DIRECTIONS = ("down", "up", "flat", "above", "below")
+STATUSES = ("prospective", "retrospective")   # prospective = hashed before any result was seen; anything else is retrospective
 FAMILIES = ("direction", "magnitude", "metric_specific", "specificity", "manipulation_check", "other")
 
 
@@ -63,6 +64,13 @@ class Ledger:
     predictions: list[Prediction]
     created: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat(timespec="seconds"))
     meta: dict = field(default_factory=dict)
+
+    @property
+    def status(self) -> str:
+        st = self.meta.get("status", "retrospective")
+        if st not in STATUSES:
+            raise ValueError(f"ledger status must be one of {STATUSES}")
+        return st
 
     def canonical(self) -> str:
         body = {"title": self.title, "created": self.created, "meta": self.meta,
@@ -130,7 +138,7 @@ def score_ledger(ledger: Ledger, results: dict, *, voided: set[str] | None = Non
                 "naive_hit_rate": mean([1.0 if h else 0.0 for h in naive_hits_change]),
                 "model_only": mc["a_only"], "naive_only": mc["b_only"], "sign_test_p": mc["p"]}
     return {
-        "ledger_sha256": ledger.sha256(), "n": len(ledger.predictions), "n_scored": n_scored,
+        "ledger_sha256": ledger.sha256(), "status": ledger.status, "n": len(ledger.predictions), "n_scored": n_scored,
         "n_voided": sum(1 for r in rows if r["status"] == "voided"),
         "n_missing": sum(1 for r in rows if r["status"] == "missing"),
         "hits": hits, "hit_rate": hits / n_scored if n_scored else None,
@@ -142,7 +150,9 @@ def score_ledger(ledger: Ledger, results: dict, *, voided: set[str] | None = Non
 
 
 def format_score(s: dict) -> str:
-    lines = [f"Ledger {s['ledger_sha256'][:12]}  scored {s['n_scored']}/{s['n']} (voided {s['n_voided']}, missing {s['n_missing']})"]
+    lines = [f"Ledger {s['ledger_sha256'][:12]}  [{s['status'].upper()}]  scored {s['n_scored']}/{s['n']} (voided {s['n_voided']}, missing {s['n_missing']})"]
+    if s["status"] == "retrospective":
+        lines.append("  retrospective: predictions were written with the outcomes knowable; this is a protocol demonstration, not evidence")
     if s["n_scored"]:
         lines.append(f"  hit rate {s['hit_rate']:.3f}  (p vs coin {s['p_vs_coin']:.3g})   Brier {s['brier']:.3f}")
     for f, v in s["by_family"].items():
