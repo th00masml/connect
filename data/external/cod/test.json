@@ -1,0 +1,1502 @@
+[
+{
+"string": "mesenteric thrombosis",
+"code": "K55.902",
+"chapter": "Digestive"
+},
+{
+"string": "cerebral congestion",
+"code": "G93.801",
+"chapter": "Nervous"
+},
+{
+"string": "sanguinous apoplexy",
+"code": "I61.901",
+"chapter": "Circulatory"
+},
+{
+"string": "pneumonia acute supposed",
+"code": "J18.900",
+"chapter": "Respiratory"
+},
+{
+"string": "quinsy",
+"code": "J36.001",
+"chapter": "Respiratory"
+},
+{
+"string": "heart dilation",
+"code": "I51.701",
+"chapter": "Circulatory"
+},
+{
+"string": "peritoneum inflammation acute supposed",
+"code": "K65.000",
+"chapter": "Digestive"
+},
+{
+"string": "glandular disease",
+"code": "I89.901",
+"chapter": "Circulatory"
+},
+{
+"string": "syncope supposed",
+"code": "R55.000",
+"chapter": "Ill-defined"
+},
+{
+"string": "enteric catarrh infectious",
+"code": "A09.030",
+"chapter": "Infectious"
+},
+{
+"string": "entero-colitis",
+"code": "A09.940",
+"chapter": "Infectious"
+},
+{
+"string": "epithelioma face",
+"code": "C49.004",
+"chapter": "Neoplasm"
+},
+{
+"string": "hepatic tumour",
+"code": "C22.905",
+"chapter": "Neoplasm"
+},
+{
+"string": "ear inflammation",
+"code": "H66.900",
+"chapter": "Ear"
+},
+{
+"string": "meningitis tubercular",
+"code": "A17.000",
+"chapter": "Infectious"
+},
+{
+"string": "intestinal worms",
+"code": "B77.900",
+"chapter": "Infectious"
+},
+{
+"string": "strophulus",
+"code": "R21.002",
+"chapter": "Ill-defined"
+},
+{
+"string": "kidney disease",
+"code": "N28.900",
+"chapter": "Genitourinary"
+},
+{
+"string": "cerebral anaemia",
+"code": "I67.802",
+"chapter": "Circulatory"
+},
+{
+"string": "rupture",
+"code": "R58.004",
+"chapter": "Ill-defined"
+},
+{
+"string": "aneurism thorax",
+"code": "I71.200",
+"chapter": "Circulatory"
+},
+{
+"string": "glands in the lungs",
+"code": "J98.403",
+"chapter": "Respiratory"
+},
+{
+"string": "premature birth supposed",
+"code": "P07.300",
+"chapter": "Perinatal"
+},
+{
+"string": "strangulated hernia",
+"code": "K46.001",
+"chapter": "Digestive"
+},
+{
+"string": "spasmodic diarrhoea infectious",
+"code": "A09.010",
+"chapter": "Infectious"
+},
+{
+"string": "heart apoplexy",
+"code": "I21.904",
+"chapter": "Circulatory"
+},
+{
+"string": "epithelioma oesophagus",
+"code": "C15.904",
+"chapter": "Neoplasm"
+},
+{
+"string": "kidney inflammation",
+"code": "N28.902",
+"chapter": "Genitourinary"
+},
+{
+"string": "kidneys disease congenital",
+"code": "Q63.900",
+"chapter": "Congenital"
+},
+{
+"string": "ulcer pelvis",
+"code": "L98.401",
+"chapter": "Skin"
+},
+{
+"string": "stomach inflammation acute",
+"code": "K29.101",
+"chapter": "Digestive"
+},
+{
+"string": "influence of alcohol",
+"code": "F10.000",
+"chapter": "Mental"
+},
+{
+"string": "tuberculosis pelvis",
+"code": "A18.000",
+"chapter": "Infectious"
+},
+{
+"string": "palpitation heart",
+"code": "R00.200",
+"chapter": "Ill-defined"
+},
+{
+"string": "run over by a dray",
+"code": "V06.901",
+"chapter": "ExternalCause"
+},
+{
+"string": "abscess ankle joint",
+"code": "L02.401",
+"chapter": "Skin"
+},
+{
+"string": "abscess scrofulous chest",
+"code": "A18.202",
+"chapter": "Infectious"
+},
+{
+"string": "ramollissement brain",
+"code": "G93.803",
+"chapter": "Nervous"
+},
+{
+"string": "uterus rupture",
+"code": "N85.802",
+"chapter": "Genitourinary"
+},
+{
+"string": "age supposed",
+"code": "R54.005",
+"chapter": "Ill-defined"
+},
+{
+"string": "loss of blood",
+"code": "R58.002",
+"chapter": "Ill-defined"
+},
+{
+"string": "abscess mastoid",
+"code": "H70.000",
+"chapter": "Ear"
+},
+{
+"string": "convulsions supposed",
+"code": "R56.800",
+"chapter": "Ill-defined"
+},
+{
+"string": "ulceration abdomen",
+"code": "K25.900",
+"chapter": "Digestive"
+},
+{
+"string": "tumour lungs",
+"code": "C34.905",
+"chapter": "Neoplasm"
+},
+{
+"string": "measles and lung congestion",
+"code": "B05.200",
+"chapter": "Infectious"
+},
+{
+"string": "enterocolitis ulcerative",
+"code": "K51.002",
+"chapter": "Digestive"
+},
+{
+"string": "nettle rash",
+"code": "L50.900",
+"chapter": "Skin"
+},
+{
+"string": "renal congestion",
+"code": "N28.802",
+"chapter": "Genitourinary"
+},
+{
+"string": "aphtha",
+"code": "B37.000",
+"chapter": "Infectious"
+},
+{
+"string": "cerebral thrombosis",
+"code": "I66.902",
+"chapter": "Circulatory"
+},
+{
+"string": "diarrhoea scrofulous",
+"code": "A18.304",
+"chapter": "Infectious"
+},
+{
+"string": "dilatation heart",
+"code": "I51.701",
+"chapter": "Circulatory"
+},
+{
+"string": "erysipelas knee",
+"code": "A46.000",
+"chapter": "Infectious"
+},
+{
+"string": "malformation abdomen",
+"code": "Q45.900",
+"chapter": "Congenital"
+},
+{
+"string": "knife wound",
+"code": "W26.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "croup spasmodic",
+"code": "J38.500",
+"chapter": "Respiratory"
+},
+{
+"string": "synovitis",
+"code": "M65.900",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "glioma",
+"code": "C71.908",
+"chapter": "Neoplasm"
+},
+{
+"string": "lungs apoplexy",
+"code": "R09.201",
+"chapter": "Ill-defined"
+},
+{
+"string": "fever miliary",
+"code": "L74.000",
+"chapter": "Skin"
+},
+{
+"string": "spine curvature",
+"code": "M43.901",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "fracture skull supposed",
+"code": "Y34.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "heart disease with gangrene",
+"code": "I25.101",
+"chapter": "Circulatory"
+},
+{
+"string": "amputation arm",
+"code": "Y34.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "cancer womb",
+"code": "C55.001",
+"chapter": "Neoplasm"
+},
+{
+"string": "mitral obstruction",
+"code": "I05.000",
+"chapter": "Circulatory"
+},
+{
+"string": "adhesions",
+"code": "R68.810",
+"chapter": "Ill-defined"
+},
+{
+"string": "icterus",
+"code": "R17.000",
+"chapter": "Ill-defined"
+},
+{
+"string": "joints disease",
+"code": "M25.900",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "hepatic dropsy",
+"code": "K75.900",
+"chapter": "Digestive"
+},
+{
+"string": "injury spine dislocation",
+"code": "Y34.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "senile gangrene foot/leg",
+"code": "I70.201",
+"chapter": "Circulatory"
+},
+{
+"string": "snake bite (venomous or not stated)",
+"code": "X20.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "urinary fistula",
+"code": "N36.000",
+"chapter": "Genitourinary"
+},
+{
+"string": "eczema scalp",
+"code": "L30.901",
+"chapter": "Skin"
+},
+{
+"string": "want",
+"code": "X57.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "meninges congestion",
+"code": "G93.801",
+"chapter": "Nervous"
+},
+{
+"string": "ovarian dropsy",
+"code": "N70.901",
+"chapter": "Genitourinary"
+},
+{
+"string": "delirium tremens",
+"code": "F10.401",
+"chapter": "Mental"
+},
+{
+"string": "gastro intestinal catarrh",
+"code": "A09.930",
+"chapter": "Infectious"
+},
+{
+"string": "disease femur",
+"code": "M89.900",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "gastro enteritis acute",
+"code": "A09.940",
+"chapter": "Infectious"
+},
+{
+"string": "tuberculosis bone",
+"code": "A18.000",
+"chapter": "Infectious"
+},
+{
+"string": "epithelioma uterus",
+"code": "C55.004",
+"chapter": "Neoplasm"
+},
+{
+"string": "atrophy muscles",
+"code": "M62.500",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "fatty degeneration liver",
+"code": "K76.000",
+"chapter": "Digestive"
+},
+{
+"string": "cellulitis leg",
+"code": "L03.100",
+"chapter": "Skin"
+},
+{
+"string": "bowels rupture supposed",
+"code": "K63.100",
+"chapter": "Digestive"
+},
+{
+"string": "gangrene scrotum",
+"code": "N49.201",
+"chapter": "Genitourinary"
+},
+{
+"string": "gangrene general",
+"code": "R02.000",
+"chapter": "Ill-defined"
+},
+{
+"string": "teething diarrheoa",
+"code": "K00.705",
+"chapter": "Digestive"
+},
+{
+"string": "serous apoplexy",
+"code": "I64.001",
+"chapter": "Circulatory"
+},
+{
+"string": "mitral disease",
+"code": "I05.900",
+"chapter": "Circulatory"
+},
+{
+"string": "bowels affection chronic",
+"code": "K63.900",
+"chapter": "Digestive"
+},
+{
+"string": "congestion brain",
+"code": "G93.801",
+"chapter": "Nervous"
+},
+{
+"string": "dropsy pericardium",
+"code": "I31.901",
+"chapter": "Circulatory"
+},
+{
+"string": "amputation leg",
+"code": "Y34.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "malaria",
+"code": "B54.000",
+"chapter": "Infectious"
+},
+{
+"string": "inflammation extremities",
+"code": "R22.701",
+"chapter": "Ill-defined"
+},
+{
+"string": "bronchitis young",
+"code": "J20.902",
+"chapter": "Respiratory"
+},
+{
+"string": "congenital chest mischief",
+"code": "Q67.800",
+"chapter": "Congenital"
+},
+{
+"string": "senile decay",
+"code": "R54.002",
+"chapter": "Ill-defined"
+},
+{
+"string": "rheumatic myocarditis chronic",
+"code": "I09.001",
+"chapter": "Circulatory"
+},
+{
+"string": "ulceration skin between the shoulders",
+"code": "L98.400",
+"chapter": "Skin"
+},
+{
+"string": "ovary rupture",
+"code": "N83.801",
+"chapter": "Genitourinary"
+},
+{
+"string": "excision of the knee joint timing not stated",
+"code": "Y83.900",
+"chapter": "ExternalCause"
+},
+{
+"string": "operation",
+"code": "Y83.900",
+"chapter": "ExternalCause"
+},
+{
+"string": "dropsy kidneys",
+"code": "N28.901",
+"chapter": "Genitourinary"
+},
+{
+"string": "blow to the head",
+"code": "Y34.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "glands enlarged thyroid",
+"code": "E07.900",
+"chapter": "Endocrine/metabolic"
+},
+{
+"string": "excision of the knee joint during",
+"code": "Y83.900",
+"chapter": "ExternalCause"
+},
+{
+"string": "carbolic acid",
+"code": "Y19.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "spasmodic diarrhoea",
+"code": "A09.910",
+"chapter": "Infectious"
+},
+{
+"string": "died soon after birth",
+"code": "P96.908",
+"chapter": "Perinatal"
+},
+{
+"string": "polyps",
+"code": "R68.801",
+"chapter": "Ill-defined"
+},
+{
+"string": "stomach and bowels irritation",
+"code": "K63.900",
+"chapter": "Digestive"
+},
+{
+"string": "leg inflammation",
+"code": "R22.401",
+"chapter": "Ill-defined"
+},
+{
+"string": "sarcoma lung",
+"code": "C34.903",
+"chapter": "Neoplasm"
+},
+{
+"string": "hydrocele",
+"code": "N43.300",
+"chapter": "Genitourinary"
+},
+{
+"string": "beaten with iron bar",
+"code": "Y00.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "catarrh nose and throat",
+"code": "J98.901",
+"chapter": "Respiratory"
+},
+{
+"string": "congenital debility",
+"code": "P96.903",
+"chapter": "Perinatal"
+},
+{
+"string": "smallpox vaccinated",
+"code": "B03.003",
+"chapter": "Infectious"
+},
+{
+"string": "tuberculosis glands abdominal",
+"code": "A18.300",
+"chapter": "Infectious"
+},
+{
+"string": "sarcoma ribs",
+"code": "C41.303",
+"chapter": "Neoplasm"
+},
+{
+"string": "teething",
+"code": "K00.704",
+"chapter": "Digestive"
+},
+{
+"string": "haemorrhage brain",
+"code": "I61.902",
+"chapter": "Circulatory"
+},
+{
+"string": "sclerosis spinal cord",
+"code": "G35.000",
+"chapter": "Nervous"
+},
+{
+"string": "swelling throat",
+"code": "J02.902",
+"chapter": "Respiratory"
+},
+{
+"string": "spina bifida congenital",
+"code": "Q05.900",
+"chapter": "Congenital"
+},
+{
+"string": "hydatid liver",
+"code": "B67.901",
+"chapter": "Infectious"
+},
+{
+"string": "chickenpox",
+"code": "B01.900",
+"chapter": "Infectious"
+},
+{
+"string": "pleuritic effusion",
+"code": "J90.000",
+"chapter": "Respiratory"
+},
+{
+"string": "ichorrhaemia",
+"code": "A41.901",
+"chapter": "Infectious"
+},
+{
+"string": "uterus degeneration polypoid",
+"code": "N84.000",
+"chapter": "Genitourinary"
+},
+{
+"string": "kidney affection",
+"code": "N28.900",
+"chapter": "Genitourinary"
+},
+{
+"string": "abscess leg inflammation",
+"code": "L02.401",
+"chapter": "Skin"
+},
+{
+"string": "trismus nascentium",
+"code": "A33.000",
+"chapter": "Infectious"
+},
+{
+"string": "cancer glands submaxillary",
+"code": "C08.001",
+"chapter": "Neoplasm"
+},
+{
+"string": "suicide drowned supposed",
+"code": "X71.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "bowels atropht",
+"code": "K63.801",
+"chapter": "Digestive"
+},
+{
+"string": "child affected by protracted labour",
+"code": "P03.800",
+"chapter": "Perinatal"
+},
+{
+"string": "cancer rectum",
+"code": "C20.001",
+"chapter": "Neoplasm"
+},
+{
+"string": "house fire",
+"code": "X00.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "inflammation testicles",
+"code": "N45.902",
+"chapter": "Genitourinary"
+},
+{
+"string": "intussusception bowels",
+"code": "K56.100",
+"chapter": "Digestive"
+},
+{
+"string": "tumour pelvis",
+"code": "C76.305",
+"chapter": "Neoplasm"
+},
+{
+"string": "abscess thorax",
+"code": "J86.903",
+"chapter": "Respiratory"
+},
+{
+"string": "prolapsus",
+"code": "N81.400",
+"chapter": "Genitourinary"
+},
+{
+"string": "rupture brain",
+"code": "I61.902",
+"chapter": "Circulatory"
+},
+{
+"string": "caries hip joint",
+"code": "M86.909",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "not clear",
+"code": "R99.000",
+"chapter": "Ill-defined"
+},
+{
+"string": "diarrhoea inflammatory",
+"code": "A09.910",
+"chapter": "Infectious"
+},
+{
+"string": "croup stomach and bowels",
+"code": "A09.972",
+"chapter": "Infectious"
+},
+{
+"string": "fall from roof",
+"code": "Y30.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "tetanus traumatic",
+"code": "A35.000",
+"chapter": "Infectious"
+},
+{
+"string": "diarrhoea watery infectious",
+"code": "A09.013",
+"chapter": "Infectious"
+},
+{
+"string": "suicide drowned",
+"code": "X71.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "decay of nature",
+"code": "R54.003",
+"chapter": "Ill-defined"
+},
+{
+"string": "sarcoma kidneys",
+"code": "C64.003",
+"chapter": "Neoplasm"
+},
+{
+"string": "compression brain",
+"code": "G93.500",
+"chapter": "Nervous"
+},
+{
+"string": "appencitis peritonitis",
+"code": "K35.200",
+"chapter": "Digestive"
+},
+{
+"string": "febris",
+"code": "R50.900",
+"chapter": "Ill-defined"
+},
+{
+"string": "died suddenly",
+"code": "R96.101",
+"chapter": "Ill-defined"
+},
+{
+"string": "carcinoma bladder",
+"code": "C67.907",
+"chapter": "Neoplasm"
+},
+{
+"string": "fracture knee compound",
+"code": "Y34.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "spinal affection",
+"code": "M48.901",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "injury dislocation ankle",
+"code": "Y34.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "malignant nasal polyp",
+"code": "C30.006",
+"chapter": "Neoplasm"
+},
+{
+"string": "tumour arm",
+"code": "C76.405",
+"chapter": "Neoplasm"
+},
+{
+"string": "gallstones",
+"code": "K80.200",
+"chapter": "Digestive"
+},
+{
+"string": "scrofula testicles",
+"code": "A18.104",
+"chapter": "Infectious"
+},
+{
+"string": "cancer spleen",
+"code": "C26.101",
+"chapter": "Neoplasm"
+},
+{
+"string": "peritoneum inflammation tubercular",
+"code": "A18.300",
+"chapter": "Infectious"
+},
+{
+"string": "spine degeneration",
+"code": "M47.901",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "bowel ulceration",
+"code": "K63.300",
+"chapter": "Digestive"
+},
+{
+"string": "suicide poisoning spirit of salts",
+"code": "X69.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "starvation",
+"code": "X53.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "waxy liver",
+"code": "K76.000",
+"chapter": "Digestive"
+},
+{
+"string": "ulcer skin",
+"code": "L98.400",
+"chapter": "Skin"
+},
+{
+"string": "brain hardening",
+"code": "G93.802",
+"chapter": "Nervous"
+},
+{
+"string": "smallpox not vaccinated",
+"code": "B03.002",
+"chapter": "Infectious"
+},
+{
+"string": "bronchorrhea",
+"code": "J98.001",
+"chapter": "Respiratory"
+},
+{
+"string": "enteritis chronic",
+"code": "K52.931",
+"chapter": "Digestive"
+},
+{
+"string": "abscess thorax with fistula",
+"code": "J86.003",
+"chapter": "Respiratory"
+},
+{
+"string": "rupture womb",
+"code": "N85.802",
+"chapter": "Genitourinary"
+},
+{
+"string": "defective condition of the blood",
+"code": "D75.900",
+"chapter": "Blood"
+},
+{
+"string": "cancer base of skull",
+"code": "C41.001",
+"chapter": "Neoplasm"
+},
+{
+"string": "spine softening",
+"code": "G95.801",
+"chapter": "Nervous"
+},
+{
+"string": "suicide cutting throat",
+"code": "X78.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "bronchitis cardiac",
+"code": "I50.100",
+"chapter": "Circulatory"
+},
+{
+"string": "spine disease chronic",
+"code": "M48.901",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "prurigo",
+"code": "L28.200",
+"chapter": "Skin"
+},
+{
+"string": "entozoa",
+"code": "B77.900",
+"chapter": "Infectious"
+},
+{
+"string": "haemorrhage mouth",
+"code": "R58.000",
+"chapter": "Ill-defined"
+},
+{
+"string": "erysipelas complications",
+"code": "A46.003",
+"chapter": "Infectious"
+},
+{
+"string": "cerebral disease",
+"code": "G93.902",
+"chapter": "Nervous"
+},
+{
+"string": "injury fall",
+"code": "W19.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "noma pudendi",
+"code": "N76.802",
+"chapter": "Genitourinary"
+},
+{
+"string": "mediastinal tumour",
+"code": "C38.005",
+"chapter": "Neoplasm"
+},
+{
+"string": "kidneys inflammation chronic",
+"code": "N03.901",
+"chapter": "Genitourinary"
+},
+{
+"string": "cystitis acute",
+"code": "N30.000",
+"chapter": "Genitourinary"
+},
+{
+"string": "general paralysis of the insane",
+"code": "A52.102",
+"chapter": "Infectious"
+},
+{
+"string": "tumour",
+"code": "C80.905",
+"chapter": "Neoplasm"
+},
+{
+"string": "gangrene perineum",
+"code": "R02.004",
+"chapter": "Ill-defined"
+},
+{
+"string": "general decay",
+"code": "R54.003",
+"chapter": "Ill-defined"
+},
+{
+"string": "pressure brain",
+"code": "G93.500",
+"chapter": "Nervous"
+},
+{
+"string": "prolapsus uteri",
+"code": "N81.400",
+"chapter": "Genitourinary"
+},
+{
+"string": "tumour neck malignant",
+"code": "C76.005",
+"chapter": "Neoplasm"
+},
+{
+"string": "gastro colitis",
+"code": "A09.940",
+"chapter": "Infectious"
+},
+{
+"string": "spinal marrow inflammation chronic",
+"code": "G04.900",
+"chapter": "Nervous"
+},
+{
+"string": "inflammation of inner ear",
+"code": "H83.000",
+"chapter": "Ear"
+},
+{
+"string": "gripes",
+"code": "R10.402",
+"chapter": "Ill-defined"
+},
+{
+"string": "tuberculosis bowels acute",
+"code": "A18.300",
+"chapter": "Infectious"
+},
+{
+"string": "umbilicus rupture supposed",
+"code": "P50.100",
+"chapter": "Perinatal"
+},
+{
+"string": "bladder and kidneys disease",
+"code": "N39.901",
+"chapter": "Genitourinary"
+},
+{
+"string": "myocardial fibrosis",
+"code": "I51.401",
+"chapter": "Circulatory"
+},
+{
+"string": "amyloid disease kidneys",
+"code": "E85.403",
+"chapter": "Endocrine/metabolic"
+},
+{
+"string": "died of grief",
+"code": "F32.901",
+"chapter": "Mental"
+},
+{
+"string": "caries tibia",
+"code": "M86.909",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "bowels catarrh acute",
+"code": "A09.973",
+"chapter": "Infectious"
+},
+{
+"string": "spinal disease",
+"code": "M48.901",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "tetanus infantile",
+"code": "A33.000",
+"chapter": "Infectious"
+},
+{
+"string": "lungs disease supposed",
+"code": "J98.902",
+"chapter": "Respiratory"
+},
+{
+"string": "haematuria",
+"code": "R31.000",
+"chapter": "Ill-defined"
+},
+{
+"string": "cardiac syncope",
+"code": "R55.000",
+"chapter": "Ill-defined"
+},
+{
+"string": "abscess meninges",
+"code": "G06.201",
+"chapter": "Nervous"
+},
+{
+"string": "salivation",
+"code": "K11.700",
+"chapter": "Digestive"
+},
+{
+"string": "hodgkin's disease",
+"code": "C81.900",
+"chapter": "Neoplasm"
+},
+{
+"string": "gastrodynia",
+"code": "R10.101",
+"chapter": "Ill-defined"
+},
+{
+"string": "inability to take nourishment",
+"code": "P92.500",
+"chapter": "Perinatal"
+},
+{
+"string": "suicide poisoning vitriol",
+"code": "X69.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "injury accident machinery",
+"code": "W31.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "self-inflicted",
+"code": "X84.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "pneumonia croupous",
+"code": "J18.000",
+"chapter": "Respiratory"
+},
+{
+"string": "joints disease knee chronic",
+"code": "M25.904",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "mining accident",
+"code": "W31.001",
+"chapter": "ExternalCause"
+},
+{
+"string": "dropsy abdomen",
+"code": "R18.001",
+"chapter": "Ill-defined"
+},
+{
+"string": "thrombosis lateral sinus",
+"code": "G08.001",
+"chapter": "Nervous"
+},
+{
+"string": "dog bite",
+"code": "W54.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "miscarriage",
+"code": "O03.901",
+"chapter": "Pregnancy"
+},
+{
+"string": "meningitis puerperal",
+"code": "O99.300",
+"chapter": "Pregnancy"
+},
+{
+"string": "compound fracture",
+"code": "Y34.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "fracture leg compound comminuted",
+"code": "Y34.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "heart irregularity",
+"code": "I49.900",
+"chapter": "Circulatory"
+},
+{
+"string": "stomach disease malignant supposed",
+"code": "C16.906",
+"chapter": "Neoplasm"
+},
+{
+"string": "abscess perineal",
+"code": "L02.202",
+"chapter": "Skin"
+},
+{
+"string": "abscess psoas",
+"code": "M60.001",
+"chapter": "Musculoskeletal"
+},
+{
+"string": "sore throat",
+"code": "J02.902",
+"chapter": "Respiratory"
+},
+{
+"string": "bleeding fingers",
+"code": "Y34.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "killed by a cricket ball",
+"code": "W21.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "puerperal convulsions",
+"code": "O15.201",
+"chapter": "Pregnancy"
+},
+{
+"string": "vagina inflammation",
+"code": "N76.000",
+"chapter": "Genitourinary"
+},
+{
+"string": "consumption larynx",
+"code": "A16.402",
+"chapter": "Infectious"
+},
+{
+"string": "catarrhal jaundice",
+"code": "A27.900",
+"chapter": "Infectious"
+},
+{
+"string": "abdominal dropsy",
+"code": "R18.001",
+"chapter": "Ill-defined"
+},
+{
+"string": "fever remittent infantile",
+"code": "B54.003",
+"chapter": "Infectious"
+},
+{
+"string": "smallpox supposed",
+"code": "B03.000",
+"chapter": "Infectious"
+},
+{
+"string": "cancrum oris",
+"code": "A69.000",
+"chapter": "Infectious"
+},
+{
+"string": "cancer larynx",
+"code": "C32.901",
+"chapter": "Neoplasm"
+},
+{
+"string": "heart inflammation rheumatic",
+"code": "I09.900",
+"chapter": "Circulatory"
+},
+{
+"string": "ulcer back",
+"code": "L98.400",
+"chapter": "Skin"
+},
+{
+"string": "falling of a tree",
+"code": "W20.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "haemorrhage postpartum acute",
+"code": "O72.102",
+"chapter": "Pregnancy"
+},
+{
+"string": "intestinal rupture",
+"code": "K63.100",
+"chapter": "Digestive"
+},
+{
+"string": "hives",
+"code": "L50.900",
+"chapter": "Skin"
+},
+{
+"string": "bowel disease",
+"code": "K63.900",
+"chapter": "Digestive"
+},
+{
+"string": "decomposing mole septicemia",
+"code": "O08.001",
+"chapter": "Pregnancy"
+},
+{
+"string": "congenital lues veneria",
+"code": "A50.900",
+"chapter": "Infectious"
+},
+{
+"string": "ulcer bowels tubercular",
+"code": "A18.300",
+"chapter": "Infectious"
+},
+{
+"string": "lungs congestion tubercular",
+"code": "A16.200",
+"chapter": "Infectious"
+},
+{
+"string": "paralysis spastic",
+"code": "G83.900",
+"chapter": "Nervous"
+},
+{
+"string": "shortness of breath",
+"code": "R06.000",
+"chapter": "Ill-defined"
+},
+{
+"string": "pylorus obstruction",
+"code": "K31.101",
+"chapter": "Digestive"
+},
+{
+"string": "tubercular disease brain",
+"code": "A17.802",
+"chapter": "Infectious"
+},
+{
+"string": "diabetes",
+"code": "E14.900",
+"chapter": "Endocrine/metabolic"
+},
+{
+"string": "fracture compound",
+"code": "Y34.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "injury birth",
+"code": "P15.900",
+"chapter": "Perinatal"
+},
+{
+"string": "croupous laryngitis",
+"code": "J05.001",
+"chapter": "Respiratory"
+},
+{
+"string": "fall of building",
+"code": "W20.000",
+"chapter": "ExternalCause"
+},
+{
+"string": "cancer ear",
+"code": "C44.201",
+"chapter": "Neoplasm"
+},
+{
+"string": "disease womb",
+"code": "N85.901",
+"chapter": "Genitourinary"
+},
+{
+"string": "strangulation",
+"code": "Y20.001",
+"chapter": "ExternalCause"
+},
+{
+"string": "kidneys congestion chronic",
+"code": "N28.802",
+"chapter": "Genitourinary"
+},
+{
+"string": "pelvic abscess",
+"code": "N73.901",
+"chapter": "Genitourinary"
+},
+{
+"string": "tumour scrotum",
+"code": "C63.205",
+"chapter": "Neoplasm"
+},
+{
+"string": "partus",
+"code": "O95.000",
+"chapter": "Pregnancy"
+},
+{
+"string": "apoplexy supposed",
+"code": "I64.001",
+"chapter": "Circulatory"
+},
+{
+"string": "disease sentrie glands",
+"code": "I89.901",
+"chapter": "Circulatory"
+},
+{
+"string": "ulcer rodent",
+"code": "C44.909",
+"chapter": "Neoplasm"
+},
+{
+"string": "congenital malformation head",
+"code": "Q75.900",
+"chapter": "Congenital"
+},
+{
+"string": "bowels obstruction",
+"code": "K56.601",
+"chapter": "Digestive"
+},
+{
+"string": "jaundice",
+"code": "R17.000",
+"chapter": "Ill-defined"
+},
+{
+"string": "erysipelas leg",
+"code": "A46.000",
+"chapter": "Infectious"
+},
+{
+"string": "chest disease malignant",
+"code": "C76.106",
+"chapter": "Neoplasm"
+},
+{
+"string": "alcohol excess supposed",
+"code": "F10.000",
+"chapter": "Mental"
+},
+{
+"string": "asystole",
+"code": "I46.900",
+"chapter": "Circulatory"
+},
+{
+"string": "stomach irritation chronic",
+"code": "K31.901",
+"chapter": "Digestive"
+},
+{
+"string": "haemorrhage",
+"code": "R58.000",
+"chapter": "Ill-defined"
+}
+]

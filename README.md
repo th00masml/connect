@@ -22,7 +22,7 @@ A pure-Python package (no hard dependencies) that implements the paper 3 protoco
 
 ```
 pip install -e ".[dev]"        # add [fast] for rapidfuzz, [hf] for transformers, [api] for OpenAI-compatible endpoints
-pytest                         # 33 tests, a few seconds, no GPU
+pytest                         # 38 tests, ~30 s, no GPU
 python examples/synth_pipeline.py   # full two-phase dry run on SynthModal-Control with dummy models
 ```
 
@@ -64,6 +64,29 @@ should detect (oracle, position bias, constant answer, nearest-neighbour retriev
 whose only problem is format noise), plus `HFModel` (transformers, choice constraint by
 candidate log-prob scoring) and `OpenAICompatModel` (soft constraint, flagged as such).
 
+### Papers 1 and 2, offline
+
+The two source repositories ship their cached model outputs. `scripts/sync_external.py`
+vendors the slices the analysis needs into `data/external/`, and
+
+```
+artifact-signals paper12 --out outputs/paper12 --report
+```
+
+reproduces every published number to the item (tests in `tests/test_benchmarks.py`), computes
+the Artifact Risk Profile for each benchmark and model, runs the offline interventions
+(leakage sweep and rebalancing on cause-of-death; constraint ablation, leak removal, prompt
+re-rendering and abstention on Kripke), and scores the ledger. Report:
+[`outputs/paper12/RESULTS_offline.md`](outputs/paper12/RESULTS_offline.md).
+
+Headline numbers from that run: Kripke fails the format gate (SD 0.13 over prompt arms vs the
+0.03 gate) and nobody abstains in 1,600 outputs; its constraint leak shows up as
+`forced_rate = 0.31` before any model runs and the leak-free replication keeps SVG at 0.39.
+Cause-of-death has no format artifact (SVG = 0), and its lexical artifact inflates the baseline
+rather than the model: under the leakage sweep retrieval falls 0.64 to 0.19 while the LLM rises
+0.66 to 0.88. Ledger: 4 of 5 scorable predictions hold; the miss (P01) is the one that predicted
+the LLM's own score would drop.
+
 ### CLI
 
 ```
@@ -82,7 +105,10 @@ Model specs: `dummy:oracle:0.8`, `dummy:first`, `dummy:constant:TRUE`, `dummy:re
 ```
 papers/03-benchmark-artifact-signals/PROPOSAL.md   the proposal
 src/artifact_signals/                              the instrument
+src/artifact_signals/benchmarks/{cod,kripke}.py    adapters for papers 1 and 2 (reproduce, profile, intervene)
+data/external/                                     vendored slices of both source repos (scripts/sync_external.py)
+outputs/paper12/                                   offline Phase 1 on papers 1 and 2
 ledger/paper3_ledger.json                          illustrative pre-registered predictions
-examples/synth_pipeline.py                         two-phase dry run
-tests/                                             33 tests
+examples/synth_pipeline.py                         two-phase dry run on the synthetic control
+tests/                                             38 tests
 ```

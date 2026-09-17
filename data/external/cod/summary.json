@@ -1,0 +1,254 @@
+{
+  "verdict": "KILLED-AT-4-not-beaten",
+  "primary": {
+    "metric": "accuracy_full_test",
+    "best_baseline": 0.7066666666666667,
+    "commercial": 0.6666666666666666,
+    "gain_over_baseline": -0.040000000000000036,
+    "target_margin": 0.05,
+    "commercial_ci95": [
+      0.61,
+      0.72
+    ]
+  },
+  "subsets": {
+    "all": {
+      "n": 300
+    },
+    "hard": {
+      "n": 33,
+      "criterion": "best dictionary char-3gram similarity < 0.5"
+    },
+    "nonhard": {
+      "n": 267
+    }
+  },
+  "metrics": {
+    "B_majority": {
+      "all": 0.15333333333333332,
+      "hard": 0.09090909090909091,
+      "nonhard": 0.16104868913857678,
+      "macro_f1": 0.014771997430956967
+    },
+    "B_fuzzy": {
+      "all": 0.7066666666666667,
+      "hard": 0.36363636363636365,
+      "nonhard": 0.7490636704119851,
+      "macro_f1": 0.6348013240904846
+    },
+    "M_local_qwen14b": {
+      "all": 0.56,
+      "hard": 0.5757575757575758,
+      "nonhard": 0.5580524344569289,
+      "macro_f1": 0.5678124790308593
+    },
+    "M_comm_sonnet5": {
+      "all": 0.6666666666666666,
+      "hard": 0.7575757575757576,
+      "nonhard": 0.6554307116104869,
+      "macro_f1": 0.7090553804734232
+    }
+  },
+  "pairwise_fuzzy_vs_comm": {
+    "hard": {
+      "both_correct": 11,
+      "a_only": 1,
+      "b_only": 14,
+      "neither": 7
+    },
+    "nonhard": {
+      "both_correct": 138,
+      "a_only": 62,
+      "b_only": 37,
+      "neither": 30
+    }
+  },
+  "examples": {
+    "hard_comm_beats_fuzzy": [
+      {
+        "i": 4,
+        "string": "quinsy",
+        "gold": "Respiratory",
+        "dict_sim": 0.20412414523193154,
+        "nearest_dict_string": "insanity",
+        "nearest_dict_chapter": "Mental",
+        "pred_a": "Mental",
+        "pred_b": "Respiratory"
+      },
+      {
+        "i": 21,
+        "string": "glands in the lungs",
+        "gold": "Respiratory",
+        "dict_sim": 0.4008918628686366,
+        "nearest_dict_string": "glands inflammation",
+        "nearest_dict_chapter": "Ill-defined",
+        "pred_a": "Ill-defined",
+        "pred_b": "Respiratory"
+      },
+      {
+        "i": 47,
+        "string": "nettle rash",
+        "gold": "Skin",
+        "dict_sim": 0.4999999999999999,
+        "nearest_dict_string": "rash",
+        "nearest_dict_chapter": "Ill-defined",
+        "pred_a": "Ill-defined",
+        "pred_b": "Skin"
+      },
+      {
+        "i": 57,
+        "string": "synovitis",
+        "gold": "Musculoskeletal",
+        "dict_sim": 0.3779644730092272,
+        "nearest_dict_string": "otitis",
+        "nearest_dict_chapter": "Ear",
+        "pred_a": "Ear",
+        "pred_b": "Musculoskeletal"
+      },
+      {
+        "i": 101,
+        "string": "congenital chest mischief",
+        "gold": "Congenital",
+        "dict_sim": 0.49099025303098287,
+        "nearest_dict_string": "syphilis congenital",
+        "nearest_dict_chapter": "Infectious",
+        "pred_a": "Infectious",
+        "pred_b": "Congenital"
+      },
+      {
+        "i": 120,
+        "string": "beaten with iron bar",
+        "gold": "ExternalCause",
+        "dict_sim": 0.1951800145897066,
+        "nearest_dict_string": "lithiasis",
+        "nearest_dict_chapter": "Genitourinary",
+        "pred_a": "Genitourinary",
+        "pred_b": "ExternalCause"
+      }
+    ],
+    "hard_comm_errors": [
+      {
+        "i": 16,
+        "string": "strophulus",
+        "gold": "Ill-defined",
+        "dict_sim": 0.4743416490252569,
+        "nearest_dict_string": "atrophy",
+        "nearest_dict_chapter": "Ill-defined",
+        "pred_a": "Ill-defined",
+        "pred_b": "Skin"
+      },
+      {
+        "i": 31,
+        "string": "influence of alcohol",
+        "gold": "Mental",
+        "dict_sim": 0.472455591261534,
+        "nearest_dict_string": "influenza",
+        "nearest_dict_chapter": "Respiratory",
+        "pred_a": "Respiratory",
+        "pred_b": "ExternalCause"
+      },
+      {
+        "i": 40,
+        "string": "loss of blood",
+        "gold": "Ill-defined",
+        "dict_sim": 0.4811252243246881,
+        "nearest_dict_string": "disease of blood",
+        "nearest_dict_chapter": "Blood",
+        "pred_a": "Blood",
+        "pred_b": "Blood"
+      },
+      {
+        "i": 76,
+        "string": "want",
+        "gold": "ExternalCause",
+        "dict_sim": 0.3779644730092272,
+        "nearest_dict_string": "want of breast milk",
+        "nearest_dict_chapter": "Perinatal",
+        "pred_a": "Perinatal",
+        "pred_b": "Ill-defined"
+      },
+      {
+        "i": 134,
+        "string": "ichorrhaemia",
+        "gold": "Infectious",
+        "dict_sim": 0.47809144373375745,
+        "nearest_dict_string": "cholaemia",
+        "nearest_dict_chapter": "Ill-defined",
+        "pred_a": "Ill-defined",
+        "pred_b": "Circulatory"
+      },
+      {
+        "i": 199,
+        "string": "noma pudendi",
+        "gold": "Genitourinary",
+        "dict_sim": 0.4216370213557839,
+        "nearest_dict_string": "ulcer pudenda",
+        "nearest_dict_chapter": "Skin",
+        "pred_a": "Skin",
+        "pred_b": "Infectious"
+      }
+    ],
+    "nonhard_fuzzy_beats_comm": [
+      {
+        "i": 1,
+        "string": "cerebral congestion",
+        "gold": "Nervous",
+        "dict_sim": 0.7637626158259734,
+        "nearest_dict_string": "cerebro spinal congestion",
+        "nearest_dict_chapter": "Nervous",
+        "pred_a": "Nervous",
+        "pred_b": "Circulatory"
+      },
+      {
+        "i": 7,
+        "string": "glandular disease",
+        "gold": "Circulatory",
+        "dict_sim": 0.6671243849949912,
+        "nearest_dict_string": "valvular disease",
+        "nearest_dict_chapter": "Circulatory",
+        "pred_a": "Circulatory",
+        "pred_b": "Endocrine/metabolic"
+      },
+      {
+        "i": 8,
+        "string": "syncope supposed",
+        "gold": "Ill-defined",
+        "dict_sim": 0.6793662204867575,
+        "nearest_dict_string": "supposed",
+        "nearest_dict_chapter": "Ill-defined",
+        "pred_a": "Ill-defined",
+        "pred_b": "Circulatory"
+      },
+      {
+        "i": 14,
+        "string": "meningitis tubercular",
+        "gold": "Infectious",
+        "dict_sim": 0.8888888888888891,
+        "nearest_dict_string": "tubercular meningitis",
+        "nearest_dict_chapter": "Infectious",
+        "pred_a": "Infectious",
+        "pred_b": "Nervous"
+      },
+      {
+        "i": 33,
+        "string": "palpitation heart",
+        "gold": "Ill-defined",
+        "dict_sim": 0.8571428571428571,
+        "nearest_dict_string": "heart palpitation",
+        "nearest_dict_chapter": "Ill-defined",
+        "pred_a": "Ill-defined",
+        "pred_b": "Circulatory"
+      },
+      {
+        "i": 35,
+        "string": "abscess ankle joint",
+        "gold": "Skin",
+        "dict_sim": 0.6210590034081188,
+        "nearest_dict_string": "abscess knee joint",
+        "nearest_dict_chapter": "Skin",
+        "pred_a": "Skin",
+        "pred_b": "Infectious"
+      }
+    ]
+  }
+}
