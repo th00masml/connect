@@ -118,6 +118,8 @@ def test_ledger_scoring_and_naive_comparison():
 
 
 def test_shipped_ledger_loads_and_hashes():
-    led = Ledger.load("ledger/paper3_ledger.json", verify=False)
-    assert len(led.predictions) == 14 and len({p.id for p in led.predictions}) == 14
-    assert len(led.sha256()) == 64
+    led = Ledger.load("ledger/retrospective_papers12.json", verify=False)
+    assert len(led.predictions) == 7 and len({p.id for p in led.predictions}) == 7
+    assert led.status == "retrospective" and len(led.sha256()) == 64
+    pro = Ledger.load("ledger/prospective_template.json", verify=False)
+    assert pro.status == "retrospective" and len(pro.predictions) == 7  # unfrozen template scores as retrospective

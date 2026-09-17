@@ -49,10 +49,16 @@ leakage-aware resplit, label rebalancing with partial-input filtering, surface r
 (score as the mean over renderings), constraint ablation, and abstention-enabled scoring
 with injected OOD probes.
 
-**A pre-registered ledger** (`ledger.py`): predictions with direction, threshold, confidence
-and family; canonical SHA-256 stamp; scoring by hit rate, Brier score, reliability table,
-per-family hit rate, and a paired sign test against the naive predictor that says every
-change goes down. `ledger/paper3_ledger.json` holds the illustrative entries from the proposal.
+**A prediction ledger** (`ledger.py`): predictions with direction, threshold, confidence and
+family; canonical SHA-256 stamp; scoring by hit rate, Brier score, reliability table, per-family
+hit rate, and a paired sign test against the naive predictor that says every change goes down.
+Every ledger carries a status the scorer prints first: `retrospective` (outcomes were knowable
+when it was written; a protocol demonstration) or `prospective` (hashed and deposited before any
+model ran; the only kind that counts as a result). See `ledger/README.md`.
+
+Every signal carries a **level**: `dataset`, `protocol`, `model`, or `model_x_benchmark`. The
+forced-answer rate is protocol-level and needs no model; format sensitivity is an interaction.
+The profile mixes levels on purpose and labels each one.
 
 **SynthModal-Control** (`modal.py`, `synth.py`): a generated Kripke-semantics benchmark
 with a real three-valued model checker. Balanced labels, per-item novel names so no lexical
@@ -84,8 +90,9 @@ Headline numbers from that run: Kripke fails the format gate (SD 0.13 over promp
 `forced_rate = 0.31` before any model runs and the leak-free replication keeps SVG at 0.39.
 Cause-of-death has no format artifact (SVG = 0), and its lexical artifact inflates the baseline
 rather than the model: under the leakage sweep retrieval falls 0.64 to 0.19 while the LLM rises
-0.66 to 0.88. Ledger: 4 of 5 scorable predictions hold; the miss (P01) is the one that predicted
-the LLM's own score would drop.
+0.66 to 0.88. The retrospective ledger scores 4 of 5; the miss (P01) predicted the LLM's own score would drop.
+Papers 1 and 2 are the development set, so that score demonstrates the protocol and validates
+nothing; the prospective ledger for FOLIO, LogiQA and the synthetic control is the paper's result.
 
 ### CLI
 
@@ -93,8 +100,8 @@ the LLM's own score would drop.
 artifact-signals synth    --n 400 --ood-frac 0.1 --out control.jsonl
 artifact-signals diagnose --benchmark eval.jsonl --train train.jsonl --model hf:Qwen/Qwen2.5-7B-Instruct \
                           --semantic lenient --cache .cache --out profile.json
-artifact-signals ledger hash  ledger/paper3_ledger.json --stamp
-artifact-signals ledger score ledger/paper3_ledger.json results.json --void P09
+artifact-signals ledger hash  ledger/prospective_template.json --stamp
+artifact-signals ledger score ledger/retrospective_papers12.json results.json --void P09
 ```
 
 Model specs: `dummy:oracle:0.8`, `dummy:first`, `dummy:constant:TRUE`, `dummy:retrieval`,
@@ -108,7 +115,8 @@ src/artifact_signals/                              the instrument
 src/artifact_signals/benchmarks/{cod,kripke}.py    adapters for papers 1 and 2 (reproduce, profile, intervene)
 data/external/                                     vendored slices of both source repos (scripts/sync_external.py)
 outputs/paper12/                                   offline Phase 1 on papers 1 and 2
-ledger/paper3_ledger.json                          illustrative pre-registered predictions
+ledger/retrospective_papers12.json                 development-set ledger (protocol demonstration)
+ledger/prospective_template.json                   test-set ledger, unfrozen; freeze procedure in its meta
 examples/synth_pipeline.py                         two-phase dry run on the synthetic control
 tests/                                             38 tests
 ```

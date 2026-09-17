@@ -7,7 +7,7 @@
   "vector": {
    "format_sensitivity": null,
    "partial_input_accuracy": 0.10787878787878787,
-   "label_prior_skew": 0.2733333333333333,
+   "label_prior_skew": 0.2733333333333334,
    "retrieval_dominance": 1.2619047619047619,
    "semantic_validity_gap": 0.0033333333333334103,
    "abstention_failure": null
@@ -15,6 +15,7 @@
   "signals": {
    "format_sensitivity": {
     "name": "format_sensitivity",
+    "level": "model_x_benchmark",
     "value": null,
     "ci": null,
     "gated": false,
@@ -23,6 +24,7 @@
    },
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
+    "level": "dataset",
     "value": 0.10787878787878787,
     "ci": null,
     "gated": false,
@@ -35,7 +37,8 @@
    },
    "label_prior_skew": {
     "name": "label_prior_skew",
-    "value": 0.2733333333333333,
+    "level": "model_x_benchmark",
+    "value": 0.2733333333333334,
     "ci": null,
     "gated": false,
     "note": "",
@@ -88,13 +91,14 @@
       "Factors": 0.0,
       "Special": 0.0
      },
-     "tv_label_vs_uniform": 0.4075757575757576,
-     "tv_model_vs_uniform": 0.41969696969696957,
+     "tv_label_vs_uniform": 0.40757575757575754,
+     "tv_model_vs_uniform": 0.4196969696969697,
      "invalid_rate": 0.0
     }
    },
    "retrieval_dominance": {
     "name": "retrieval_dominance",
+    "level": "dataset",
     "value": 1.2619047619047619,
     "ci": null,
     "gated": false,
@@ -126,6 +130,7 @@
    },
    "semantic_validity_gap": {
     "name": "semantic_validity_gap",
+    "level": "protocol",
     "value": 0.0033333333333334103,
     "ci": null,
     "gated": false,
@@ -156,6 +161,7 @@
    },
    "abstention_failure": {
     "name": "abstention_failure",
+    "level": "model_x_benchmark",
     "value": null,
     "ci": null,
     "gated": false,
@@ -172,7 +178,7 @@
   "vector": {
    "format_sensitivity": null,
    "partial_input_accuracy": 0.10787878787878787,
-   "label_prior_skew": 0.1866666666666667,
+   "label_prior_skew": 0.18666666666666665,
    "retrieval_dominance": 1.06,
    "semantic_validity_gap": 0.0,
    "abstention_failure": null
@@ -180,6 +186,7 @@
   "signals": {
    "format_sensitivity": {
     "name": "format_sensitivity",
+    "level": "model_x_benchmark",
     "value": null,
     "ci": null,
     "gated": false,
@@ -188,6 +195,7 @@
    },
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
+    "level": "dataset",
     "value": 0.10787878787878787,
     "ci": null,
     "gated": false,
@@ -200,7 +208,8 @@
    },
    "label_prior_skew": {
     "name": "label_prior_skew",
-    "value": 0.1866666666666667,
+    "level": "model_x_benchmark",
+    "value": 0.18666666666666665,
     "ci": null,
     "gated": false,
     "note": "",
@@ -253,13 +262,14 @@
       "Factors": 0.0,
       "Special": 0.0
      },
-     "tv_label_vs_uniform": 0.4075757575757576,
-     "tv_model_vs_uniform": 0.4042424242424242,
+     "tv_label_vs_uniform": 0.40757575757575754,
+     "tv_model_vs_uniform": 0.40424242424242424,
      "invalid_rate": 0.0
     }
    },
    "retrieval_dominance": {
     "name": "retrieval_dominance",
+    "level": "dataset",
     "value": 1.06,
     "ci": null,
     "gated": false,
@@ -291,6 +301,7 @@
    },
    "semantic_validity_gap": {
     "name": "semantic_validity_gap",
+    "level": "protocol",
     "value": 0.0,
     "ci": null,
     "gated": false,
@@ -321,6 +332,7 @@
    },
    "abstention_failure": {
     "name": "abstention_failure",
+    "level": "model_x_benchmark",
     "value": null,
     "ci": null,
     "gated": false,
@@ -345,6 +357,7 @@
   "signals": {
    "format_sensitivity": {
     "name": "format_sensitivity",
+    "level": "model_x_benchmark",
     "value": 0.13731047544403402,
     "ci": [
      0.10051948401512348,
@@ -421,6 +434,7 @@
    },
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
+    "level": "dataset",
     "value": 0.050000000000000044,
     "ci": null,
     "gated": true,
@@ -440,6 +454,7 @@
    },
    "label_prior_skew": {
     "name": "label_prior_skew",
+    "level": "model_x_benchmark",
     "value": 0.55,
     "ci": null,
     "gated": true,
@@ -460,6 +475,7 @@
    },
    "retrieval_dominance": {
     "name": "retrieval_dominance",
+    "level": "dataset",
     "value": 1.777777777777778,
     "ci": null,
     "gated": true,
@@ -484,6 +500,7 @@
    },
    "semantic_validity_gap": {
     "name": "semantic_validity_gap",
+    "level": "protocol",
     "value": 0.125,
     "ci": null,
     "gated": true,
@@ -547,6 +564,7 @@
    },
    "abstention_failure": {
     "name": "abstention_failure",
+    "level": "model_x_benchmark",
     "value": 1.0,
     "ci": null,
     "gated": true,
@@ -586,6 +604,7 @@
   "signals": {
    "format_sensitivity": {
     "name": "format_sensitivity",
+    "level": "model_x_benchmark",
     "value": 0.14154406459552524,
     "ci": [
      0.10358169078880045,
@@ -662,6 +681,7 @@
    },
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
+    "level": "dataset",
     "value": 0.050000000000000044,
     "ci": null,
     "gated": true,
@@ -681,6 +701,7 @@
    },
    "label_prior_skew": {
     "name": "label_prior_skew",
+    "level": "model_x_benchmark",
     "value": 0.55,
     "ci": null,
     "gated": true,
@@ -701,6 +722,7 @@
    },
    "retrieval_dominance": {
     "name": "retrieval_dominance",
+    "level": "dataset",
     "value": 1.777777777777778,
     "ci": null,
     "gated": true,
@@ -725,6 +747,7 @@
    },
    "semantic_validity_gap": {
     "name": "semantic_validity_gap",
+    "level": "protocol",
     "value": 0.11249999999999999,
     "ci": null,
     "gated": true,
@@ -775,6 +798,7 @@
    },
    "abstention_failure": {
     "name": "abstention_failure",
+    "level": "model_x_benchmark",
     "value": 1.0,
     "ci": null,
     "gated": true,
@@ -814,6 +838,7 @@
   "signals": {
    "format_sensitivity": {
     "name": "format_sensitivity",
+    "level": "model_x_benchmark",
     "value": 0.13030413142593242,
     "ci": [
      0.08720187306856812,
@@ -890,6 +915,7 @@
    },
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
+    "level": "dataset",
     "value": 0.050000000000000044,
     "ci": null,
     "gated": true,
@@ -911,6 +937,7 @@
    },
    "label_prior_skew": {
     "name": "label_prior_skew",
+    "level": "model_x_benchmark",
     "value": 0.38589743589743586,
     "ci": null,
     "gated": true,
@@ -931,6 +958,7 @@
    },
    "retrieval_dominance": {
     "name": "retrieval_dominance",
+    "level": "dataset",
     "value": 1.6,
     "ci": null,
     "gated": true,
@@ -955,6 +983,7 @@
    },
    "semantic_validity_gap": {
     "name": "semantic_validity_gap",
+    "level": "protocol",
     "value": 0.4,
     "ci": null,
     "gated": true,
@@ -1018,6 +1047,7 @@
    },
    "abstention_failure": {
     "name": "abstention_failure",
+    "level": "model_x_benchmark",
     "value": 1.0,
     "ci": null,
     "gated": true,
@@ -1057,6 +1087,7 @@
   "signals": {
    "format_sensitivity": {
     "name": "format_sensitivity",
+    "level": "model_x_benchmark",
     "value": 0.13501543121683043,
     "ci": [
      0.08897565210026093,
@@ -1133,6 +1164,7 @@
    },
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
+    "level": "dataset",
     "value": 0.050000000000000044,
     "ci": null,
     "gated": true,
@@ -1154,6 +1186,7 @@
    },
    "label_prior_skew": {
     "name": "label_prior_skew",
+    "level": "model_x_benchmark",
     "value": 0.35909090909090907,
     "ci": null,
     "gated": true,
@@ -1174,6 +1207,7 @@
    },
    "retrieval_dominance": {
     "name": "retrieval_dominance",
+    "level": "dataset",
     "value": 1.777777777777778,
     "ci": null,
     "gated": true,
@@ -1198,6 +1232,7 @@
    },
    "semantic_validity_gap": {
     "name": "semantic_validity_gap",
+    "level": "protocol",
     "value": 0.3875,
     "ci": null,
     "gated": true,
@@ -1248,6 +1283,7 @@
    },
    "abstention_failure": {
     "name": "abstention_failure",
+    "level": "model_x_benchmark",
     "value": 1.0,
     "ci": null,
     "gated": true,

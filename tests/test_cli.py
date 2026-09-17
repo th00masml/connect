@@ -13,11 +13,11 @@ def test_cli_end_to_end(tmp_path, capsys):
     assert set(d["vector"]) == {"format_sensitivity", "partial_input_accuracy", "label_prior_skew",
                                 "retrieval_dominance", "semantic_validity_gap", "abstention_failure"}
     assert d["vector"]["format_sensitivity"] == 0.0
-    assert main(["ledger", "hash", "ledger/paper3_ledger.json"]) == 0
+    assert main(["ledger", "hash", "ledger/retrospective_papers12.json"]) == 0
     res = tmp_path / "r.json"
-    res.write_text(json.dumps({"synthmodal_control": {"leakage_resplit": {"llm": {"accuracy": {"delta": 0.01}}}}}))
-    assert main(["ledger", "score", "ledger/paper3_ledger.json", str(res), "--out", str(led_out)]) == 0
+    res.write_text(json.dumps({"cause_of_death": {"leakage_resplit": {"gap": {"llm_minus_retrieval": {"delta": 0.4}}}}}))
+    assert main(["ledger", "score", "ledger/retrospective_papers12.json", str(res), "--out", str(led_out)]) == 0
     s = json.load(open(led_out))
     assert s["n_scored"] == 1 and s["hits"] == 1
     out = capsys.readouterr().out
-    assert "Artifact Risk Profile" in out and "[HIT ] P11" in out
+    assert "Artifact Risk Profile" in out and "[dataset]" in out and "[RETROSPECTIVE]" in out
