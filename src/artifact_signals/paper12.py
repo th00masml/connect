@@ -89,9 +89,10 @@ def render_report(profiles: dict, results: dict, score: dict) -> str:
                 extra = ", ".join(f"{r}={v['accuracy']:.3f}" for r, v in d["per_rendering"].items())
                 if "truth_value" in d:
                     extra += f"; truth-value SD={d['truth_value']['value']:.3f}"
-            if k == "label_prior_skew" and d.get("model_marginal"):
-                top = sorted(d["model_marginal"].items(), key=lambda kv: -kv[1])[:3]
-                extra = "model top: " + ", ".join(f"{a}={b:.2f}" for a, b in top) + f"; label-vs-uniform={d['tv_label_vs_uniform']:.3f}"
+            if k == "partial_input_accuracy" and d.get("label_marginal"):
+                extra = f"label-vs-uniform={d['label_marginal']['tv_vs_uniform']:.3f}"
+                if d.get("model_truth_dist_prompted"):
+                    extra += "; model truth dist: " + ", ".join(f"{a}={b}" for a, b in d["model_truth_dist_prompted"].items())
             if k == "abstention_failure" and d.get("per_arm"):
                 extra = ", ".join(f"{a}={v:.2f}" for a, v in d["per_arm"].items())
             note = (s.get("note") or "") + ((" | " + extra) if extra else "")
@@ -112,7 +113,7 @@ def render_report(profiles: dict, results: dict, score: dict) -> str:
     r = c["rebalance_and_filter"]
     L += ["", f"Cap-based rebalancing (<= {r['cap']} per chapter, n={r['n_after']}): LLM accuracy {r['before']['llm_accuracy']:.3f} -> {r['after']['llm_accuracy']:.3f}, "
           f"retrieval {r['before']['retrieval_accuracy']:.3f} -> {r['after']['retrieval_accuracy']:.3f}, gap {r['before']['gap']:+.3f} -> {r['after']['gap']:+.3f}; "
-          f"label TV vs uniform {r['label_prior_skew']['tv_label_vs_uniform_before']:.3f} -> {r['label_prior_skew']['tv_label_vs_uniform']:.3f}.", ""]
+          f"label TV vs uniform {r['label_marginal']['tv_label_vs_uniform_before']:.3f} -> {r['label_marginal']['tv_label_vs_uniform']:.3f}.", ""]
     for m in kripke.MODELS:
         k = results[f"kripke@{kripke.SHORT[m]}"]
         L += [f"### kripke / {kripke.SHORT[m]}, constraint ablation (prompted vs constrained), EM = strict parse, semantic = truth value", "",

@@ -12,7 +12,7 @@ artifacts, retrieval shortcuts, format constraints, and evaluation effects?
 | 3 | [Predicting Benchmark Failure Before Benchmark Repair](papers/03-benchmark-artifact-signals/PROPOSAL.md) | Can we forecast artifact-driven performance before repairing the benchmark? |
 
 Paper 3 promotes the findings of papers 1 and 2 from results to instruments:
-retrieval dominance and the semantic-validity gap become two of six diagnostics
+retrieval dominance and the semantic-validity gap become two of five diagnostics
 in an Artifact Risk Profile, validated by pre-registered prediction rather than
 post-hoc description.
 
@@ -28,19 +28,20 @@ python examples/synth_pipeline.py   # full two-phase dry run on SynthModal-Contr
 
 ### What it does
 
-**Six diagnostics** (`signals.py`), reported as a vector and never collapsed to a scalar:
+**Five diagnostics** (`signals.py`), reported as a vector and never collapsed to a scalar:
 
 | Signal | Estimator | Clean value |
 |---|---|---|
 | `format_sensitivity` | SD of accuracy over 5 equivalent renderings (option permutation, token relabelling, instruction paraphrase, premise reorder, delimiter) | within re-run noise; gate at 0.03 |
 | `partial_input_accuracy` | best excess over chance with options-only / question-only / premises-only input | 0 |
-| `label_prior_skew` | TV distance between the model's answer marginal and the label marginal; label-vs-uniform reported separately | 0 |
 | `retrieval_dominance` | best of fuzzy / char-TF-IDF / BM25 nearest-neighbour accuracy over LLM accuracy, with the similarity-correctness point-biserial | low ratio, corr near 0 |
 | `semantic_validity_gap` | (EM gain from constrained decoding) minus (semantic gain from constrained decoding) | 0 |
 | `abstention_failure` | fraction of undetermined probes answered when an explicit abstain option is offered; risk-coverage AUC | 0 |
 
 Format sensitivity is computed first and acts as a gate: above the threshold, the other
-five are marked uninterpretable at the benchmark level.
+four are marked uninterpretable at the benchmark level. The label prior is reported inside
+partial-input accuracy (a prior only matters if a model can exploit it without the input);
+`label_prior_skew` remains in the library as an auxiliary and is not part of the paper.
 
 **Five interventions** (`interventions.py`), each with a manipulation check on the signal it
 targets, plus a cross-model invariance check that voids predictions when a filter removes

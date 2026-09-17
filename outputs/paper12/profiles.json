@@ -7,7 +7,6 @@
   "vector": {
    "format_sensitivity": null,
    "partial_input_accuracy": 0.10787878787878787,
-   "label_prior_skew": 0.2733333333333334,
    "retrieval_dominance": 1.2619047619047619,
    "semantic_validity_gap": 0.0033333333333334103,
    "abstention_failure": null
@@ -32,68 +31,34 @@
     "details": {
      "proxy": "majority-class baseline stands in for options-only input (no premises exist to withhold)",
      "majority_accuracy": 0.15333333333333332,
-     "chance": 0.045454545454545456
-    }
-   },
-   "label_prior_skew": {
-    "name": "label_prior_skew",
-    "level": "model_x_benchmark",
-    "value": 0.2733333333333334,
-    "ci": null,
-    "gated": false,
-    "note": "",
-    "details": {
+     "chance": 0.045454545454545456,
      "label_marginal": {
-      "Infectious": 0.15333333333333332,
-      "Neoplasm": 0.09333333333333334,
-      "Blood": 0.0033333333333333335,
-      "Endocrine/metabolic": 0.01,
-      "Mental": 0.013333333333333334,
-      "Nervous": 0.04666666666666667,
-      "Eye": 0.0,
-      "Ear": 0.01,
-      "Circulatory": 0.08,
-      "Respiratory": 0.05,
-      "Digestive": 0.08666666666666667,
-      "Skin": 0.043333333333333335,
-      "Musculoskeletal": 0.043333333333333335,
-      "Genitourinary": 0.08,
-      "Pregnancy": 0.02,
-      "Perinatal": 0.023333333333333334,
-      "Congenital": 0.016666666666666666,
-      "Ill-defined": 0.10333333333333333,
-      "Injury": 0.0,
-      "ExternalCause": 0.12333333333333334,
-      "Factors": 0.0,
-      "Special": 0.0
-     },
-     "model_marginal": {
-      "Infectious": 0.16666666666666666,
-      "Neoplasm": 0.07333333333333333,
-      "Blood": 0.01,
-      "Endocrine/metabolic": 0.023333333333333334,
-      "Mental": 0.023333333333333334,
-      "Nervous": 0.06333333333333334,
-      "Eye": 0.0,
-      "Ear": 0.01,
-      "Circulatory": 0.11,
-      "Respiratory": 0.08,
-      "Digestive": 0.12333333333333334,
-      "Skin": 0.02,
-      "Musculoskeletal": 0.04,
-      "Genitourinary": 0.06333333333333334,
-      "Pregnancy": 0.03333333333333333,
-      "Perinatal": 0.006666666666666667,
-      "Congenital": 0.016666666666666666,
-      "Ill-defined": 0.03,
-      "Injury": 0.10333333333333333,
-      "ExternalCause": 0.0033333333333333335,
-      "Factors": 0.0,
-      "Special": 0.0
-     },
-     "tv_label_vs_uniform": 0.40757575757575754,
-     "tv_model_vs_uniform": 0.4196969696969697,
-     "invalid_rate": 0.0
+      "marginal": {
+       "Infectious": 0.15333333333333332,
+       "Neoplasm": 0.09333333333333334,
+       "Blood": 0.0033333333333333335,
+       "Endocrine/metabolic": 0.01,
+       "Mental": 0.013333333333333334,
+       "Nervous": 0.04666666666666667,
+       "Eye": 0.0,
+       "Ear": 0.01,
+       "Circulatory": 0.08,
+       "Respiratory": 0.05,
+       "Digestive": 0.08666666666666667,
+       "Skin": 0.043333333333333335,
+       "Musculoskeletal": 0.043333333333333335,
+       "Genitourinary": 0.08,
+       "Pregnancy": 0.02,
+       "Perinatal": 0.023333333333333334,
+       "Congenital": 0.016666666666666666,
+       "Ill-defined": 0.10333333333333333,
+       "Injury": 0.0,
+       "ExternalCause": 0.12333333333333334,
+       "Factors": 0.0,
+       "Special": 0.0
+      },
+      "tv_vs_uniform": 0.40757575757575754
+     }
     }
    },
    "retrieval_dominance": {
@@ -178,7 +143,6 @@
   "vector": {
    "format_sensitivity": null,
    "partial_input_accuracy": 0.10787878787878787,
-   "label_prior_skew": 0.18666666666666665,
    "retrieval_dominance": 1.06,
    "semantic_validity_gap": 0.0,
    "abstention_failure": null
@@ -203,68 +167,34 @@
     "details": {
      "proxy": "majority-class baseline stands in for options-only input (no premises exist to withhold)",
      "majority_accuracy": 0.15333333333333332,
-     "chance": 0.045454545454545456
-    }
-   },
-   "label_prior_skew": {
-    "name": "label_prior_skew",
-    "level": "model_x_benchmark",
-    "value": 0.18666666666666665,
-    "ci": null,
-    "gated": false,
-    "note": "",
-    "details": {
+     "chance": 0.045454545454545456,
      "label_marginal": {
-      "Infectious": 0.15333333333333332,
-      "Neoplasm": 0.09333333333333334,
-      "Blood": 0.0033333333333333335,
-      "Endocrine/metabolic": 0.01,
-      "Mental": 0.013333333333333334,
-      "Nervous": 0.04666666666666667,
-      "Eye": 0.0,
-      "Ear": 0.01,
-      "Circulatory": 0.08,
-      "Respiratory": 0.05,
-      "Digestive": 0.08666666666666667,
-      "Skin": 0.043333333333333335,
-      "Musculoskeletal": 0.043333333333333335,
-      "Genitourinary": 0.08,
-      "Pregnancy": 0.02,
-      "Perinatal": 0.023333333333333334,
-      "Congenital": 0.016666666666666666,
-      "Ill-defined": 0.10333333333333333,
-      "Injury": 0.0,
-      "ExternalCause": 0.12333333333333334,
-      "Factors": 0.0,
-      "Special": 0.0
-     },
-     "model_marginal": {
-      "Infectious": 0.15333333333333332,
-      "Neoplasm": 0.08666666666666667,
-      "Blood": 0.006666666666666667,
-      "Endocrine/metabolic": 0.013333333333333334,
-      "Mental": 0.01,
-      "Nervous": 0.07333333333333333,
-      "Eye": 0.0,
-      "Ear": 0.013333333333333334,
-      "Circulatory": 0.09666666666666666,
-      "Respiratory": 0.05333333333333334,
-      "Digestive": 0.16333333333333333,
-      "Skin": 0.023333333333333334,
-      "Musculoskeletal": 0.03666666666666667,
-      "Genitourinary": 0.06666666666666667,
-      "Pregnancy": 0.02,
-      "Perinatal": 0.016666666666666666,
-      "Congenital": 0.02,
-      "Ill-defined": 0.02666666666666667,
-      "Injury": 0.05,
-      "ExternalCause": 0.07,
-      "Factors": 0.0,
-      "Special": 0.0
-     },
-     "tv_label_vs_uniform": 0.40757575757575754,
-     "tv_model_vs_uniform": 0.40424242424242424,
-     "invalid_rate": 0.0
+      "marginal": {
+       "Infectious": 0.15333333333333332,
+       "Neoplasm": 0.09333333333333334,
+       "Blood": 0.0033333333333333335,
+       "Endocrine/metabolic": 0.01,
+       "Mental": 0.013333333333333334,
+       "Nervous": 0.04666666666666667,
+       "Eye": 0.0,
+       "Ear": 0.01,
+       "Circulatory": 0.08,
+       "Respiratory": 0.05,
+       "Digestive": 0.08666666666666667,
+       "Skin": 0.043333333333333335,
+       "Musculoskeletal": 0.043333333333333335,
+       "Genitourinary": 0.08,
+       "Pregnancy": 0.02,
+       "Perinatal": 0.023333333333333334,
+       "Congenital": 0.016666666666666666,
+       "Ill-defined": 0.10333333333333333,
+       "Injury": 0.0,
+       "ExternalCause": 0.12333333333333334,
+       "Factors": 0.0,
+       "Special": 0.0
+      },
+      "tv_vs_uniform": 0.40757575757575754
+     }
     }
    },
    "retrieval_dominance": {
@@ -349,7 +279,6 @@
   "vector": {
    "format_sensitivity": 0.13731047544403402,
    "partial_input_accuracy": 0.050000000000000044,
-   "label_prior_skew": 0.55,
    "retrieval_dominance": 1.777777777777778,
    "semantic_validity_gap": 0.125,
    "abstention_failure": 1.0
@@ -449,28 +378,14 @@
      },
      "model_truth_dist_prompted": {
       "TRUE": 80
-     }
-    }
-   },
-   "label_prior_skew": {
-    "name": "label_prior_skew",
-    "level": "model_x_benchmark",
-    "value": 0.55,
-    "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.137 > 0.03",
-    "details": {
+     },
      "label_marginal": {
-      "TRUE": 0.45,
-      "FALSE": 0.55
-     },
-     "model_marginal": {
-      "TRUE": 1.0,
-      "FALSE": 0.0
-     },
-     "tv_label_vs_uniform": 0.05000000000000002,
-     "tv_model_vs_uniform": 0.5,
-     "invalid_rate": 0.0
+      "marginal": {
+       "TRUE": 0.45,
+       "FALSE": 0.55
+      },
+      "tv_vs_uniform": 0.05000000000000002
+     }
     }
    },
    "retrieval_dominance": {
@@ -596,7 +511,6 @@
   "vector": {
    "format_sensitivity": 0.14154406459552524,
    "partial_input_accuracy": 0.050000000000000044,
-   "label_prior_skew": 0.55,
    "retrieval_dominance": 1.777777777777778,
    "semantic_validity_gap": 0.11249999999999999,
    "abstention_failure": 1.0
@@ -696,28 +610,14 @@
      },
      "model_truth_dist_prompted": {
       "TRUE": 80
-     }
-    }
-   },
-   "label_prior_skew": {
-    "name": "label_prior_skew",
-    "level": "model_x_benchmark",
-    "value": 0.55,
-    "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.142 > 0.03",
-    "details": {
+     },
      "label_marginal": {
-      "TRUE": 0.45,
-      "FALSE": 0.55
-     },
-     "model_marginal": {
-      "TRUE": 1.0,
-      "FALSE": 0.0
-     },
-     "tv_label_vs_uniform": 0.05000000000000002,
-     "tv_model_vs_uniform": 0.5,
-     "invalid_rate": 0.0
+      "marginal": {
+       "TRUE": 0.45,
+       "FALSE": 0.55
+      },
+      "tv_vs_uniform": 0.05000000000000002
+     }
     }
    },
    "retrieval_dominance": {
@@ -830,7 +730,6 @@
   "vector": {
    "format_sensitivity": 0.13030413142593242,
    "partial_input_accuracy": 0.050000000000000044,
-   "label_prior_skew": 0.38589743589743586,
    "retrieval_dominance": 1.6,
    "semantic_validity_gap": 0.4,
    "abstention_failure": 1.0
@@ -932,28 +831,14 @@
       "FALSE": 73,
       "TRUE": 5,
       "": 2
-     }
-    }
-   },
-   "label_prior_skew": {
-    "name": "label_prior_skew",
-    "level": "model_x_benchmark",
-    "value": 0.38589743589743586,
-    "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.130 > 0.03",
-    "details": {
+     },
      "label_marginal": {
-      "TRUE": 0.45,
-      "FALSE": 0.55
-     },
-     "model_marginal": {
-      "TRUE": 0.0641025641025641,
-      "FALSE": 0.9358974358974359
-     },
-     "tv_label_vs_uniform": 0.05000000000000002,
-     "tv_model_vs_uniform": 0.4358974358974359,
-     "invalid_rate": 0.025000000000000022
+      "marginal": {
+       "TRUE": 0.45,
+       "FALSE": 0.55
+      },
+      "tv_vs_uniform": 0.05000000000000002
+     }
     }
    },
    "retrieval_dominance": {
@@ -1079,7 +964,6 @@
   "vector": {
    "format_sensitivity": 0.13501543121683043,
    "partial_input_accuracy": 0.050000000000000044,
-   "label_prior_skew": 0.35909090909090907,
    "retrieval_dominance": 1.777777777777778,
    "semantic_validity_gap": 0.3875,
    "abstention_failure": 1.0
@@ -1181,28 +1065,14 @@
       "FALSE": 70,
       "TRUE": 7,
       "": 3
-     }
-    }
-   },
-   "label_prior_skew": {
-    "name": "label_prior_skew",
-    "level": "model_x_benchmark",
-    "value": 0.35909090909090907,
-    "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.135 > 0.03",
-    "details": {
+     },
      "label_marginal": {
-      "TRUE": 0.45,
-      "FALSE": 0.55
-     },
-     "model_marginal": {
-      "TRUE": 0.09090909090909091,
-      "FALSE": 0.9090909090909091
-     },
-     "tv_label_vs_uniform": 0.05000000000000002,
-     "tv_model_vs_uniform": 0.40909090909090906,
-     "invalid_rate": 0.03749999999999998
+      "marginal": {
+       "TRUE": 0.45,
+       "FALSE": 0.55
+      },
+      "tv_vs_uniform": 0.05000000000000002
+     }
     }
    },
    "retrieval_dominance": {

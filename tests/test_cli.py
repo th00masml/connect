@@ -10,7 +10,7 @@ def test_cli_end_to_end(tmp_path, capsys):
     assert main(["diagnose", "--benchmark", str(te), "--train", str(tr), "--model", "dummy:oracle:0.8",
                  "--semantic", "lenient", "--n-boot", "20", "--out", str(prof)]) == 0
     d = json.load(open(prof))
-    assert set(d["vector"]) == {"format_sensitivity", "partial_input_accuracy", "label_prior_skew",
+    assert set(d["vector"]) == {"format_sensitivity", "partial_input_accuracy",
                                 "retrieval_dominance", "semantic_validity_gap", "abstention_failure"}
     assert d["vector"]["format_sensitivity"] == 0.0
     assert main(["ledger", "hash", "ledger/retrospective_papers12.json"]) == 0

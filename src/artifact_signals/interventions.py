@@ -82,7 +82,7 @@ def rebalance_and_filter(bench: Benchmark, partial_runs: list[Run] | None = None
 
 
 REBALANCE = InterventionSpec(
-    "rebalance_and_filter", ("label_prior_skew", "partial_input_accuracy"),
+    "rebalance_and_filter", ("partial_input_accuracy",),
     lambda after: (after.value or 0.0) < 0.05,
     "balance labels and drop partial-input-solvable items; partial-input excess over chance must fall below 0.05",
 )

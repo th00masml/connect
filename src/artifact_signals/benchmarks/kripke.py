@@ -17,7 +17,7 @@ from ..data import ABSTAIN, Benchmark, Item
 from ..evaluate import Run
 from ..retrieval import char3_sim
 from ..signals import (ArtifactRiskProfile, Signal, abstention_failure_from_run, constraint_gain_from_runs,
-                       format_sensitivity_from_runs, label_prior_skew)
+                       format_sensitivity_from_runs, label_marginal)
 from ..stats import mean, point_biserial
 
 ROOT = Path(os.environ.get("ARTIFACT_SIGNALS_DATA", Path(__file__).resolve().parents[3] / "data" / "external")) / "kripke"
@@ -190,9 +190,8 @@ def profile(model: str = MODELS[1], run: str = "gold", root: Path = ROOT) -> Art
     signals["partial_input_accuracy"] = Signal(
         "partial_input_accuracy", maj - 0.5,
         details={"proxy": "majority truth value over the 80 in-language fixtures", "majority_accuracy": maj, "chance": 0.5,
-                 "gold_truth_dist": dict(gold_t), "model_truth_dist_prompted": dict(model_t)},
+                 "gold_truth_dist": dict(gold_t), "model_truth_dist_prompted": dict(model_t), "label_marginal": label_marginal(tb)},
         note="proxy from the label prior, not a model run")
-    signals["label_prior_skew"] = label_prior_skew(tb, tr)
     signals["retrieval_dominance"] = loo_retrieval_dominance(tb, tr)
     svg = constraint_gain_from_runs(prompted, con, bench, sem_judge=truth_judge, forced_ids=forced)
     svg_len = constraint_gain_from_runs(prompted, con, bench, sem_judge=lenient_judge, forced_ids=forced)

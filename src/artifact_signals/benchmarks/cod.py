@@ -18,7 +18,7 @@ from ..evaluate import Run
 from ..interventions import LEAKAGE
 from ..judge import exact_match, lenient_choice
 from ..retrieval import char3_sim
-from ..signals import ArtifactRiskProfile, Signal, constraint_gain_from_runs, label_prior_skew, retrieval_dominance
+from ..signals import ArtifactRiskProfile, Signal, constraint_gain_from_runs, label_marginal, retrieval_dominance
 from ..stats import macro_f1, mean, point_biserial, tv_distance
 
 ROOT = Path(os.environ.get("ARTIFACT_SIGNALS_DATA", Path(__file__).resolve().parents[3] / "data" / "external")) / "cod"
@@ -117,9 +117,8 @@ def _profile(model_key: str, root: Path, retrieval_methods: tuple[str, ...]) -> 
     signals["partial_input_accuracy"] = Signal(
         "partial_input_accuracy", maj.accuracy - 1 / len(CHAPTERS),
         details={"proxy": "majority-class baseline stands in for options-only input (no premises exist to withhold)",
-                 "majority_accuracy": maj.accuracy, "chance": 1 / len(CHAPTERS)},
+                 "majority_accuracy": maj.accuracy, "chance": 1 / len(CHAPTERS), "label_marginal": label_marginal(test)},
         note="proxy from the label prior, not a model run")
-    signals["label_prior_skew"] = label_prior_skew(test, llm)
     signals["retrieval_dominance"] = retrieval_dominance(dictionary, test, llm, methods=retrieval_methods)
     # strict decoding (output must be exactly a chapter name) vs the paper's lenient parse
     strict = Run.from_answers(llm.model, test, {i: (r if r in CHAPTERS else "") for i, r in llm.raw.items()}, exact_match,
@@ -188,7 +187,7 @@ def interventions(model_key: str = "M_comm_sonnet5", root: Path = ROOT, *, thres
                 "macro_f1": {"delta": after["llm_macro_f1"] - before["llm_macro_f1"]}},
         "retrieval": {"accuracy": {"delta": after["retrieval_accuracy"] - before["retrieval_accuracy"]}},
         "gap": {"llm_minus_retrieval": {"delta": after["gap"] - before["gap"]}},
-        "label_prior_skew": {"tv_label_vs_uniform_before": tv_distance({k: v / len(ids) for k, v in lab_before.items()}, uni),
+        "label_marginal": {"tv_label_vs_uniform_before": tv_distance({k: v / len(ids) for k, v in lab_before.items()}, uni),
                              "tv_label_vs_uniform": tv_distance({k: v / len(kept) for k, v in lab_after.items()}, uni)},
     }
     prof = profile(model_key, root)

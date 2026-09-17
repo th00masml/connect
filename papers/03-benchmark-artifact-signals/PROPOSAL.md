@@ -6,7 +6,7 @@ Workshop-ready research proposal. Paper 3 of the research program *Reliable Eval
 
 **One question.** Does measuring a benchmark before repairing it predict the direction and the
 metric-specific pattern of what the repair does to scores? Everything else in this document
-(six diagnostics, five interventions, a synthetic control, a software package) is
+(five diagnostics, five interventions, a synthetic control, a software package) is
 operationalization. The result of the paper is one number with a calibration curve: the
 prospective hit rate on benchmarks whose outcomes were unknown when the predictions were frozen,
 against the naive predictor that says every score drops.
@@ -17,13 +17,13 @@ against the naive predictor that says every score drops.
 
 **Predicting Benchmark Failure Before Benchmark Repair: Pre-Registered Diagnostic Signals for Evaluation Artifacts in LLM Reasoning Benchmarks**
 
-The obvious alternative, *Diagnostic Signals of Benchmark Artifacts in Language Model Evaluation*, loses. It names a measurement exercise, and a measurement exercise is retrospective by construction: you report six numbers about datasets already suspected of being broken and nothing can come out false. The predictive title commits the paper to a falsifiable object, a ledger of registered predictions that can be wrong, and that is the only version of this work worth a reviewer's time.
+The obvious alternative, *Diagnostic Signals of Benchmark Artifacts in Language Model Evaluation*, loses. It names a measurement exercise, and a measurement exercise is retrospective by construction: you report five numbers about datasets already suspected of being broken and nothing can come out false. The predictive title commits the paper to a falsifiable object, a ledger of registered predictions that can be wrong, and that is the only version of this work worth a reviewer's time.
 
 ---
 
 ## B. Abstract (200 words)
 
-Benchmark artifacts are usually discovered after the fact: a benchmark is published, adopted, and only later shown to be solvable by a partial-input baseline or a lexical nearest neighbour. We ask whether that discovery can be moved earlier. We propose treating artifact diagnostics as forecasting instruments rather than post-hoc descriptions, and we test them by pre-registering predictions about what happens to benchmark scores once artifacts are removed. Six cheap diagnostics (format sensitivity, partial-input accuracy, label-prior skew, retrieval dominance, constrained-decoding gain versus semantic gain, and abstention failure) are measured on five reasoning benchmarks, two of them our own and one a synthetic negative control. Predictions about the direction, the relative magnitude, and the metric-specific pattern of post-intervention score change are registered with stated confidences before any intervention runs. We then apply targeted interventions (leakage-aware resplitting, label rebalancing, surface re-rendering, constraint ablation, abstention-enabled scoring), each with a manipulation check, and score the ledger against a naive predictor by hit rate and by calibration. The contribution is methodological: a reusable protocol, an open instrument, and first evidence on whether artifact diagnostics transfer across benchmark families. All experiments fit on a single 24 GB GPU.
+Benchmark artifacts are usually discovered after the fact: a benchmark is published, adopted, and only later shown to be solvable by a partial-input baseline or a lexical nearest neighbour. We ask whether that discovery can be moved earlier. We propose treating artifact diagnostics as forecasting instruments rather than post-hoc descriptions, and we test them by pre-registering predictions about what happens to benchmark scores once artifacts are removed. Five cheap diagnostics (format sensitivity, partial-input accuracy, retrieval dominance, constrained-decoding gain versus semantic gain, and abstention failure) are measured on five reasoning benchmarks, two of them our own and one a synthetic negative control. Predictions about the direction, the relative magnitude, and the metric-specific pattern of post-intervention score change are registered with stated confidences before any intervention runs. We then apply targeted interventions (leakage-aware resplitting, label rebalancing, surface re-rendering, constraint ablation, abstention-enabled scoring), each with a manipulation check, and score the ledger against a naive predictor by hit rate and by calibration. The contribution is methodological: a reusable protocol, an open instrument, and first evidence on whether artifact diagnostics transfer across benchmark families. All experiments fit on a single 24 GB GPU.
 
 ---
 
@@ -45,10 +45,10 @@ vector that also contains model behaviour:
 
 | level | meaning | diagnostics |
 |---|---|---|
-| dataset | a property of the items and labels; estimated with a model but owned by the data | partial-input accuracy; retrieval baseline accuracy; label-vs-uniform skew |
+| dataset | a property of the items and labels; estimated with a model but owned by the data | partial-input accuracy (with the label marginal inside it); retrieval baseline accuracy |
 | protocol | a property of how outputs are elicited and scored | semantic-validity gap; forced-answer rate (needs no model at all) |
 | model | a property of the model alone | none in this instrument; abstention style would be one |
-| model x benchmark | an interaction | format sensitivity; model-vs-label skew; retrieval dominance ratio; abstention failure |
+| model x benchmark | an interaction | format sensitivity; retrieval dominance ratio; abstention failure |
 
 **Threat mapping.**
 
@@ -56,7 +56,6 @@ vector that also contains model behaviour:
 |---|---|
 | format sensitivity | the score measures surface-form compliance, so any other diagnostic is unstable |
 | partial-input accuracy | the items are solvable without the input the construct requires |
-| label-prior skew | the score rewards a prior the model can hold without reading |
 | retrieval dominance | the split rewards lexical proximity to training data, not generalization |
 | semantic-validity gap, forced rate | the protocol (decoder plus metric) credits form, or the constraint answers the item |
 | abstention failure | the score credits fluent answers to unanswerable items as if they were answers |
@@ -78,7 +77,7 @@ Three gaps follow.
 
 First, nobody has tested whether artifact diagnostics are *predictive*. The literature reports diagnostics and it reports repairs, but it does not register the diagnostic-derived prediction before the repair and then check it. So we do not know whether a partial-input baseline of 68% tells you anything quantitative about what happens when you filter the data, or whether it is a qualitative red flag and nothing more.
 
-Second, the diagnostics live in disjoint literatures. Contamination and leakage detection, label-prior and partial-input analysis, prompt and format sensitivity, constrained decoding, and selective prediction each have their own venues and their own datasets. They are almost never measured jointly, on the same items, with the same models, under the same decoding settings. Their conditional structure is therefore unknown: we cannot say whether format sensitivity confounds the measurement of retrieval dominance, or whether a constraint gain is interpretable at all when label priors are skewed.
+Second, the diagnostics live in disjoint literatures. Contamination and leakage detection, partial-input analysis, prompt and format sensitivity, constrained decoding, and selective prediction each have their own venues and their own datasets. They are almost never measured jointly, on the same items, with the same models, under the same decoding settings. Their conditional structure is therefore unknown: we cannot say whether format sensitivity confounds the measurement of retrieval dominance, or whether a constraint gain is interpretable at all when label priors are skewed.
 
 Third, and most damaging, artifact studies rarely include a negative control. They are run on datasets already believed to be flawed, which guarantees a positive finding and tells us nothing about specificity. A diagnostic that fires on everything is a thermometer that reads 39 degrees on a corpse.
 
@@ -100,13 +99,13 @@ The naive-predictor clause is the load-bearing part. Almost every intervention r
 
 **H2 (the semantic-validity gap is a property of the benchmark, not the model).** Where constrained decoding produces a large exact-match gain and a near-zero semantic-correctness gain, that dissociation will be stable across model scales and will not shrink as base capability rises. If the gap is instead a model deficiency, it should close with capability. This is the cleanest discriminating test in the study, because the two accounts make opposite predictions about the model-size trend.
 
-**H3 (partial input plus label skew predicts a residual hard core).** Above-chance partial-input accuracy and skewed answer marginals predict that rebalancing and light adversarial filtering reduce headline accuracy while leaving a residual subset whose item-difficulty ordering is preserved across models. Artifact removal should compress scores toward the hard core, not scramble the difficulty structure. If filtering scrambles difficulty ordering, the filter removed signal rather than artifact, and the intervention itself is invalid.
+**H3 (partial-input solvability predicts a residual hard core).** Above-chance partial-input accuracy predicts that rebalancing and light adversarial filtering reduce headline accuracy while leaving a residual subset whose item-difficulty ordering is preserved across models. Artifact removal should compress scores toward the hard core, not scramble the difficulty structure. If filtering scrambles difficulty ordering, the filter removed signal rather than artifact, and the intervention itself is invalid.
 
 **H4 (format sensitivity is a gate, not a peer signal).** Score variance across semantically equivalent surface renderings (option permutation, answer-token relabelling, instruction paraphrase) moderates every other diagnostic. On high-variance benchmarks, the other five diagnostics will show wider between-rendering spread than their own between-model spread, making them uninterpretable as benchmark properties. The methodological position this paper takes: measure format sensitivity first and refuse to report the other diagnostics as benchmark-level facts until it is below a pre-registered threshold.
 
 **H5 (abstention failure predicts overstated novel-case capability).** Benchmarks where models answer nearly all out-of-distribution or unanswerable probes overstate performance on their novel slice. Introducing an explicit "insufficient information" option and abstention-aware scoring will reorder models, and the reordering will be larger where abstention failure was higher.
 
-**H6 (specificity / negative control).** On the synthetic control benchmark, where all six diagnostics sit near their clean values by construction, every intervention will produce score changes statistically indistinguishable from re-run noise. Any diagnostic that fires on the control, or any intervention that moves the control, falsifies the instrument rather than the benchmark.
+**H6 (specificity / negative control).** On the synthetic control benchmark, where all five diagnostics sit near their clean values by construction, every intervention will produce score changes statistically indistinguishable from re-run noise. Any diagnostic that fires on the control, or any intervention that moves the control, falsifies the instrument rather than the benchmark.
 
 ---
 
@@ -182,7 +181,7 @@ Three open-weight models spanning at least an 8x parameter range, run locally at
 
 ### G.3 Two-phase protocol
 
-**Phase 1, diagnosis.** Compute all six diagnostics on the measurement split. Compute format sensitivity first and apply the H4 gate. Write the prediction ledger: for each (benchmark, intervention) pair, a prediction of direction, of magnitude bucket, of which metric moves, and a stated subjective probability. Hash the ledger, tag it in the repository, deposit on OSF. Nothing from the evaluation split has been touched at this point.
+**Phase 1, diagnosis.** Compute all five diagnostics on the measurement split. Compute format sensitivity first and apply the H4 gate. Write the prediction ledger: for each (benchmark, intervention) pair, a prediction of direction, of magnitude bucket, of which metric moves, and a stated subjective probability. Hash the ledger, tag it in the repository, deposit on OSF. Nothing from the evaluation split has been touched at this point.
 
 **Phase 2, intervention.** Apply the interventions of Section J to the evaluation split, run the manipulation checks, score, and compare against the ledger.
 
@@ -204,21 +203,19 @@ Five benchmarks x 1000 items x 5 renderings x 4 models x 2 decoding conditions i
 
 ## H. Diagnostic signals
 
-Six signals, each with a cheap estimator and a stated clean value.
+Five signals, each with a cheap estimator and a stated clean value.
 
 **1. Format sensitivity (FS).** Standard deviation of accuracy across k = 5 semantically equivalent renderings: option permutation, answer-token relabelling (TRUE/FALSE vs A/B vs yes/no), instruction paraphrase, premise reordering, whitespace and delimiter change. Clean value: within re-run noise. Gate threshold pre-registered at 3 accuracy points.
 
-**2. Partial-input accuracy (PIA).** Accuracy of the same model given a deliberately insufficient input: answer options only, hypothesis only, query without premises. Clean value: chance. This is the most direct artifact indicator in the set and the cheapest to run.
+**2. Partial-input accuracy (PIA).** Accuracy of the same model given a deliberately insufficient input: answer options only, hypothesis only, query without premises. Clean value: chance. This is the most direct artifact indicator in the set and the cheapest to run. The benchmark's label marginal and its distance from uniform are reported inside it, not as a separate signal: a skewed prior is a threat only if a model can exploit it without the input, and partial-input accuracy is the test of exactly that.
 
-**3. Label-prior skew (LPS).** Total variation distance between the model's marginal answer distribution and the benchmark's label marginal, plus the benchmark's own deviation from uniform. Separates "the data is skewed" from "the model is skewed", which are routinely conflated.
+**3. Retrieval dominance (RD).** Accuracy of a non-parametric baseline (character n-gram TF-IDF plus token-set fuzzy match, and BM25) divided by LLM accuracy, reported alongside the point-biserial correlation between nearest-neighbour similarity and item-level LLM correctness. The correlation matters more than the ratio: a strong baseline is suggestive, but correctness tracking lexical proximity is the actual shortcut evidence.
 
-**4. Retrieval dominance (RD).** Accuracy of a non-parametric baseline (character n-gram TF-IDF plus token-set fuzzy match, and BM25) divided by LLM accuracy, reported alongside the point-biserial correlation between nearest-neighbour similarity and item-level LLM correctness. The correlation matters more than the ratio: a strong baseline is suggestive, but correctness tracking lexical proximity is the actual shortcut evidence.
+**4. Constraint gain and semantic-validity gap (CG, SVG), with forced-answer rate.** CG = EM(constrained) - EM(free). SVG = CG - (Sem(constrained) - Sem(free)). A large positive SVG says the constraint bought form and not content. Alongside it, the *forced-answer rate*: the fraction of items on which the admissible set contains exactly one answer, computed from the constraint and the items before any model runs. Paper 2's leak was a forced rate of 0.31; a constraint with a non-zero forced rate is answering the benchmark itself. This signal is Paper 2's finding, promoted to an instrument.
 
-**5. Constraint gain and semantic-validity gap (CG, SVG), with forced-answer rate.** CG = EM(constrained) - EM(free). SVG = CG - (Sem(constrained) - Sem(free)). A large positive SVG says the constraint bought form and not content. Alongside it, the *forced-answer rate*: the fraction of items on which the admissible set contains exactly one answer, computed from the constraint and the items before any model runs. Paper 2's leak was a forced rate of 0.31; a constraint with a non-zero forced rate is answering the benchmark itself. This signal is Paper 2's finding, promoted to an instrument.
+**5. Abstention failure (AF).** Fraction of unanswerable or out-of-distribution probes answered rather than declined, measured with an explicit abstention option present in the prompt. Complemented by the risk-coverage AUC when the model's own confidence is used to trigger abstention.
 
-**6. Abstention failure (AF).** Fraction of unanswerable or out-of-distribution probes answered rather than declined, measured with an explicit abstention option present in the prompt. Complemented by the risk-coverage AUC when the model's own confidence is used to trigger abstention.
-
-The six are reported as a vector, the **Artifact Risk Profile**, and deliberately not collapsed into a scalar index. A scalar would be more quotable and would destroy the conditional structure (H4's gating, H2's metric specificity) that makes the predictions falsifiable in the first place. Resisting the composite is part of the methodological contribution.
+The five are reported as a vector, the **Artifact Risk Profile**, and deliberately not collapsed into a scalar index. A scalar would be more quotable and would destroy the conditional structure (H4's gating, H2's metric specificity) that makes the predictions falsifiable in the first place. Resisting the composite is part of the methodological contribution.
 
 ---
 
@@ -252,7 +249,7 @@ Every intervention obeys a minimal-edit principle: it may remove an artifact, it
 | Intervention | Targets | Manipulation check |
 |---|---|---|
 | Leakage-aware resplit (nearest-neighbour similarity capped between train and test; novel-term-only slice) | RD | similarity-correctness correlation drops |
-| Label rebalancing plus light adversarial filtering of partial-input-solvable items | LPS, PIA | partial-input accuracy returns to chance |
+| Label rebalancing plus light adversarial filtering of partial-input-solvable items | PIA | partial-input accuracy returns to chance |
 | Surface re-rendering with randomized option order, answer tokens, and instruction phrasing; score as the mean over renderings | FS | between-rendering variance falls below gate |
 | Constraint ablation: free decoding versus grammar-constrained, with the semantic verifier held fixed | CG, SVG | EM and semantic metrics separate as designed |
 | Abstention-enabled scoring: explicit "insufficient information" option, risk-coverage reporting, OOD probes injected at 10% | AF | abstention rate on OOD probes rises above 50% |
@@ -287,7 +284,7 @@ All four are reportable at an evaluation-focused workshop (BlackboxNLP, GEM, the
 
 Paper 1 asks when semantic generalization beats retrieval and answers it on one domain. Paper 2 asks when benchmark improvement fails to reflect reasoning improvement and answers it on one benchmark. Both are single-case findings, and both are, structurally, the same finding: a reported score was produced by something other than the capability it claimed to measure. In Paper 1 that something is lexical proximity. In Paper 2 it is format compliance.
 
-Paper 3 takes each of those findings and demotes it from a result to an instrument. Retrieval dominance becomes signal 4. The semantic-validity gap becomes signal 5. The question shifts from "was this particular benchmark measuring what it claimed" to "can we tell in advance, and how much does knowing help". That is the move from two case studies to a method, and it is the move that turns three repositories into a program.
+Paper 3 takes each of those findings and demotes it from a result to an instrument. Retrieval dominance becomes signal 3. The semantic-validity gap becomes signal 4. The question shifts from "was this particular benchmark measuring what it claimed" to "can we tell in advance, and how much does knowing help". That is the move from two case studies to a method, and it is the move that turns three repositories into a program.
 
 It also gives the earlier two papers a job in the program's narrative that they cannot do alone: they are the validation cases where the ground truth about the artifact is already known, which is what makes the forecasting test possible at all. You cannot validate a forecasting instrument on benchmarks whose true artifact status is unknown.
 

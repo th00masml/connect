@@ -90,8 +90,9 @@ def test_profile_gate_marks_other_signals():
     gold = {i.id: i.label for i in te}
     prof = compute_profile(OracleModel(gold, 0.8), te, train=tr, sem_judge=lenient_choice, n_boot=30)
     assert not prof.gated and all(not s.gated for s in prof.signals.values())
-    assert set(prof.vector()) == {"format_sensitivity", "partial_input_accuracy", "label_prior_skew",
+    assert set(prof.vector()) == {"format_sensitivity", "partial_input_accuracy",
                                   "retrieval_dominance", "semantic_validity_gap", "abstention_failure"}
+    assert "label_marginal" in prof.signals["partial_input_accuracy"].details
     prof2 = compute_profile(FirstChoiceModel(), te, train=tr, n_boot=30, fs_gate=-1.0)  # force the gate
-    assert prof2.gated and prof2.signals["label_prior_skew"].gated and not prof2.signals["format_sensitivity"].gated
+    assert prof2.gated and prof2.signals["partial_input_accuracy"].gated and not prof2.signals["format_sensitivity"].gated
     assert "Artifact Risk Profile" in prof2.summary()
