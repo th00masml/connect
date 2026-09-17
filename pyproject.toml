@@ -1,0 +1,28 @@
+[project]
+name = "artifact-signals"
+version = "0.1.0"
+description = "Pre-registered diagnostic signals for benchmark artifacts in LLM reasoning evaluation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+fast = ["rapidfuzz>=3"]
+hf = ["torch", "transformers>=4.40"]
+api = ["openai>=1"]
+data = ["datasets"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+artifact-signals = "artifact_signals.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
