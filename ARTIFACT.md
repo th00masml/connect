@@ -75,7 +75,7 @@ decimals are rounded from those fields.
 | `papers/03-benchmark-artifact-signals/PROPOSAL.md` | `73dd0e3d2aa421248e6e09b0c6b2739d284f18f96e7ce0ecf7894b8c4a5c5b65` | n/a | proposal, edited in v0.2.0 (corrections) |
 
 Check with `python scripts/hash_ledger.py --check` or `sha256sum -c SHA256SUMS`. The ledger files
-are byte-identical to the v0.1.0 commit 8e14c04.
+are byte-identical to the v0.1.0 commit 26e02fa.
 
 ## Badges (ACM artifact review terms), honestly
 
