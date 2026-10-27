@@ -144,7 +144,8 @@ artifact-signals synth    --n 400 --ood-frac 0.1 --out control.jsonl
 artifact-signals fetch    --source folio --split validation --out folio.jsonl   # needs [data]; or --rows FILE, no download
 artifact-signals diagnose --benchmark eval.jsonl --train train.jsonl --model hf:Qwen/Qwen2.5-7B-Instruct \
                           --semantic lenient --cache .cache --out profile.json
-artifact-signals ledger hash  ledger/prospective_template.json --stamp
+artifact-signals ledger hash  ledger/prospective_template.json             # print the canonical hash
+# artifact-signals ledger hash ledger/prospective_template.json --stamp    # freeze step only: rewrites the file
 artifact-signals ledger score ledger/retrospective_papers12.json results.json --void P09
 ```
 
