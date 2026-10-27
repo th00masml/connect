@@ -99,8 +99,11 @@ the four model x run profiles) is a prompt-variance figure, not the gate statist
 prompt arms vs the 0.03 gate)" and the report marked the other Kripke signals GATED; the
 statistic was the wrong one, so the gate decision is withdrawn until a live five-rendering run.
 Nobody abstains in 1,600 outputs per run; Kripke's constraint leak shows up as
-`forced_rate = 0.31` before any model runs and the leak-free replication keeps SVG at 0.39.
-Cause-of-death has no format artifact (SVG = 0), and its lexical artifact inflates the baseline
+`forced_rate = 0.31` before any model runs, and the leak-free replication keeps SVG at 0.39 for
+the 1.5B model (0.11 for 0.5B; the sentence previously gave 0.39 without naming the model).
+Cause-of-death has essentially no format artifact (SVG 0.000 for claude-sonnet-5, 0.003 for
+qwen2.5:14b, where strict and lenient parsing differ on 1 of 300 outputs; previously "SVG = 0"),
+and its lexical artifact inflates the baseline
 rather than the model: under the leakage sweep retrieval falls 0.64 to 0.19 while the LLM rises
 0.66 to 0.88. The cause-of-death memorisation probe is inconclusive, not zero: 30 of 30 probe
 calls returned empty, so its exact-code rate of 0.00 is over zero answered items

@@ -152,8 +152,10 @@ the profile and the offline-computable interventions without a model call. The f
   accordingly.
 - **Nobody abstains, in 1,600 outputs.** Abstention failure is 1.00 in every arm of every model,
   including the arms whose prompt says to output empty on out-of-language atoms.
-- **Cause-of-death has no format artifact.** Strict decoding and the paper's lenient parser agree
-  on all 300 outputs of both models; SVG = 0. The memorization probe is inconclusive.
+- **Cause-of-death has essentially no format artifact.** Strict decoding and the paper's lenient
+  parser agree on all 300 claude-sonnet-5 outputs (SVG 0.000) and on 299 of 300 qwen2.5:14b
+  outputs (SVG 0.003). *Correction (v0.2):* this originally read "agree on all 300 outputs of
+  both models; SVG = 0"; the Qwen run has one discordant output. The memorization probe is inconclusive.
   *Correction (v0.2):* this line originally read "The memorization probe is 0.00." The 0.00 is an
   exact-code rate over zero answered items: 30 of 30 probe calls returned empty, so the probe cannot
   tell ignorance from refusal or a CLI artefact (`data/external/cod/probe_summary.json`,
