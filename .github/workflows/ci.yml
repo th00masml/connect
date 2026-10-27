@@ -1,0 +1,24 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      # Offline path only. The hf (GPU models), api (OpenAI-compatible endpoints) and data
+      # (Hugging Face downloads) extras are deliberately not installed or exercised here.
+      - run: python -m pip install -e ".[dev]"
+      - run: ruff check .
+      # verify.sh runs the full test suite, then regenerates and byte-compares every committed output.
+      - run: scripts/verify.sh
