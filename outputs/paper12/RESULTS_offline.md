@@ -128,9 +128,9 @@ Abstention on the 80 out-of-language fixtures, answered rate per arm: naive=1.00
 Ledger b2290d6a0187  [RETROSPECTIVE]  scored 5/7 (voided 0, missing 2)
   retrospective: predictions were written with the outcomes knowable; this is a protocol demonstration, not evidence
   hit rate 0.800  (p vs coin 0.188)   Brier 0.140
-  magnitude          n=1   hit rate 0.000
-  metric_specific    n=3   hit rate 1.000
-  manipulation_check n=1   hit rate 1.000
+  magnitude          n=1   hit rate 0.000  p vs coin 1 (Holm 1)
+  metric_specific    n=3   hit rate 1.000  p vs coin 0.125 (Holm 0.375)
+  manipulation_check n=1   hit rate 1.000  p vs coin 0.5 (Holm 1)
   vs naive (change preds, n=2): model 0.500  naive 0.000  model-only 1  naive-only 0  sign-test p 1
   [MISS] P01      cause_of_death/leakage_resplit  llm.accuracy.delta down 0.08  conf 0.70  value +0.091
   [HIT ] P02      cause_of_death/leakage_resplit  gap.llm_minus_retrieval.delta up 0.05  conf 0.70  value +0.434

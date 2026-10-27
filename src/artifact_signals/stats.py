@@ -7,6 +7,8 @@ import random
 from collections import defaultdict
 from typing import Callable, Sequence
 
+N_BOOT = 10_000  # cluster-bootstrap resamples, as registered in PROPOSAL G.5
+
 
 def mean(xs: Sequence[float]) -> float:
     xs = list(xs)
@@ -57,7 +59,8 @@ def cluster_bootstrap(
     clusters: Sequence[str],
     stat: Callable[[Sequence[float]], float] = mean,
     *,
-    n_boot: int = 1000,
+    n_boot: int = N_BOOT,
+
     seed: int = 0,
     alpha: float = 0.05,
 ) -> tuple[float, float, float]:

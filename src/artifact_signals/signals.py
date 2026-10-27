@@ -16,7 +16,7 @@ from .evaluate import Cache, Run, run_model
 from .judge import Judge, exact_match
 from .render import Rendering, abstention_rendering, baseline_rendering, partial_input_renderings, standard_renderings
 from .retrieval import METHODS, nearest_neighbor
-from .stats import (binom_test, cluster_bootstrap, mcnemar, mean, point_biserial, pstdev,
+from .stats import (N_BOOT, binom_test, cluster_bootstrap, mcnemar, mean, point_biserial, pstdev,
                     risk_coverage_auc, tv_distance)
 
 FS_GATE_DEFAULT = 0.03
@@ -69,7 +69,7 @@ def _acc_ci(run: Run, bench: Benchmark, n_boot: int, seed: int) -> tuple[float, 
 # --- 1. format sensitivity ------------------------------------------------------------
 
 
-def format_sensitivity_from_runs(runs: list[Run], bench: Benchmark, *, n_boot: int = 500, seed: int = 0) -> Signal:
+def format_sensitivity_from_runs(runs: list[Run], bench: Benchmark, *, n_boot: int = N_BOOT, seed: int = 0) -> Signal:
     """SD of in-distribution accuracy across runs that differ only in surface form."""
     ids = _ids(bench)
     accs = [r.accuracy_on(ids) for r in runs]
@@ -102,7 +102,7 @@ def format_sensitivity_from_runs(runs: list[Run], bench: Benchmark, *, n_boot: i
 
 
 def format_sensitivity(model, bench: Benchmark, judge: Judge = exact_match, renderings: list[Rendering] | None = None,
-                       *, n_boot: int = 500, seed: int = 0, cache: Cache | None = None) -> tuple[Signal, list[Run]]:
+                       *, n_boot: int = N_BOOT, seed: int = 0, cache: Cache | None = None) -> tuple[Signal, list[Run]]:
     renderings = renderings or standard_renderings(seed)
     runs = [run_model(model, bench, r, judge, cache=cache) for r in renderings]
     return format_sensitivity_from_runs(runs, bench, n_boot=n_boot, seed=seed), runs
@@ -337,7 +337,8 @@ def compute_profile(
     sem_judge: Judge | None = None,
     renderings: list[Rendering] | None = None,
     fs_gate: float = FS_GATE_DEFAULT,
-    n_boot: int = 500,
+    n_boot: int = N_BOOT,
+
     seed: int = 0,
     cache: Cache | None = None,
 ) -> ArtifactRiskProfile:

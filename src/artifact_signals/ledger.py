@@ -14,7 +14,7 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
-from .stats import binom_test, brier, mcnemar, mean, reliability
+from .stats import binom_test, brier, holm, mcnemar, mean, reliability
 
 DIRECTIONS = ("down", "up", "flat", "above", "below")
 STATUSES = ("prospective", "retrospective")   # prospective = hashed before any result was seen; anything else is retrospective
@@ -130,7 +130,11 @@ def score_ledger(ledger: Ledger, results: dict, *, voided: set[str] | None = Non
     for f in FAMILIES:
         sub = [r for r in rows if r["status"] == "scored" and r["family"] == f]
         if sub:
-            fam[f] = {"n": len(sub), "hit_rate": mean([1.0 if r["hit"] else 0.0 for r in sub])}
+            k = sum(1 for r in sub if r["hit"])
+            fam[f] = {"n": len(sub), "hit_rate": k / len(sub), "p_vs_coin": binom_test(k, len(sub), 0.5, "greater")}
+    # Holm across the per-family tests: one family of hypotheses per ledger (PROPOSAL G.5)
+    for f, adj in zip(fam, holm([v["p_vs_coin"] for v in fam.values()])):
+        fam[f]["p_vs_coin_holm"] = adj
     comp = None
     if model_hits_change:
         mc = mcnemar(model_hits_change, naive_hits_change)
@@ -156,7 +160,8 @@ def format_score(s: dict) -> str:
     if s["n_scored"]:
         lines.append(f"  hit rate {s['hit_rate']:.3f}  (p vs coin {s['p_vs_coin']:.3g})   Brier {s['brier']:.3f}")
     for f, v in s["by_family"].items():
-        lines.append(f"  {f:<18} n={v['n']:<3} hit rate {v['hit_rate']:.3f}")
+        lines.append(f"  {f:<18} n={v['n']:<3} hit rate {v['hit_rate']:.3f}  p vs coin {v['p_vs_coin']:.3g} (Holm {v['p_vs_coin_holm']:.3g})")
+
     c = s["vs_naive_on_change_predictions"]
     if c:
         lines.append(f"  vs naive (change preds, n={c['n']}): model {c['model_hit_rate']:.3f}  naive {c['naive_hit_rate']:.3f}  "

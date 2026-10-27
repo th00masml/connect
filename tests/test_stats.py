@@ -31,3 +31,16 @@ def test_brier_reliability_and_risk_coverage():
     assert r[0]["n"] == 1 and r[1]["n"] == 2 and r[1]["hit_rate"] == 1.0
     assert risk_coverage_auc([0.9, 0.8, 0.7, 0.6], [True, True, False, False]) < risk_coverage_auc([0.6, 0.7, 0.8, 0.9], [True, True, False, False])
     assert math.isnan(risk_coverage_auc([], []))
+
+
+def test_bootstrap_default_is_the_registered_10k():
+    import inspect
+
+    from artifact_signals import cli, signals
+    from artifact_signals.stats import N_BOOT
+    assert N_BOOT == 10_000  # PROPOSAL G.5: cluster bootstrap, 10k resamples
+    assert inspect.signature(cluster_bootstrap).parameters["n_boot"].default == N_BOOT
+    for fn in (signals.format_sensitivity_from_runs, signals.format_sensitivity, signals.compute_profile):
+        assert inspect.signature(fn).parameters["n_boot"].default == N_BOOT
+    sub = cli.build_parser()._subparsers._group_actions[0].choices["diagnose"]
+    assert sub.get_default("n_boot") == N_BOOT

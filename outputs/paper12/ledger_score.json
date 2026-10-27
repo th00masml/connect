@@ -49,15 +49,21 @@
  "by_family": {
   "magnitude": {
    "n": 1,
-   "hit_rate": 0.0
+   "hit_rate": 0.0,
+   "p_vs_coin": 1.0,
+   "p_vs_coin_holm": 1.0
   },
   "metric_specific": {
    "n": 3,
-   "hit_rate": 1.0
+   "hit_rate": 1.0,
+   "p_vs_coin": 0.125,
+   "p_vs_coin_holm": 0.375
   },
   "manipulation_check": {
    "n": 1,
-   "hit_rate": 1.0
+   "hit_rate": 1.0,
+   "p_vs_coin": 0.5,
+   "p_vs_coin_holm": 1.0
   }
  },
  "vs_naive_on_change_predictions": {

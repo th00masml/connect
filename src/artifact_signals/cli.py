@@ -20,6 +20,7 @@ from .modal import FORMULA_REGEX
 from .models import from_spec
 from .render import standard_renderings
 from .signals import compute_profile
+from .stats import N_BOOT
 from .synth import generate
 
 
@@ -78,7 +79,7 @@ def cmd_paper12(a: argparse.Namespace) -> int:
     return 0
 
 
-def main(argv: list[str] | None = None) -> int:
+def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="artifact-signals")
     sub = p.add_subparsers(dest="cmd", required=True)
 
@@ -98,7 +99,7 @@ def main(argv: list[str] | None = None) -> int:
     d.add_argument("--judge", choices=list(JUDGES), default="exact")
     d.add_argument("--semantic", choices=list(JUDGES), help="semantic judge for the constraint-gain signal")
     d.add_argument("--fs-gate", type=float, default=0.03)
-    d.add_argument("--n-boot", type=int, default=500)
+    d.add_argument("--n-boot", type=int, default=N_BOOT)
     d.add_argument("--seed", type=int, default=0)
     d.add_argument("--cache")
     d.add_argument("--out")
@@ -117,8 +118,13 @@ def main(argv: list[str] | None = None) -> int:
     q.add_argument("--out", default="outputs/paper12")
     q.add_argument("--report", action="store_true", help="print the full markdown report")
     q.set_defaults(fn=cmd_paper12)
+    return p
 
+
+def main(argv: list[str] | None = None) -> int:
+    p = build_parser()
     a = p.parse_args(argv)
+
     if a.cmd == "ledger" and a.action == "score" and not a.results:
         p.error("ledger score requires a results file")
     return a.fn(a)

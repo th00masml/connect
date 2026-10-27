@@ -123,3 +123,15 @@ def test_shipped_ledger_loads_and_hashes():
     assert led.status == "retrospective" and len(led.sha256()) == 64
     pro = Ledger.load("ledger/prospective_template.json", verify=False)
     assert pro.status == "retrospective" and len(pro.predictions) == 7  # unfrozen template scores as retrospective
+
+
+def test_ledger_scoring_applies_holm_across_family_tests():
+    from artifact_signals.stats import binom_test, holm
+    preds = [Prediction("A1", "b", "i", "x", "above", 0.0, 0.7, family="direction"),
+             Prediction("A2", "b", "i", "x", "above", 0.0, 0.7, family="direction"),
+             Prediction("B1", "b", "i", "x", "below", 0.0, 0.7, family="magnitude")]
+    s = score_ledger(Ledger("t", preds), {"b": {"i": {"x": 1.0}}})
+    fam = s["by_family"]
+    raw = [binom_test(2, 2, 0.5, "greater"), binom_test(0, 1, 0.5, "greater")]
+    assert [fam["direction"]["p_vs_coin"], fam["magnitude"]["p_vs_coin"]] == raw
+    assert [fam["direction"]["p_vs_coin_holm"], fam["magnitude"]["p_vs_coin_holm"]] == holm(raw)
