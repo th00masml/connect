@@ -22,7 +22,8 @@ A pure-Python package (no hard dependencies) that implements the paper 3 protoco
 
 ```
 pip install -e ".[dev]"        # add [fast] for rapidfuzz, [hf] for transformers, [api] for OpenAI-compatible endpoints
-pytest                         # 38 tests, ~30 s, no GPU
+pytest                         # 57 tests, about 1 min on CPU, no GPU, no network (was 38 tests, ~30 s in v0.1.0)
+scripts/verify.sh              # regenerate every CPU-reproducible claim and compare; see ARTIFACT.md
 python examples/synth_pipeline.py   # full two-phase dry run on SynthModal-Control with dummy models
 ```
 
@@ -167,5 +168,7 @@ outputs/paper12/                                   offline Phase 1 on papers 1 a
 ledger/retrospective_papers12.json                 development-set ledger (protocol demonstration)
 ledger/prospective_template.json                   test-set ledger, unfrozen; freeze procedure in its meta
 examples/synth_pipeline.py                         two-phase dry run on the synthetic control
-tests/                                             38 tests
+tests/                                             57 tests
+scripts/verify.sh, scripts/hash_ledger.py          one-command verification; ledger hashes (SHA256SUMS)
+ARTIFACT.md                                        every claim with the command that regenerates it
 ```
