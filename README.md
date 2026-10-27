@@ -118,6 +118,7 @@ Kripke reports the majority truth value's share minus 0.5 (0.050). The report ma
 
 ```
 artifact-signals synth    --n 400 --ood-frac 0.1 --out control.jsonl
+artifact-signals fetch    --source folio --split validation --out folio.jsonl   # needs [data]; or --rows FILE, no download
 artifact-signals diagnose --benchmark eval.jsonl --train train.jsonl --model hf:Qwen/Qwen2.5-7B-Instruct \
                           --semantic lenient --cache .cache --out profile.json
 artifact-signals ledger hash  ledger/prospective_template.json --stamp

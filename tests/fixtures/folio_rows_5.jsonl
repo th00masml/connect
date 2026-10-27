@@ -1,0 +1,5 @@
+{"story_id": 901, "example_id": 9001, "premises": "All glimbs are snarfs.\nTova is a glimb.", "conclusion": "Tova is a snarf.", "label": "True"}
+{"story_id": 901, "example_id": 9002, "premises": "All glimbs are snarfs.\nTova is a glimb.", "conclusion": "Tova is not a snarf.", "label": "False"}
+{"story_id": 902, "example_id": 9003, "premises": "Some wexes are blue.\nRin is a wex.", "conclusion": "Rin is blue.", "label": "Uncertain"}
+{"story_id": 903, "example_id": 9004, "premises": "No plonks fly.\nMeb is a plonk.", "conclusion": "Meb flies.", "label": "false"}
+{"story_id": 904, "example_id": 9005, "premises": "Every drib hums.", "conclusion": "Some drib hums.", "label": "Unknown"}

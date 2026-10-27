@@ -1,0 +1,5 @@
+{"context": "Every zop in the yard is either red or green. Kel is a zop in the yard and is not red.", "query": "Which of the following must be true?", "options": ["Kel is green.", "Kel is red.", "Kel is blue.", "Kel is not a zop."], "correct_option": 0}
+{"context": "If the lamp is on, the room is bright. The room is not bright.", "query": "Which conclusion follows?", "options": ["The lamp is on.", "The lamp is off.", "The room is dark and bright.", "Nothing follows."], "correct_option": 1}
+{"context": "All quibs are trons. No trons are lums.", "query": "Which of the following must be true?", "options": ["Some quibs are lums.", "All lums are quibs.", "No quibs are lums.", "Some trons are quibs."], "correct_option": 2}
+{"context": "Ana finished before Bo. Bo finished before Cy.", "query": "Who finished last?", "options": ["Ana", "Bo", "Both Ana and Bo", "Cy"], "correct_option": 3}
+{"context": "Either the gate is locked or the guard is present. The gate is not locked.", "query": "Which of the following must be true?", "options": ["The guard is absent.", "The gate is open and locked.", "The guard is present.", "The gate is broken."], "correct_option": 2}

@@ -12,7 +12,7 @@ import argparse
 import json
 import sys
 
-from .data import Benchmark
+from .data import PUBLIC_SOURCES, Benchmark
 from .evaluate import Cache
 from .judge import JUDGES
 from .ledger import Ledger, format_score, score_ledger
@@ -31,6 +31,21 @@ def cmd_synth(a: argparse.Namespace) -> int:
     for i in b:
         labels[i.label if not i.ood else "<abstain>"] = labels.get(i.label if not i.ood else "<abstain>", 0) + 1
     print(f"wrote {len(b)} items to {a.out}: {labels}")
+    return 0
+
+
+def cmd_fetch(a: argparse.Namespace) -> int:
+    from_rows, load = PUBLIC_SOURCES[a.source]
+    if a.rows:
+        rows = [json.loads(line) for line in open(a.rows, encoding="utf-8") if line.strip()]
+        n_rows = len(rows) if a.limit is None else min(len(rows), a.limit)
+        b = from_rows(rows, a.split, a.limit)
+    else:
+        b = load(a.split, a.limit)
+        n_rows = None
+    b.to_jsonl(a.out)
+    skipped = f" (skipped {n_rows - len(b)} rows with an unusable label)" if n_rows is not None else ""
+    print(f"wrote {len(b)} items to {a.out}{skipped}")
     return 0
 
 
@@ -91,6 +106,14 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--plain-names", action="store_true", help="use w0/p/q instead of novel random names")
     s.add_argument("--out", required=True)
     s.set_defaults(fn=cmd_synth)
+
+    f = sub.add_parser("fetch", help="convert FOLIO or LogiQA to benchmark JSONL (downloads unless --rows is given)")
+    f.add_argument("--source", choices=sorted(PUBLIC_SOURCES), required=True)
+    f.add_argument("--split", default="validation")
+    f.add_argument("--rows", help="local JSONL of dataset rows in the Hugging Face field layout; no download")
+    f.add_argument("--limit", type=int)
+    f.add_argument("--out", required=True)
+    f.set_defaults(fn=cmd_fetch)
 
     d = sub.add_parser("diagnose", help="compute the Artifact Risk Profile")
     d.add_argument("--benchmark", required=True)

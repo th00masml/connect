@@ -118,17 +118,22 @@ class Benchmark:
         return cls(name or path.stem, items)
 
 
-# --- optional loaders for public benchmarks (require `datasets`) ---------------
+# --- public benchmarks: row converters (no dependency) and loaders (require `datasets`) -----------
+
+FOLIO_OPTIONS = ["True", "False", "Uncertain"]
 
 
-def load_folio(split: str = "validation", limit: int | None = None) -> Benchmark:
-    """FOLIO as a 3-way choice task (True / False / Uncertain)."""
+def _hf_rows(name: str, split: str):
     from datasets import load_dataset  # type: ignore
 
-    ds = load_dataset("yale-nlp/FOLIO", split=split)
-    opts = ["True", "False", "Uncertain"]
+    return load_dataset(name, split=split)
+
+
+def folio_from_rows(rows, split: str = "validation", limit: int | None = None) -> Benchmark:
+    """FOLIO as a 3-way choice task (True / False / Uncertain). Rows with any other label are skipped."""
+    opts = FOLIO_OPTIONS
     items = []
-    for k, row in enumerate(ds):
+    for k, row in enumerate(rows):
         if limit and k >= limit:
             break
         label = str(row["label"]).strip().capitalize()
@@ -139,7 +144,7 @@ def load_folio(split: str = "validation", limit: int | None = None) -> Benchmark
                 id=f"folio-{split}-{row.get('example_id', k)}",
                 premises=[p.strip() for p in str(row["premises"]).split("\n") if p.strip()],
                 question=f"Is the following conclusion true, false, or uncertain given the premises? {row['conclusion']}",
-                options=opts,
+                options=list(opts),
                 label=label,
                 source_id=str(row.get("story_id", k)),
             )
@@ -147,12 +152,9 @@ def load_folio(split: str = "validation", limit: int | None = None) -> Benchmark
     return Benchmark("folio", items)
 
 
-def load_logiqa(split: str = "validation", limit: int | None = None) -> Benchmark:
-    from datasets import load_dataset  # type: ignore
-
-    ds = load_dataset("lucasmccabe/logiqa", split=split)
+def logiqa_from_rows(rows, split: str = "validation", limit: int | None = None) -> Benchmark:
     items = []
-    for k, row in enumerate(ds):
+    for k, row in enumerate(rows):
         if limit and k >= limit:
             break
         options = [str(o) for o in row["options"]]
@@ -167,3 +169,14 @@ def load_logiqa(split: str = "validation", limit: int | None = None) -> Benchmar
             )
         )
     return Benchmark("logiqa", items)
+
+
+def load_folio(split: str = "validation", limit: int | None = None) -> Benchmark:
+    return folio_from_rows(_hf_rows("yale-nlp/FOLIO", split), split, limit)
+
+
+def load_logiqa(split: str = "validation", limit: int | None = None) -> Benchmark:
+    return logiqa_from_rows(_hf_rows("lucasmccabe/logiqa", split), split, limit)
+
+
+PUBLIC_SOURCES = {"folio": (folio_from_rows, load_folio), "logiqa": (logiqa_from_rows, load_logiqa)}
