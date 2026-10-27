@@ -1,5 +1,8 @@
 {
   "n": 30,
+  "answered": 0,
   "exact_code": 0.0,
-  "base3": 0.0
+  "base3": 0.0,
+  "exact_code_among_answered": null,
+  "verdict": "INCONCLUSIVE: no item received a code-shaped answer; cannot distinguish ignorance from refusal or a CLI artefact"
 }

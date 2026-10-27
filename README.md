@@ -91,7 +91,10 @@ Headline numbers from that run: Kripke fails the format gate (SD 0.13 over promp
 `forced_rate = 0.31` before any model runs and the leak-free replication keeps SVG at 0.39.
 Cause-of-death has no format artifact (SVG = 0), and its lexical artifact inflates the baseline
 rather than the model: under the leakage sweep retrieval falls 0.64 to 0.19 while the LLM rises
-0.66 to 0.88. The retrospective ledger scores 4 of 5; the miss (P01) predicted the LLM's own score would drop.
+0.66 to 0.88. The cause-of-death memorisation probe is inconclusive, not zero: 30 of 30 probe
+calls returned empty, so its exact-code rate of 0.00 is over zero answered items
+([`data/external/cod/probe_summary.json`](data/external/cod/probe_summary.json)).
+The retrospective ledger scores 4 of 5; the miss (P01) predicted the LLM's own score would drop.
 Papers 1 and 2 are the development set, so that score demonstrates the protocol and validates
 nothing; the prospective ledger for FOLIO, LogiQA and the synthetic control is the paper's result.
 

@@ -202,5 +202,10 @@ def interventions(model_key: str = "M_comm_sonnet5", root: Path = ROOT, *, thres
     return out
 
 
+def probe_rows(root: Path = ROOT) -> list[dict]:
+    """Per-item memorisation-probe outputs (string, gold ICD code, guess). An empty guess is no answer."""
+    return [json.loads(l) for l in (root / "probe_results.jsonl").open(encoding="utf-8") if l.strip()]
+
+
 def published(root: Path = ROOT) -> dict:
     return json.loads((root / "summary.json").read_text())

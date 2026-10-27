@@ -131,6 +131,12 @@ def render_report(profiles: dict, results: dict, score: dict) -> str:
     L += ["", f"Cap-based rebalancing (<= {r['cap']} per chapter, n={r['n_after']}): LLM accuracy {r['before']['llm_accuracy']:.3f} -> {r['after']['llm_accuracy']:.3f}, "
           f"retrieval {r['before']['retrieval_accuracy']:.3f} -> {r['after']['retrieval_accuracy']:.3f}, gap {r['before']['gap']:+.3f} -> {r['after']['gap']:+.3f}; "
           f"label TV vs uniform {r['label_marginal']['tv_label_vs_uniform_before']:.3f} -> {r['label_marginal']['tv_label_vs_uniform']:.3f}.", ""]
+    mp = c.get("memorization_probe")
+    if mp:
+        L += [f"Memorisation probe: {mp['n'] - mp['answered']} of {mp['n']} probe calls returned empty "
+              f"(answered {mp['answered']}); {mp['verdict'].split(':')[0]}. The exact-code rate {mp['exact_code']:.2f} is over "
+              "zero answered items, so it is not a score. Source: `data/external/cod/probe_summary.json`, "
+              "`data/external/cod/probe_results.jsonl`.", ""]
     for m in kripke.MODELS:
         k = results[f"kripke@{kripke.SHORT[m]}"]
         L += [f"### kripke / {kripke.SHORT[m]}, constraint ablation (prompted vs constrained), EM = strict parse, semantic = truth value", "",

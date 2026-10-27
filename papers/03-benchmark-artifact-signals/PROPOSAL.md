@@ -148,7 +148,11 @@ the profile and the offline-computable interventions without a model call. The f
 - **Nobody abstains, in 1,600 outputs.** Abstention failure is 1.00 in every arm of every model,
   including the arms whose prompt says to output empty on out-of-language atoms.
 - **Cause-of-death has no format artifact.** Strict decoding and the paper's lenient parser agree
-  on all 300 outputs of both models; SVG = 0. The memorization probe is 0.00. Its artifact is
+  on all 300 outputs of both models; SVG = 0. The memorization probe is inconclusive.
+  *Correction (v0.2):* this line originally read "The memorization probe is 0.00." The 0.00 is an
+  exact-code rate over zero answered items: 30 of 30 probe calls returned empty, so the probe cannot
+  tell ignorance from refusal or a CLI artefact (`data/external/cod/probe_summary.json`,
+  `probe_results.jsonl`). Memorisation is untested, not ruled out. Its artifact is
   the lexical one only, and the leakage sweep shows it cleanly: as the dictionary-similarity cap
   drops from 0.8 to 0.4 the retrieval baseline falls from 0.64 to 0.19 while the LLM climbs from
   0.66 to 0.88.

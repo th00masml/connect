@@ -20,7 +20,7 @@ COD_FILES = [
     "data/derived/test.json", "data/derived/dictionary.json", "outputs/test_dictsim.json",
     "outputs/pred_B_majority.json", "outputs/pred_B_fuzzy.json", "outputs/pred_M_local_qwen14b.json",
     "outputs/pred_M_comm_sonnet5.json", "outputs/raw_comm.jsonl", "outputs/raw_local.jsonl",
-    "outputs/probe_summary.json", "outputs/summary.json",
+    "outputs/probe_summary.json", "outputs/probe_results.jsonl", "outputs/summary.json", "outputs/paper_stats.json",
 ]
 KRIPKE_KEEP = ("id", "present", "world", "formula", "gold", "model", "arm", "output")
 

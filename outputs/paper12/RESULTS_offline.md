@@ -98,6 +98,8 @@ below is a protocol demonstration and is labelled retrospective by the scorer.
 
 Cap-based rebalancing (<= 10 per chapter, n=139): LLM accuracy 0.667 -> 0.741, retrieval 0.707 -> 0.698, gap -0.040 -> +0.043; label TV vs uniform 0.331 -> 0.180.
 
+Memorisation probe: 30 of 30 probe calls returned empty (answered 0); INCONCLUSIVE. The exact-code rate 0.00 is over zero answered items, so it is not a score. Source: `data/external/cod/probe_summary.json`, `data/external/cod/probe_results.jsonl`.
+
 ### kripke / 0.5B, constraint ablation (prompted vs constrained), EM = strict parse, semantic = truth value
 
 | run | forced rate | EM free | EM constrained | EM gain | sem free | sem constrained | sem gain | SVG |

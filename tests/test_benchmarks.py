@@ -77,3 +77,12 @@ def test_kripke_profile_is_gated_and_nobody_abstains():
     assert ca["product"]["forced_rate"] == 0.0
     assert abs(ca["product"]["sem"]["constrained_minus_free"]) < abs(ca["gold"]["sem"]["constrained_minus_free"])
     assert res["leak_removal"]["free_subset"]["outputs_identical"] == 55 and res["leak_removal"]["manipulation_check"]
+
+
+def test_cod_memorization_probe_is_inconclusive_not_zero():
+    # exact_code == 0.0 is a score over zero answered items: all 30 probe calls came back empty.
+    probe = cod.interventions("M_comm_sonnet5")["memorization_probe"]
+    assert probe["n"] == 30 and probe["answered"] == 0
+    assert probe["verdict"].startswith("INCONCLUSIVE")
+    rows = cod.probe_rows()
+    assert len(rows) == 30 and all(r["guess"] == "" for r in rows)

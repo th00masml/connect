@@ -1,0 +1,30 @@
+{"string": "mesenteric thrombosis", "gold": "K55.902", "guess": "", "exact": false, "base3_match": false}
+{"string": "cerebral congestion", "gold": "G93.801", "guess": "", "exact": false, "base3_match": false}
+{"string": "sanguinous apoplexy", "gold": "I61.901", "guess": "", "exact": false, "base3_match": false}
+{"string": "pneumonia acute supposed", "gold": "J18.900", "guess": "", "exact": false, "base3_match": false}
+{"string": "quinsy", "gold": "J36.001", "guess": "", "exact": false, "base3_match": false}
+{"string": "heart dilation", "gold": "I51.701", "guess": "", "exact": false, "base3_match": false}
+{"string": "peritoneum inflammation acute supposed", "gold": "K65.000", "guess": "", "exact": false, "base3_match": false}
+{"string": "glandular disease", "gold": "I89.901", "guess": "", "exact": false, "base3_match": false}
+{"string": "syncope supposed", "gold": "R55.000", "guess": "", "exact": false, "base3_match": false}
+{"string": "enteric catarrh infectious", "gold": "A09.030", "guess": "", "exact": false, "base3_match": false}
+{"string": "entero-colitis", "gold": "A09.940", "guess": "", "exact": false, "base3_match": false}
+{"string": "epithelioma face", "gold": "C49.004", "guess": "", "exact": false, "base3_match": false}
+{"string": "hepatic tumour", "gold": "C22.905", "guess": "", "exact": false, "base3_match": false}
+{"string": "ear inflammation", "gold": "H66.900", "guess": "", "exact": false, "base3_match": false}
+{"string": "meningitis tubercular", "gold": "A17.000", "guess": "", "exact": false, "base3_match": false}
+{"string": "intestinal worms", "gold": "B77.900", "guess": "", "exact": false, "base3_match": false}
+{"string": "strophulus", "gold": "R21.002", "guess": "", "exact": false, "base3_match": false}
+{"string": "kidney disease", "gold": "N28.900", "guess": "", "exact": false, "base3_match": false}
+{"string": "cerebral anaemia", "gold": "I67.802", "guess": "", "exact": false, "base3_match": false}
+{"string": "rupture", "gold": "R58.004", "guess": "", "exact": false, "base3_match": false}
+{"string": "aneurism thorax", "gold": "I71.200", "guess": "", "exact": false, "base3_match": false}
+{"string": "glands in the lungs", "gold": "J98.403", "guess": "", "exact": false, "base3_match": false}
+{"string": "premature birth supposed", "gold": "P07.300", "guess": "", "exact": false, "base3_match": false}
+{"string": "strangulated hernia", "gold": "K46.001", "guess": "", "exact": false, "base3_match": false}
+{"string": "spasmodic diarrhoea infectious", "gold": "A09.010", "guess": "", "exact": false, "base3_match": false}
+{"string": "heart apoplexy", "gold": "I21.904", "guess": "", "exact": false, "base3_match": false}
+{"string": "epithelioma oesophagus", "gold": "C15.904", "guess": "", "exact": false, "base3_match": false}
+{"string": "kidney inflammation", "gold": "N28.902", "guess": "", "exact": false, "base3_match": false}
+{"string": "kidneys disease congenital", "gold": "Q63.900", "guess": "", "exact": false, "base3_match": false}
+{"string": "ulcer pelvis", "gold": "L98.401", "guess": "", "exact": false, "base3_match": false}
