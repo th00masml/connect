@@ -12,7 +12,7 @@ fast = ["rapidfuzz>=3"]
 hf = ["torch", "transformers>=4.40"]
 api = ["openai>=1"]
 data = ["datasets"]
-dev = ["pytest>=7"]
+dev = ["pytest>=7", "ruff>=0.6"]
 
 [project.scripts]
 artifact-signals = "artifact_signals.cli:main"
