@@ -109,7 +109,6 @@ withheld: cause-of-death reports the majority baseline's accuracy minus 1/22 cha
 Kripke reports the majority truth value's share minus 0.5 (0.050). The report marks these rows
 `(proxy)`. The model-run estimator in the table above needs a live run.
 
-
 ### CLI
 
 ```

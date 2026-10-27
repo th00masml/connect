@@ -161,7 +161,6 @@ def format_score(s: dict) -> str:
         lines.append(f"  hit rate {s['hit_rate']:.3f}  (p vs coin {s['p_vs_coin']:.3g})   Brier {s['brier']:.3f}")
     for f, v in s["by_family"].items():
         lines.append(f"  {f:<18} n={v['n']:<3} hit rate {v['hit_rate']:.3f}  p vs coin {v['p_vs_coin']:.3g} (Holm {v['p_vs_coin_holm']:.3g})")
-
     c = s["vs_naive_on_change_predictions"]
     if c:
         lines.append(f"  vs naive (change preds, n={c['n']}): model {c['model_hit_rate']:.3f}  naive {c['naive_hit_rate']:.3f}  "

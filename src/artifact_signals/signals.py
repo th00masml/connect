@@ -305,7 +305,6 @@ class ArtifactRiskProfile:
     def to_dict(self) -> dict:
         return {"benchmark": self.benchmark, "model": self.model, "fs_gate": self.fs_gate, "gated": self.gated,
                 "gate_evaluated": self.gate_evaluated,
-
                 "vector": self.vector(), "signals": {k: s.to_dict() for k, s in self.signals.items()}}
 
     def to_json(self, path) -> None:
@@ -338,7 +337,6 @@ def compute_profile(
     renderings: list[Rendering] | None = None,
     fs_gate: float = FS_GATE_DEFAULT,
     n_boot: int = N_BOOT,
-
     seed: int = 0,
     cache: Cache | None = None,
 ) -> ArtifactRiskProfile:

@@ -60,7 +60,6 @@ def cluster_bootstrap(
     stat: Callable[[Sequence[float]], float] = mean,
     *,
     n_boot: int = N_BOOT,
-
     seed: int = 0,
     alpha: float = 0.05,
 ) -> tuple[float, float, float]:
