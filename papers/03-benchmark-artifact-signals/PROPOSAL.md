@@ -127,10 +127,15 @@ Both source repositories ship their cached model outputs (`cause-of-death-coding
 the profile and the offline-computable interventions without a model call. The full report is
 `outputs/paper12/RESULTS_offline.md`. What it already settles:
 
-- **Kripke fails the format-sensitivity gate by a factor of four.** Strict exact match across the
-  three unconstrained prompt arms has SD 0.13 to 0.14 for both models (gate: 0.03); even the
-  truth-value judge that reads through format noise gives SD 0.08 to 0.19. Every other signal on
-  that benchmark is reported gated. H4 is not a hypothesis there, it is the observed regime.
+- **Kripke's format-sensitivity gate is not evaluated offline.** Strict exact match across the
+  three unconstrained prompt arms has SD 0.13 to 0.14 for both models, and the truth-value judge
+  gives SD 0.08 to 0.19. Those three arms are different prompts (naive / prompted / prompt_tuned),
+  not the five meaning-preserving renderings of Section H, so the figure is prompt variance, not
+  the gate statistic, and the other Kripke signals are reported ungated until a live run computes
+  the gate. *Correction (v0.2):* this bullet originally read "Kripke fails the format-sensitivity
+  gate by a factor of four ... Every other signal on that benchmark is reported gated. H4 is not a
+  hypothesis there, it is the observed regime." It compared the wrong statistic with the 0.03 gate.
+
 - **The constraint leak is measurable before the repair.** With the admissible set built from
   gold judgements, 25 of 80 fixtures admit only one truth value. The instrument reports this as
   `forced_rate` = 0.312 inside the semantic-validity-gap signal, computed from the constraint and

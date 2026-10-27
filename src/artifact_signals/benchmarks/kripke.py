@@ -176,13 +176,18 @@ def profile(model: str = MODELS[1], run: str = "gold", root: Path = ROOT) -> Art
     unc = [runs[(model, a)] for a in UNCONSTRAINED]
     prompted, con = runs[(model, "prompted")], runs[(model, "constrained")]
     signals: dict[str, Signal] = {}
-    fs = format_sensitivity_from_runs(unc, bench, n_boot=300)
-    fs_len = format_sensitivity_from_runs([r.rejudge(bench, lenient_judge) for r in unc], bench, n_boot=300)
-    fs_truth = format_sensitivity_from_runs([r.rejudge(bench, truth_judge) for r in unc], bench, n_boot=300)
-    fs.details["lenient"] = {"value": fs_len.value, "per_rendering": fs_len.details["per_rendering"]}
-    fs.details["truth_value"] = {"value": fs_truth.value, "per_rendering": fs_truth.details["per_rendering"]}
-    fs.note = "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse"
-    signals["format_sensitivity"] = fs
+    # The three cached arms are different prompts, not the five meaning-preserving renderings the gate is
+    # defined on, so their SD is reported as prompt variance and the gate statistic stays n/a offline.
+    pv = format_sensitivity_from_runs(unc, bench, n_boot=300)
+    pv_len = format_sensitivity_from_runs([r.rejudge(bench, lenient_judge) for r in unc], bench, n_boot=300)
+    pv_truth = format_sensitivity_from_runs([r.rejudge(bench, truth_judge) for r in unc], bench, n_boot=300)
+    signals["format_sensitivity"] = Signal("format_sensitivity", None, details={"prompt_variance": {
+        "value": pv.value, "ci": list(pv.ci) if pv.ci else None, "n_prompts": len(unc), "judge": "strict parse",
+        "per_rendering": pv.details["per_rendering"],
+        "lenient": {"value": pv_len.value, "per_rendering": pv_len.details["per_rendering"]},
+        "truth_value": {"value": pv_truth.value, "per_rendering": pv_truth.details["per_rendering"]}}},
+        note="gate not evaluated offline: needs a live re-run under standard_renderings; prompt_variance in details is "
+             "the SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), not the gate statistic")
     tb, tr = truth_projection(bench, prompted)
     gold_t = Counter(i.label for i in tb)
     maj = max(gold_t.values()) / len(tb)

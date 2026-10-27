@@ -294,11 +294,18 @@ class ArtifactRiskProfile:
         fs = self.signals.get("format_sensitivity")
         return bool(fs and fs.value is not None and fs.value > self.fs_gate)
 
+    @property
+    def gate_evaluated(self) -> bool:
+        fs = self.signals.get("format_sensitivity")
+        return bool(fs and fs.value is not None)
+
     def vector(self) -> dict[str, float | None]:
         return {k: s.value for k, s in self.signals.items()}
 
     def to_dict(self) -> dict:
         return {"benchmark": self.benchmark, "model": self.model, "fs_gate": self.fs_gate, "gated": self.gated,
+                "gate_evaluated": self.gate_evaluated,
+
                 "vector": self.vector(), "signals": {k: s.to_dict() for k, s in self.signals.items()}}
 
     def to_json(self, path) -> None:

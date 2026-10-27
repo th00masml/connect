@@ -86,8 +86,14 @@ the Artifact Risk Profile for each benchmark and model, runs the offline interve
 re-rendering and abstention on Kripke), and scores the ledger. Report:
 [`outputs/paper12/RESULTS_offline.md`](outputs/paper12/RESULTS_offline.md).
 
-Headline numbers from that run: Kripke fails the format gate (SD 0.13 over prompt arms vs the
-0.03 gate) and nobody abstains in 1,600 outputs; its constraint leak shows up as
+Headline numbers from that run. Kripke's format-sensitivity gate is not evaluated offline: the
+cached run has three different prompts (naive / prompted / prompt_tuned), not the five
+meaning-preserving renderings the gate is defined on, so their accuracy SD (0.130 to 0.142 across
+the four model x run profiles) is a prompt-variance figure, not the gate statistic.
+*Correction (v0.2):* this sentence originally read "Kripke fails the format gate (SD 0.13 over
+prompt arms vs the 0.03 gate)" and the report marked the other Kripke signals GATED; the
+statistic was the wrong one, so the gate decision is withdrawn until a live five-rendering run.
+Nobody abstains in 1,600 outputs per run; Kripke's constraint leak shows up as
 `forced_rate = 0.31` before any model runs and the leak-free replication keeps SVG at 0.39.
 Cause-of-death has no format artifact (SVG = 0), and its lexical artifact inflates the baseline
 rather than the model: under the leakage sweep retrieval falls 0.64 to 0.19 while the LLM rises
@@ -97,6 +103,12 @@ calls returned empty, so its exact-code rate of 0.00 is over zero answered items
 The retrospective ledger scores 4 of 5; the miss (P01) predicted the LLM's own score would drop.
 Papers 1 and 2 are the development set, so that score demonstrates the protocol and validates
 nothing; the prospective ledger for FOLIO, LogiQA and the synthetic control is the paper's result.
+
+Offline, `partial_input_accuracy` is a majority-class proxy, not a model run with the input
+withheld: cause-of-death reports the majority baseline's accuracy minus 1/22 chance (0.108), and
+Kripke reports the majority truth value's share minus 0.5 (0.050). The report marks these rows
+`(proxy)`. The model-run estimator in the table above needs a live run.
+
 
 ### CLI
 

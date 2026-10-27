@@ -102,18 +102,23 @@ def render_report(profiles: dict, results: dict, score: dict) -> str:
                 extra = f"corr={d['sim_correctness_corr']:+.3f}, gap={d['gap']:+.3f}, best={d.get('best_method')}"
             if k == "semantic_validity_gap" and "constraint_gain" in d:
                 extra = f"cg={d['constraint_gain']:+.3f}, sg={d['semantic_gain']:+.3f}" + (f", forced_rate={d['forced_rate']:.3f}" if "forced_rate" in d else "")
-            if k == "format_sensitivity" and d.get("per_rendering"):
-                extra = ", ".join(f"{r}={v['accuracy']:.3f}" for r, v in d["per_rendering"].items())
-                if "truth_value" in d:
-                    extra += f"; truth-value SD={d['truth_value']['value']:.3f}"
+            if k == "format_sensitivity" and d.get("prompt_variance"):
+                pv = d["prompt_variance"]
+                extra = (f"prompt variance (SD over {pv['n_prompts']} prompts, not the gate statistic)={pv['value']:.3f}; "
+                         + ", ".join(f"{r}={v['accuracy']:.3f}" for r, v in pv["per_rendering"].items())
+                         + f"; truth-value SD={pv['truth_value']['value']:.3f}")
             if k == "partial_input_accuracy" and d.get("label_marginal"):
                 extra = f"label-vs-uniform={d['label_marginal']['tv_vs_uniform']:.3f}"
                 if d.get("model_truth_dist_prompted"):
                     extra += "; model truth dist: " + ", ".join(f"{a}={b}" for a, b in d["model_truth_dist_prompted"].items())
             if k == "abstention_failure" and d.get("per_arm"):
                 extra = ", ".join(f"{a}={v:.2f}" for a, v in d["per_arm"].items())
-            note = (s.get("note") or "") + ((" | " + extra) if extra else "")
+            note = (s.get("note") or "") + (("; " + extra) if (extra and s.get("note")) else extra)
+
             flag = " (GATED)" if s["gated"] else ""
+            if d.get("proxy"):
+                flag += " (proxy)"
+
             L.append(f"| {k}{flag} | {s['level']} | {_f(s['value'])} | {note} |")
         L.append("")
     L += ["## Interventions", ""]

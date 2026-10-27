@@ -4,6 +4,7 @@
   "model": "qwen2.5:14b",
   "fs_gate": 0.03,
   "gated": false,
+  "gate_evaluated": false,
   "vector": {
    "format_sensitivity": null,
    "partial_input_accuracy": 0.107878787879,
@@ -140,6 +141,7 @@
   "model": "claude-sonnet-5",
   "fs_gate": 0.03,
   "gated": false,
+  "gate_evaluated": false,
   "vector": {
    "format_sensitivity": null,
    "partial_input_accuracy": 0.107878787879,
@@ -275,9 +277,10 @@
   "benchmark": "kripke@gold",
   "model": "0.5B",
   "fs_gate": 0.03,
-  "gated": true,
+  "gated": false,
+  "gate_evaluated": false,
   "vector": {
-   "format_sensitivity": 0.137310475444,
+   "format_sensitivity": null,
    "partial_input_accuracy": 0.05,
    "retrieval_dominance": 1.777777777778,
    "semantic_validity_gap": 0.125,
@@ -287,75 +290,65 @@
    "format_sensitivity": {
     "name": "format_sensitivity",
     "level": "model_x_benchmark",
-    "value": 0.137310475444,
-    "ci": [
-     0.100519484015,
-     0.182669251807
-    ],
+    "value": null,
+    "ci": null,
     "gated": false,
-    "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
+    "note": "gate not evaluated offline: needs a live re-run under standard_renderings; prompt_variance in details is the SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), not the gate statistic",
     "details": {
-     "per_rendering": {
-      "naive": {
-       "accuracy": 0.0,
-       "invalid_rate": 0.0
-      },
-      "prompted": {
-       "accuracy": 0.325,
-       "invalid_rate": 0.0
-      },
-      "prompt_tuned": {
-       "accuracy": 0.2375,
-       "invalid_rate": 0.0
-      }
-     },
-     "range": 0.325,
-     "item_agreement": 0.6625,
-     "mcnemar_vs_baseline": {
-      "prompted": {
-       "a_only": 0,
-       "b_only": 26,
-       "n_discordant": 26,
-       "p": 2.9802e-08
-      },
-      "prompt_tuned": {
-       "a_only": 0,
-       "b_only": 19,
-       "n_discordant": 19,
-       "p": 3.814697e-06
-      }
-     },
-     "lenient": {
-      "value": 0.147196014439,
+     "prompt_variance": {
+      "value": 0.137310475444,
+      "ci": [
+       0.100519484015,
+       0.182669251807
+      ],
+      "n_prompts": 3,
+      "judge": "strict parse",
       "per_rendering": {
        "naive": {
         "accuracy": 0.0,
         "invalid_rate": 0.0
        },
        "prompted": {
-        "accuracy": 0.35,
+        "accuracy": 0.325,
         "invalid_rate": 0.0
        },
        "prompt_tuned": {
-        "accuracy": 0.25,
+        "accuracy": 0.2375,
         "invalid_rate": 0.0
        }
-      }
-     },
-     "truth_value": {
-      "value": 0.188285392128,
-      "per_rendering": {
-       "naive": {
-        "accuracy": 0.0,
-        "invalid_rate": 0.0
-       },
-       "prompted": {
-        "accuracy": 0.45,
-        "invalid_rate": 0.0
-       },
-       "prompt_tuned": {
-        "accuracy": 0.3125,
-        "invalid_rate": 0.0
+      },
+      "lenient": {
+       "value": 0.147196014439,
+       "per_rendering": {
+        "naive": {
+         "accuracy": 0.0,
+         "invalid_rate": 0.0
+        },
+        "prompted": {
+         "accuracy": 0.35,
+         "invalid_rate": 0.0
+        },
+        "prompt_tuned": {
+         "accuracy": 0.25,
+         "invalid_rate": 0.0
+        }
+       }
+      },
+      "truth_value": {
+       "value": 0.188285392128,
+       "per_rendering": {
+        "naive": {
+         "accuracy": 0.0,
+         "invalid_rate": 0.0
+        },
+        "prompted": {
+         "accuracy": 0.45,
+         "invalid_rate": 0.0
+        },
+        "prompt_tuned": {
+         "accuracy": 0.3125,
+         "invalid_rate": 0.0
+        }
        }
       }
      }
@@ -366,8 +359,8 @@
     "level": "dataset",
     "value": 0.05,
     "ci": null,
-    "gated": true,
-    "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.137 > 0.03",
+    "gated": false,
+    "note": "proxy from the label prior, not a model run",
     "details": {
      "proxy": "majority truth value over the 80 in-language fixtures",
      "majority_accuracy": 0.55,
@@ -393,8 +386,8 @@
     "level": "dataset",
     "value": 1.777777777778,
     "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.137 > 0.03",
+    "gated": false,
+    "note": "",
     "details": {
      "llm_accuracy": 0.45,
      "best_method": "loo-char3",
@@ -418,8 +411,8 @@
     "level": "protocol",
     "value": 0.125,
     "ci": null,
-    "gated": true,
-    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.137 > 0.03",
+    "gated": false,
+    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm",
     "details": {
      "em_free": 0.325,
      "em_constrained": 0.6375,
@@ -482,8 +475,8 @@
     "level": "model_x_benchmark",
     "value": 1.0,
     "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.137 > 0.03",
+    "gated": false,
+    "note": "",
     "details": {
      "n_ood": 80,
      "ood_answered_rate": 1.0,
@@ -507,9 +500,10 @@
   "benchmark": "kripke@product",
   "model": "0.5B",
   "fs_gate": 0.03,
-  "gated": true,
+  "gated": false,
+  "gate_evaluated": false,
   "vector": {
-   "format_sensitivity": 0.141544064596,
+   "format_sensitivity": null,
    "partial_input_accuracy": 0.05,
    "retrieval_dominance": 1.777777777778,
    "semantic_validity_gap": 0.1125,
@@ -519,75 +513,65 @@
    "format_sensitivity": {
     "name": "format_sensitivity",
     "level": "model_x_benchmark",
-    "value": 0.141544064596,
-    "ci": [
-     0.103581690789,
-     0.186059279681
-    ],
+    "value": null,
+    "ci": null,
     "gated": false,
-    "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
+    "note": "gate not evaluated offline: needs a live re-run under standard_renderings; prompt_variance in details is the SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), not the gate statistic",
     "details": {
-     "per_rendering": {
-      "naive": {
-       "accuracy": 0.0,
-       "invalid_rate": 0.0
-      },
-      "prompted": {
-       "accuracy": 0.3375,
-       "invalid_rate": 0.0
-      },
-      "prompt_tuned": {
-       "accuracy": 0.2375,
-       "invalid_rate": 0.0
-      }
-     },
-     "range": 0.3375,
-     "item_agreement": 0.65,
-     "mcnemar_vs_baseline": {
-      "prompted": {
-       "a_only": 0,
-       "b_only": 27,
-       "n_discordant": 27,
-       "p": 1.4901e-08
-      },
-      "prompt_tuned": {
-       "a_only": 0,
-       "b_only": 19,
-       "n_discordant": 19,
-       "p": 3.814697e-06
-      }
-     },
-     "lenient": {
-      "value": 0.151497158022,
+     "prompt_variance": {
+      "value": 0.141544064596,
+      "ci": [
+       0.103581690789,
+       0.186059279681
+      ],
+      "n_prompts": 3,
+      "judge": "strict parse",
       "per_rendering": {
        "naive": {
         "accuracy": 0.0,
         "invalid_rate": 0.0
        },
        "prompted": {
-        "accuracy": 0.3625,
+        "accuracy": 0.3375,
         "invalid_rate": 0.0
        },
        "prompt_tuned": {
-        "accuracy": 0.25,
+        "accuracy": 0.2375,
         "invalid_rate": 0.0
        }
-      }
-     },
-     "truth_value": {
-      "value": 0.189663444612,
-      "per_rendering": {
-       "naive": {
-        "accuracy": 0.0,
-        "invalid_rate": 0.0
-       },
-       "prompted": {
-        "accuracy": 0.45,
-        "invalid_rate": 0.0
-       },
-       "prompt_tuned": {
-        "accuracy": 0.325,
-        "invalid_rate": 0.0
+      },
+      "lenient": {
+       "value": 0.151497158022,
+       "per_rendering": {
+        "naive": {
+         "accuracy": 0.0,
+         "invalid_rate": 0.0
+        },
+        "prompted": {
+         "accuracy": 0.3625,
+         "invalid_rate": 0.0
+        },
+        "prompt_tuned": {
+         "accuracy": 0.25,
+         "invalid_rate": 0.0
+        }
+       }
+      },
+      "truth_value": {
+       "value": 0.189663444612,
+       "per_rendering": {
+        "naive": {
+         "accuracy": 0.0,
+         "invalid_rate": 0.0
+        },
+        "prompted": {
+         "accuracy": 0.45,
+         "invalid_rate": 0.0
+        },
+        "prompt_tuned": {
+         "accuracy": 0.325,
+         "invalid_rate": 0.0
+        }
        }
       }
      }
@@ -598,8 +582,8 @@
     "level": "dataset",
     "value": 0.05,
     "ci": null,
-    "gated": true,
-    "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.142 > 0.03",
+    "gated": false,
+    "note": "proxy from the label prior, not a model run",
     "details": {
      "proxy": "majority truth value over the 80 in-language fixtures",
      "majority_accuracy": 0.55,
@@ -625,8 +609,8 @@
     "level": "dataset",
     "value": 1.777777777778,
     "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.142 > 0.03",
+    "gated": false,
+    "note": "",
     "details": {
      "llm_accuracy": 0.45,
      "best_method": "loo-char3",
@@ -650,8 +634,8 @@
     "level": "protocol",
     "value": 0.1125,
     "ci": null,
-    "gated": true,
-    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.142 > 0.03",
+    "gated": false,
+    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm",
     "details": {
      "em_free": 0.3375,
      "em_constrained": 0.45,
@@ -701,8 +685,8 @@
     "level": "model_x_benchmark",
     "value": 1.0,
     "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.142 > 0.03",
+    "gated": false,
+    "note": "",
     "details": {
      "n_ood": 80,
      "ood_answered_rate": 1.0,
@@ -726,9 +710,10 @@
   "benchmark": "kripke@gold",
   "model": "1.5B",
   "fs_gate": 0.03,
-  "gated": true,
+  "gated": false,
+  "gate_evaluated": false,
   "vector": {
-   "format_sensitivity": 0.130304131426,
+   "format_sensitivity": null,
    "partial_input_accuracy": 0.05,
    "retrieval_dominance": 1.6,
    "semantic_validity_gap": 0.4,
@@ -738,75 +723,65 @@
    "format_sensitivity": {
     "name": "format_sensitivity",
     "level": "model_x_benchmark",
-    "value": 0.130304131426,
-    "ci": [
-     0.087201873069,
-     0.173905306289
-    ],
+    "value": null,
+    "ci": null,
     "gated": false,
-    "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
+    "note": "gate not evaluated offline: needs a live re-run under standard_renderings; prompt_variance in details is the SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), not the gate statistic",
     "details": {
-     "per_rendering": {
-      "naive": {
-       "accuracy": 0.3125,
-       "invalid_rate": 0.0
-      },
-      "prompted": {
-       "accuracy": 0.1,
-       "invalid_rate": 0.0
-      },
-      "prompt_tuned": {
-       "accuracy": 0.0,
-       "invalid_rate": 0.0
-      }
-     },
-     "range": 0.3125,
-     "item_agreement": 0.6875,
-     "mcnemar_vs_baseline": {
-      "prompted": {
-       "a_only": 17,
-       "b_only": 0,
-       "n_discordant": 17,
-       "p": 1.5258789e-05
-      },
-      "prompt_tuned": {
-       "a_only": 25,
-       "b_only": 0,
-       "n_discordant": 25,
-       "p": 5.9605e-08
-      }
-     },
-     "lenient": {
-      "value": 0.094831722306,
+     "prompt_variance": {
+      "value": 0.130304131426,
+      "ci": [
+       0.087201873069,
+       0.173905306289
+      ],
+      "n_prompts": 3,
+      "judge": "strict parse",
       "per_rendering": {
        "naive": {
-        "accuracy": 0.525,
+        "accuracy": 0.3125,
         "invalid_rate": 0.0
        },
        "prompted": {
-        "accuracy": 0.5,
+        "accuracy": 0.1,
         "invalid_rate": 0.0
        },
        "prompt_tuned": {
-        "accuracy": 0.3125,
+        "accuracy": 0.0,
         "invalid_rate": 0.0
        }
-      }
-     },
-     "truth_value": {
-      "value": 0.094831722306,
-      "per_rendering": {
-       "naive": {
-        "accuracy": 0.525,
-        "invalid_rate": 0.0
-       },
-       "prompted": {
-        "accuracy": 0.5,
-        "invalid_rate": 0.0
-       },
-       "prompt_tuned": {
-        "accuracy": 0.3125,
-        "invalid_rate": 0.0
+      },
+      "lenient": {
+       "value": 0.094831722306,
+       "per_rendering": {
+        "naive": {
+         "accuracy": 0.525,
+         "invalid_rate": 0.0
+        },
+        "prompted": {
+         "accuracy": 0.5,
+         "invalid_rate": 0.0
+        },
+        "prompt_tuned": {
+         "accuracy": 0.3125,
+         "invalid_rate": 0.0
+        }
+       }
+      },
+      "truth_value": {
+       "value": 0.094831722306,
+       "per_rendering": {
+        "naive": {
+         "accuracy": 0.525,
+         "invalid_rate": 0.0
+        },
+        "prompted": {
+         "accuracy": 0.5,
+         "invalid_rate": 0.0
+        },
+        "prompt_tuned": {
+         "accuracy": 0.3125,
+         "invalid_rate": 0.0
+        }
        }
       }
      }
@@ -817,8 +792,8 @@
     "level": "dataset",
     "value": 0.05,
     "ci": null,
-    "gated": true,
-    "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.130 > 0.03",
+    "gated": false,
+    "note": "proxy from the label prior, not a model run",
     "details": {
      "proxy": "majority truth value over the 80 in-language fixtures",
      "majority_accuracy": 0.55,
@@ -846,8 +821,8 @@
     "level": "dataset",
     "value": 1.6,
     "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.130 > 0.03",
+    "gated": false,
+    "note": "",
     "details": {
      "llm_accuracy": 0.5,
      "best_method": "loo-char3",
@@ -871,8 +846,8 @@
     "level": "protocol",
     "value": 0.4,
     "ci": null,
-    "gated": true,
-    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.130 > 0.03",
+    "gated": false,
+    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm",
     "details": {
      "em_free": 0.1,
      "em_constrained": 0.65,
@@ -935,8 +910,8 @@
     "level": "model_x_benchmark",
     "value": 1.0,
     "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.130 > 0.03",
+    "gated": false,
+    "note": "",
     "details": {
      "n_ood": 80,
      "ood_answered_rate": 1.0,
@@ -960,9 +935,10 @@
   "benchmark": "kripke@product",
   "model": "1.5B",
   "fs_gate": 0.03,
-  "gated": true,
+  "gated": false,
+  "gate_evaluated": false,
   "vector": {
-   "format_sensitivity": 0.135015431217,
+   "format_sensitivity": null,
    "partial_input_accuracy": 0.05,
    "retrieval_dominance": 1.777777777778,
    "semantic_validity_gap": 0.3875,
@@ -972,75 +948,65 @@
    "format_sensitivity": {
     "name": "format_sensitivity",
     "level": "model_x_benchmark",
-    "value": 0.135015431217,
-    "ci": [
-     0.0889756521,
-     0.181429508809
-    ],
+    "value": null,
+    "ci": null,
     "gated": false,
-    "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
+    "note": "gate not evaluated offline: needs a live re-run under standard_renderings; prompt_variance in details is the SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), not the gate statistic",
     "details": {
-     "per_rendering": {
-      "naive": {
-       "accuracy": 0.3125,
-       "invalid_rate": 0.0
-      },
-      "prompted": {
-       "accuracy": 0.0625,
-       "invalid_rate": 0.0
-      },
-      "prompt_tuned": {
-       "accuracy": 0.0,
-       "invalid_rate": 0.0
-      }
-     },
-     "range": 0.3125,
-     "item_agreement": 0.6875,
-     "mcnemar_vs_baseline": {
-      "prompted": {
-       "a_only": 20,
-       "b_only": 0,
-       "n_discordant": 20,
-       "p": 1.907349e-06
-      },
-      "prompt_tuned": {
-       "a_only": 25,
-       "b_only": 0,
-       "n_discordant": 25,
-       "p": 5.9605e-08
-      }
-     },
-     "lenient": {
-      "value": 0.089170560663,
+     "prompt_variance": {
+      "value": 0.135015431217,
+      "ci": [
+       0.0889756521,
+       0.181429508809
+      ],
+      "n_prompts": 3,
+      "judge": "strict parse",
       "per_rendering": {
        "naive": {
-        "accuracy": 0.5125,
-        "invalid_rate": 0.0
-       },
-       "prompted": {
-        "accuracy": 0.45,
-        "invalid_rate": 0.0
-       },
-       "prompt_tuned": {
-        "accuracy": 0.3,
-        "invalid_rate": 0.0
-       }
-      }
-     },
-     "truth_value": {
-      "value": 0.083541406899,
-      "per_rendering": {
-       "naive": {
-        "accuracy": 0.5125,
-        "invalid_rate": 0.0
-       },
-       "prompted": {
-        "accuracy": 0.45,
-        "invalid_rate": 0.0
-       },
-       "prompt_tuned": {
         "accuracy": 0.3125,
         "invalid_rate": 0.0
+       },
+       "prompted": {
+        "accuracy": 0.0625,
+        "invalid_rate": 0.0
+       },
+       "prompt_tuned": {
+        "accuracy": 0.0,
+        "invalid_rate": 0.0
+       }
+      },
+      "lenient": {
+       "value": 0.089170560663,
+       "per_rendering": {
+        "naive": {
+         "accuracy": 0.5125,
+         "invalid_rate": 0.0
+        },
+        "prompted": {
+         "accuracy": 0.45,
+         "invalid_rate": 0.0
+        },
+        "prompt_tuned": {
+         "accuracy": 0.3,
+         "invalid_rate": 0.0
+        }
+       }
+      },
+      "truth_value": {
+       "value": 0.083541406899,
+       "per_rendering": {
+        "naive": {
+         "accuracy": 0.5125,
+         "invalid_rate": 0.0
+        },
+        "prompted": {
+         "accuracy": 0.45,
+         "invalid_rate": 0.0
+        },
+        "prompt_tuned": {
+         "accuracy": 0.3125,
+         "invalid_rate": 0.0
+        }
        }
       }
      }
@@ -1051,8 +1017,8 @@
     "level": "dataset",
     "value": 0.05,
     "ci": null,
-    "gated": true,
-    "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.135 > 0.03",
+    "gated": false,
+    "note": "proxy from the label prior, not a model run",
     "details": {
      "proxy": "majority truth value over the 80 in-language fixtures",
      "majority_accuracy": 0.55,
@@ -1080,8 +1046,8 @@
     "level": "dataset",
     "value": 1.777777777778,
     "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.135 > 0.03",
+    "gated": false,
+    "note": "",
     "details": {
      "llm_accuracy": 0.45,
      "best_method": "loo-char3",
@@ -1105,8 +1071,8 @@
     "level": "protocol",
     "value": 0.3875,
     "ci": null,
-    "gated": true,
-    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.135 > 0.03",
+    "gated": false,
+    "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm",
     "details": {
      "em_free": 0.0625,
      "em_constrained": 0.4625,
@@ -1156,8 +1122,8 @@
     "level": "model_x_benchmark",
     "value": 1.0,
     "ci": null,
-    "gated": true,
-    "note": "gated: format sensitivity 0.135 > 0.03",
+    "gated": false,
+    "note": "",
     "details": {
      "n_ood": 80,
      "ood_answered_rate": 1.0,

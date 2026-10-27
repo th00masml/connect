@@ -64,9 +64,18 @@ def test_kripke_reproduces_published_numbers():
         assert len(forced) == kripke.published(run)["forced_fixtures"]
 
 
-def test_kripke_profile_is_gated_and_nobody_abstains():
+def test_kripke_offline_format_figure_is_prompt_variance_not_the_gate_statistic():
+    # The gate is defined on 5 meaning-preserving renderings; the cached run has 3 different prompts.
     prof = kripke.profile(kripke.MODELS[1], "gold")
-    assert prof.gated and prof.signals["format_sensitivity"].value > 0.03
+    fs = prof.signals["format_sensitivity"]
+    assert fs.value is None and not prof.gated and not prof.gate_evaluated
+    pv = fs.details["prompt_variance"]
+    assert pv["n_prompts"] == 3 and abs(pv["value"] - 0.130) < 1e-3
+    assert prof.signals["partial_input_accuracy"].details["proxy"]
+
+
+def test_kripke_nobody_abstains_and_leak_is_measurable():
+    prof = kripke.profile(kripke.MODELS[1], "gold")
     assert prof.signals["abstention_failure"].value == 1.0
     assert all(v == 1.0 for v in prof.signals["abstention_failure"].details["per_arm"].values())
     svg = prof.signals["semantic_validity_gap"].details
