@@ -6,3 +6,8 @@ dist/
 .pytest_cache/
 examples/out/
 .cache/
+.venv/
+venv/
+.ruff_cache/
+.coverage
+htmlcov/
