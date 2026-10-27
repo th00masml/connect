@@ -71,7 +71,7 @@ decimals are rounded from those fields.
 |---|---|---|---|
 | `ledger/retrospective_papers12.json` | `b33a7641dfc3d95958fed7b1c159380c1e16e87b8194411197add75f1f16a204` | `b2290d6a0187ba9500635516f8f9347977647cc474a99f4dd609015d489e9c76` | retrospective |
 | `ledger/prospective_template.json` | `7172b7e1b58941f4805859c92a07ad3a31f9563fe0f56042b3a27bffc9a45e36` | `7ad157f0d905ab4020ac97371e5ac62f7d3e686c6f64b632c458dcf5bee4423a` | retrospective (unfrozen) |
-| `outputs/paper12/ledger_score.json` | `440c9db2ca1d53831d27f730721007b2171c3fbbc1d4f5c9663af1873e5fb4aa` | n/a | generated |
+| `outputs/paper12/ledger_score.json` | `a5b1fadf7d79f9e3c5f56eb3160f7929a911483197d462d2840f9df547aba43e` | n/a | generated |
 | `papers/03-benchmark-artifact-signals/PROPOSAL.md` | `73dd0e3d2aa421248e6e09b0c6b2739d284f18f96e7ce0ecf7894b8c4a5c5b65` | n/a | proposal, edited in v0.2.0 (corrections) |
 
 Check with `python scripts/hash_ledger.py --check` or `sha256sum -c SHA256SUMS`. The ledger files

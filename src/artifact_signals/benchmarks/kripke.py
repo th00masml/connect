@@ -179,8 +179,8 @@ def profile(model: str = MODELS[1], run: str = "gold", root: Path = ROOT) -> Art
     # The three cached arms are different prompts, not the five meaning-preserving renderings the gate is
     # defined on, so their SD is reported as prompt variance and the gate statistic stays n/a offline.
     pv = format_sensitivity_from_runs(unc, bench)
-    pv_len = format_sensitivity_from_runs([r.rejudge(bench, lenient_judge) for r in unc], bench)
-    pv_truth = format_sensitivity_from_runs([r.rejudge(bench, truth_judge) for r in unc], bench)
+    pv_len = format_sensitivity_from_runs([r.rejudge(bench, lenient_judge) for r in unc], bench, n_boot=0)  # only .value is kept
+    pv_truth = format_sensitivity_from_runs([r.rejudge(bench, truth_judge) for r in unc], bench, n_boot=0)
     signals["format_sensitivity"] = Signal("format_sensitivity", None, details={"prompt_variance": {
         "value": pv.value, "ci": list(pv.ci) if pv.ci else None, "n_prompts": len(unc), "judge": "strict parse",
         "per_rendering": pv.details["per_rendering"],

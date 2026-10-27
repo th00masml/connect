@@ -50,3 +50,16 @@ def test_compute_profile_reports_scoring_key_validity_only_with_a_key():
     with_key = compute_profile(OracleModel(gold, 0.8), bench, n_boot=20, independent_key=checker_key)
     assert with_key.signals["scoring_key_validity"].value == 0.0
     assert "scoring_key_validity" not in compute_profile(OracleModel(gold, 0.8), bench, n_boot=20).signals
+
+
+def test_chapter_rule_returns_none_for_malformed_codes():
+    assert cod.chapter_from_code("K55.902") == "Digestive" and cod.chapter_from_code("D50.1") == "Blood"
+    for bad in ("Dxx", "C7A", "I-1", "D5", "", "9A0"):
+        assert cod.chapter_from_code(bad) is None, bad
+
+
+def test_folded_scoring_removes_injury_from_the_model_emit_space():
+    prof = cod.profile("M_comm_sonnet5", retrieval_methods=("char3",), fold_injury=True)
+    d = prof.signals["scoring_key_validity"].details
+    assert d["asymmetric_labels"] == ["Special"] and abs(d["label_space_asymmetry"] - 1 / 22) < 1e-12
+    assert set(d["predictions_in_asymmetric_labels"].values()) == {0}

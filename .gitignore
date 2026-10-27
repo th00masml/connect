@@ -11,3 +11,4 @@ venv/
 .ruff_cache/
 .coverage
 htmlcov/
+outputs/paper12_folded/

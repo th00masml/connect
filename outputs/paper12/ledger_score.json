@@ -84,7 +84,7 @@
    "threshold": 0.08,
    "confidence": 0.7,
    "family": "magnitude",
-   "value": 0.090909090909,
+   "value": 0.0909090909091,
    "status": "scored",
    "hit": false
   },

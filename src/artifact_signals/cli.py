@@ -38,7 +38,7 @@ def cmd_fetch(a: argparse.Namespace) -> int:
     from_rows, load = PUBLIC_SOURCES[a.source]
     if a.rows:
         rows = [json.loads(line) for line in open(a.rows, encoding="utf-8") if line.strip()]
-        n_rows = len(rows) if a.limit is None else min(len(rows), a.limit)
+        n_rows = min(len(rows), a.limit) if a.limit else len(rows)  # the loaders read limit=0 as no limit
         b = from_rows(rows, a.split, a.limit)
     else:
         b = load(a.split, a.limit)
@@ -88,9 +88,10 @@ def cmd_paper12(a: argparse.Namespace) -> int:
 
     from .paper12 import run_all
 
-    res = run_all(Path(a.out), fold_injury=a.fold_injury)
+    out = a.out or ("outputs/paper12_folded" if a.fold_injury else "outputs/paper12")  # never overwrite the committed outputs
+    res = run_all(Path(out), fold_injury=a.fold_injury)
     print(res["report"] if a.report else res["report"].split("## Ledger score")[0][-1200:])
-    print(f"wrote {a.out}/profiles.json, results.json, ledger_score.json, RESULTS_offline.md")
+    print(f"wrote {out}/profiles.json, results.json, ledger_score.json, RESULTS_offline.md")
     return 0
 
 
@@ -138,7 +139,7 @@ def build_parser() -> argparse.ArgumentParser:
     l.set_defaults(fn=cmd_ledger)
 
     q = sub.add_parser("paper12", help="offline Phase 1 on papers 1 and 2 from cached outputs")
-    q.add_argument("--out", default="outputs/paper12")
+    q.add_argument("--out", help="default outputs/paper12, or outputs/paper12_folded with --fold-injury")
     q.add_argument("--report", action="store_true", help="print the full markdown report")
     q.add_argument("--fold-injury", action="store_true",
                    help="score cause-of-death with Injury folded into ExternalCause (COD v2 secondary scoring)")
@@ -151,6 +152,8 @@ def main(argv: list[str] | None = None) -> int:
     a = p.parse_args(argv)
     if a.cmd == "ledger" and a.action == "score" and not a.results:
         p.error("ledger score requires a results file")
+    if a.cmd == "diagnose" and a.model.startswith("cached:") and not a.cache:
+        p.error("a cached: model replays saved outputs, so it needs --cache DIR")
     return a.fn(a)
 
 

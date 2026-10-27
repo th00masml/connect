@@ -21,7 +21,7 @@ FLOAT_DIGITS = 12
 
 def _rounded(x):
     if isinstance(x, float):
-        return round(x, FLOAT_DIGITS)
+        return float(f"{x:.{FLOAT_DIGITS}g}")  # significant digits: a p of 8e-25 must not become 0.0
     if isinstance(x, dict):
         return {k: _rounded(v) for k, v in x.items()}
     if isinstance(x, list):
@@ -30,7 +30,7 @@ def _rounded(x):
 
 
 def stable_json(obj) -> str:
-    """JSON with floats rounded to 12 decimals, so the committed outputs are byte-identical across
+    """JSON with floats rounded to 12 significant digits, so the committed outputs are byte-identical across
     CPython versions (3.12 changed float summation, which moves the 16th digit of some means)."""
     return json.dumps(_rounded(json.loads(json.dumps(obj, default=float))), indent=1)
 
@@ -70,6 +70,16 @@ def _f(x, d=3):
     return "n/a" if x is None else (f"{x:.{d}f}" if isinstance(x, float) else str(x))
 
 
+def probe_sentence(mp: dict) -> str:
+    src = "Source: `data/external/cod/probe_summary.json`, `data/external/cod/probe_results.jsonl`."
+    verdict = mp["verdict"].split(":")[0]
+    if mp["answered"] == 0:
+        return (f"Memorisation probe: {mp['n']} of {mp['n']} probe calls returned empty; {verdict}. The exact-code rate "
+                f"{mp['exact_code']:.2f} is over zero answered items, so it is not a score. {src}")
+    return (f"Memorisation probe: {mp['answered']} of {mp['n']} probe calls answered; exact-code rate {mp['exact_code']:.2f}; "
+            f"{verdict}. {src}")
+
+
 def _cod_v2_rows() -> list[str]:
     """Reproduce COD v2's Injury-folded headline from the cached predictions."""
     test, _ = cod.load()
@@ -94,7 +104,7 @@ def render_report(profiles: dict, results: dict, score: dict, *, fold_injury: bo
                "so its profile, interventions and ledger values differ from the preregistered-label report."
                if fold_injury else
                "Cause-of-death is scored on the preregistered labels; COD v2's Injury-folded scoring is reproduced in "
-               "the table below and in full by `artifact-signals paper12 --fold-injury`.")
+               "the table below and in full by `artifact-signals paper12 --fold-injury` (written to outputs/paper12_folded).")
     L = ["# Development set: retrospective reconstruction on papers 1 and 2", "",
          "Recomputed by `artifact-signals paper12` from `data/external/`. No model was run. Papers 1 and 2 are the",
          "development set: the instrument was built by inspecting them, so nothing here validates it. The ledger",
@@ -171,10 +181,7 @@ def render_report(profiles: dict, results: dict, score: dict, *, fold_injury: bo
           f"label TV vs uniform {r['label_marginal']['tv_label_vs_uniform_before']:.3f} -> {r['label_marginal']['tv_label_vs_uniform']:.3f}.", ""]
     mp = c.get("memorization_probe")
     if mp:
-        L += [f"Memorisation probe: {mp['n'] - mp['answered']} of {mp['n']} probe calls returned empty "
-              f"(answered {mp['answered']}); {mp['verdict'].split(':')[0]}. The exact-code rate {mp['exact_code']:.2f} is over "
-              "zero answered items, so it is not a score. Source: `data/external/cod/probe_summary.json`, "
-              "`data/external/cod/probe_results.jsonl`.", ""]
+        L += [probe_sentence(mp), ""]
     for m in kripke.MODELS:
         k = results[f"kripke@{kripke.SHORT[m]}"]
         L += [f"### kripke / {kripke.SHORT[m]}, constraint ablation (prompted vs constrained), EM = strict parse, semantic = truth value", "",

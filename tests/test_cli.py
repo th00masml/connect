@@ -75,3 +75,28 @@ def test_cached_model_refuses_to_invent_missing_outputs(tmp_path):
     item = generate(2, seed=0)[0]
     with pytest.raises(LookupError):
         from_spec("cached:hf:some/70B-model").generate([baseline_rendering()(item)])
+
+
+def test_cli_paper12_fold_injury_never_writes_into_the_committed_outputs(monkeypatch):
+    import artifact_signals.paper12 as p12
+    seen = {}
+    monkeypatch.setattr(p12, "run_all", lambda out, fold_injury=False: seen.update(out=str(out), fold=fold_injury) or {"report": ""})
+    main(["paper12", "--fold-injury"])
+    assert seen == {"out": "outputs/paper12_folded", "fold": True}
+    main(["paper12"])
+    assert seen == {"out": "outputs/paper12", "fold": False}
+
+
+def test_cli_fetch_limit_zero_means_no_limit(tmp_path, capsys):
+    assert main(["fetch", "--source", "folio", "--rows", "tests/fixtures/folio_rows_5.jsonl", "--limit", "0",
+                 "--out", str(tmp_path / "f.jsonl")]) == 0
+    out = capsys.readouterr().out
+    assert "wrote 4 items" in out and "skipped 1 " in out
+
+
+def test_cli_cached_model_requires_cache(tmp_path):
+    import pytest
+    te = tmp_path / "te.jsonl"
+    main(["synth", "--n", "10", "--out", str(te)])
+    with pytest.raises(SystemExit):
+        main(["diagnose", "--benchmark", str(te), "--model", "cached:hf:x/y"])

@@ -4,7 +4,7 @@ Recomputed by `artifact-signals paper12` from `data/external/`. No model was run
 development set: the instrument was built by inspecting them, so nothing here validates it. The ledger
 below is a protocol demonstration and is labelled retrospective by the scorer.
 
-Cause-of-death is scored on the preregistered labels; COD v2's Injury-folded scoring is reproduced in the table below and in full by `artifact-signals paper12 --fold-injury`.
+Cause-of-death is scored on the preregistered labels; COD v2's Injury-folded scoring is reproduced in the table below and in full by `artifact-signals paper12 --fold-injury` (written to outputs/paper12_folded).
 
 ## Reproduction check (published vs recomputed)
 
@@ -108,7 +108,7 @@ Cause-of-death is scored on the preregistered labels; COD v2's Injury-folded sco
 
 Cap-based rebalancing (<= 10 per chapter, n=139): LLM accuracy 0.667 -> 0.741, retrieval 0.707 -> 0.698, gap -0.040 -> +0.043; label TV vs uniform 0.331 -> 0.180.
 
-Memorisation probe: 30 of 30 probe calls returned empty (answered 0); INCONCLUSIVE. The exact-code rate 0.00 is over zero answered items, so it is not a score. Source: `data/external/cod/probe_summary.json`, `data/external/cod/probe_results.jsonl`.
+Memorisation probe: 30 of 30 probe calls returned empty; INCONCLUSIVE. The exact-code rate 0.00 is over zero answered items, so it is not a score. Source: `data/external/cod/probe_summary.json`, `data/external/cod/probe_results.jsonl`.
 
 ### kripke / 0.5B, constraint ablation (prompted vs constrained), EM = strict parse, semantic = truth value
 

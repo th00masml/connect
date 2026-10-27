@@ -57,10 +57,9 @@ def chapter_from_code(code: str) -> str | None:
     c = (code or "").strip().upper()
     if not c or not c[0].isalpha():
         return None
-    try:
-        num = int(c[1:3])
-    except ValueError:
-        num = 0
+    if not c[1:3].isdigit() or len(c[1:3]) != 2:  # paper 1's rule read an unparsable block as 00; here it is unkeyable
+        return None
+    num = int(c[1:3])
     return next((name for letter, lo, hi, name in _CHAPTER_TABLE if c[0] == letter and lo <= num <= hi), None)
 
 
@@ -156,7 +155,8 @@ def _profile(model_key: str, root: Path, retrieval_methods: tuple[str, ...], fol
                                            note="no unanswerable probes in the cached run; interventions.make_unanswerable for a live run")
     skv = scoring_key_validity(
         test, rule=lambda it: chapter_from_code(it.meta["code"]),
-        emit_spaces={runs[k].model: set(CHAPTERS) for k in LLM_METHODS} | {fuzzy.model: {i.label for i in dictionary}},
+        emit_spaces={runs[k].model: {INJURY_FOLD.get(c, c) for c in CHAPTERS} if fold_injury else set(CHAPTERS)
+                     for k in LLM_METHODS} | {fuzzy.model: {i.label for i in dictionary}},
         runs={k: runs[k] for k in (*LLM_METHODS, "B_fuzzy")})
     skv.note = ("no independent key offline: chapter labels are derived from the ICD codes by the same rule, so "
                 "re-keying would only test consistency; asymmetry = labels the dictionary baseline cannot emit")
