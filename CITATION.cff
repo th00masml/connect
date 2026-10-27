@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "artifact-signals: pre-registered diagnostic signals for benchmark artifacts in LLM reasoning evaluation"
+type: software
+authors:
+  - alias: th00masml
+version: 0.2.0
+license: MIT
+repository-code: "https://github.com/th00masml/connect"
+abstract: >-
+  An instrument for distinguishing genuine reasoning capability from benchmark artifacts:
+  six diagnostic signals reported as an Artifact Risk Profile, five interventions with
+  manipulation checks, and a hashed prediction ledger scored against a naive predictor.
+keywords:
+  - evaluation
+  - benchmark artifacts
+  - language models
+  - reasoning
+  - preregistration

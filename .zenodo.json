@@ -1,0 +1,9 @@
+{
+  "title": "artifact-signals: pre-registered diagnostic signals for benchmark artifacts in LLM reasoning evaluation",
+  "upload_type": "software",
+  "version": "0.2.0",
+  "creators": [{"name": "th00masml"}],
+  "license": "MIT",
+  "description": "An instrument for distinguishing genuine reasoning capability from benchmark artifacts: six diagnostic signals reported as an Artifact Risk Profile, five interventions with manipulation checks, and a hashed prediction ledger scored against a naive predictor.",
+  "keywords": ["evaluation", "benchmark artifacts", "language models", "reasoning", "preregistration"]
+}
