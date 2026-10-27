@@ -106,6 +106,8 @@ rather than the model: under the leakage sweep retrieval falls 0.64 to 0.19 whil
 calls returned empty, so its exact-code rate of 0.00 is over zero answered items
 ([`data/external/cod/probe_summary.json`](data/external/cod/probe_summary.json)).
 The retrospective ledger scores 4 of 5; the miss (P01) predicted the LLM's own score would drop.
+P01 to P05 restate the two papers' own published tables (PROPOSAL, Section I), so those hits are
+retrospective by construction.
 Papers 1 and 2 are the development set, so that score demonstrates the protocol and validates
 nothing; the prospective ledger for FOLIO, LogiQA and the synthetic control is the paper's result.
 

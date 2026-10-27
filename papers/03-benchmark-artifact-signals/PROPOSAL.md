@@ -162,7 +162,9 @@ the profile and the offline-computable interventions without a model call. The f
   drops from 0.8 to 0.4 the retrieval baseline falls from 0.64 to 0.19 while the LLM climbs from
   0.66 to 0.88.
 
-The retrospective ledger scores 4 of 5 scorable predictions (P06 needs a third model size). That
+The retrospective ledger scores 4 of 5 scorable predictions (P06 needs a third model size; P14 needs
+an abstention-enabled cause-of-death run), and P01 to P05 restate the source papers' own tables
+(note in Section I). That
 number is a protocol demonstration on the development set and is presented as nothing more: the
 outcomes were published before the predictions existed, and the mapping from prediction to
 cached quantity was fixed while building the report. The paper's result is the prospective
@@ -234,7 +236,18 @@ Two ledgers with different epistemic status. `ledger/retrospective_papers12.json
 development-set predictions below (P01 to P06, P14); its outcomes were public when it was
 written, so scoring it demonstrates the protocol and validates nothing. `ledger/prospective_template.json`
 holds the test-set entries (P07 to P13) and stays labelled retrospective until the freeze
-procedure in its metadata is complete. Illustrative entries, each with its confidence:
+procedure in its metadata is complete.
+
+*Note (v0.2): P01 to P05 restate the two source papers' own tables.* P01 and P02 are the HARD-subset
+rows of paper 1's results table (claude-sonnet-5 0.758 vs the fuzzy dictionary 0.364 on the 33
+low-similarity strings, against 0.667 vs 0.707 overall). P03 re-expresses paper 1's published
+accuracy-by-similarity bins as a point-biserial on the same per-item data. P04 and P05 are paper 2's
+strict-exact and truth-value counts for the prompted and constrained arms. Their hits are therefore
+retrospective by construction: they confirm that each prediction's wording maps onto a number the
+papers had already published, and they are not prospective evidence for the instrument. The
+paper's evidence is the prospective ledger alone.
+
+Illustrative entries, each with its confidence:
 
 1. Cause-of-death, leakage-aware resplit: LLM accuracy falls by more than 8 points absolute; the retrieval baseline falls by more, so the LLM-minus-retrieval gap *widens* by at least 5 points. Confidence 0.7. (Paper 1 predicts widening because the LLM advantage was concentrated on novel cases; if the gap narrows instead, H1's causal story is wrong.)
 2. Cause-of-death, the point-biserial correlation between fuzzy similarity and correctness drops below 0.15 after resplitting. Confidence 0.8. This is the manipulation check for intervention 1.
