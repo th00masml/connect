@@ -1,16 +1,20 @@
 # Vendored slices of the two source repositories
 
-Regenerate with `python scripts/sync_external.py` from sibling clones.
+Regenerate with `python scripts/sync_external.py` from sibling clones of the two companion
+repositories (papers 1 and 2). Both are not yet public; the slices here are what the analysis
+reads, so nothing in this repository needs them.
 
-## `cod/`  from https://github.com/th00masml/cause-of-death-coding
+## `cod/`  from the paper 1 companion repository (not yet public), commit 9b6015f
 
 `test.json` (300 held-out strings), `dictionary.json` (3,006 lookup strings), the cached
 predictions of the four methods, `test_dictsim.json` (best char-3gram cosine to the
-dictionary per test item), the raw model outputs, and the published summary.
+dictionary per test item), the raw model outputs, the published summary, the published
+`paper_stats.json` (including the COD v2 Injury-folded scoring), and the memorisation probe
+(`probe_summary.json`, `probe_results.jsonl`: 30 calls, 0 answered).
 Underlying data: ICD10h historic strings (Reid, Garrett, Hiltunen Maltesdotter, Cambridge,
 2024), CC-BY 4.0. Only the derived chapter-level slice is vendored.
 
-## `kripke/`  from https://github.com/th00masml/kripke-modal-accessibility
+## `kripke/`  from the paper 2 companion repository (not yet public), commit e927bdb
 
 `fixtures.jsonl` (160 fixtures: 80 in-language, 80 out-of-language), the raw outputs of the
 `gold` run (admissible set = gold judgements, leaks 25/80) and the `product` replication

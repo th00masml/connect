@@ -1,4 +1,4 @@
-"""Paper 1: historical cause-of-death coding (th00masml/cause-of-death-coding).
+"""Paper 1: historical cause-of-death coding (paper 1 companion repository, not yet public).
 
 300 held-out historic strings -> one of 22 ICD-10 chapters. Cached: majority and fuzzy
 char-3gram dictionary baselines, qwen2.5:14b, claude-sonnet-5, and per-item best dictionary

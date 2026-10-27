@@ -121,8 +121,8 @@ Specific citation is deferred to the full write-up, with two exceptions worth na
 
 ### G.0 Phase 1 on benchmarks A and B is already done, offline
 
-Both source repositories ship their cached model outputs (`cause-of-death-coding/outputs/`,
-`kripke-modal-accessibility/outputs/{gold,product}/`). The instrument reads them directly
+Both source repositories (companion repositories, not yet public) ship their cached model
+outputs, vendored here under `data/external/`. The instrument reads them directly
 (`artifact-signals paper12`), reproduces every published number to the item, and computes
 the profile and the offline-computable interventions without a model call. The full report is
 `outputs/paper12/RESULTS_offline.md`. What it already settles:

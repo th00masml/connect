@@ -1,4 +1,4 @@
-"""Paper 2: Kripke modal accessibility (th00masml/kripke-modal-accessibility).
+"""Paper 2: Kripke modal accessibility (paper 2 companion repository, not yet public).
 
 160 fixtures: 80 in-language (gold judgement "w_i |= F iff TRUE/FALSE.") and 80 out-of-language
 (correct output is empty). Two Qwen2.5 models x five arms, two runs: `gold` (constraint set built
