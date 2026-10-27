@@ -16,7 +16,8 @@ Evaluation of Reasoning in Language Models*, with its offline Phase 1 on papers 
 | `docs/signals.md` | estimator and clean value for each signal, D-001 to D-006 |
 | `papers/03-benchmark-artifact-signals/PROPOSAL.md` | the proposal |
 | `scripts/verify.sh` | the single entry point that regenerates every CPU-reproducible claim |
-| `tests/` | 64 tests, CPU only, no network |
+| `scripts/build_deposit.py`, `docs/DEPOSIT.md` | freeze procedure and the reproducible deposit bundle (not yet built: the ledger is not frozen) |
+| `tests/` | 72 tests, CPU only, no network |
 
 ## One command
 

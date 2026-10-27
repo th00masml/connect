@@ -12,3 +12,4 @@ venv/
 .coverage
 htmlcov/
 outputs/paper12_folded/
+dist/
