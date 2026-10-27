@@ -142,6 +142,10 @@ def render_report(profiles: dict, results: dict, score: dict, *, fold_injury: bo
                 extra = f"label-vs-uniform={d['label_marginal']['tv_vs_uniform']:.3f}"
                 if d.get("model_truth_dist_prompted"):
                     extra += "; model truth dist: " + ", ".join(f"{a}={b}" for a, b in d["model_truth_dist_prompted"].items())
+            if k == "scoring_key_validity" and "asymmetric_labels" in d:
+                extra = (f"label-space asymmetry={d['label_space_asymmetry']:.3f} ({', '.join(d['asymmetric_labels'])}); "
+                         "predictions in those labels: " + ", ".join(f"{m}={c}" for m, c in d["predictions_in_asymmetric_labels"].items())
+                         + f"; rule null rate={d['rule_null_rate']:.3f}")
             if k == "abstention_failure" and d.get("per_arm"):
                 extra = ", ".join(f"{a}={v:.2f}" for a, v in d["per_arm"].items())
             note = (s.get("note") or "") + (("; " + extra) if (extra and s.get("note")) else extra)

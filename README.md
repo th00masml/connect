@@ -43,6 +43,11 @@ four are marked uninterpretable at the benchmark level. The label prior is repor
 partial-input accuracy (a prior only matters if a model can exploit it without the input);
 `label_prior_skew` remains in the library as an auxiliary and is not part of the paper.
 
+A sixth signal, `scoring_key_validity` (D-006, added in v0.2), checks the scoring key itself:
+disagreement with an independent re-scoring, the rule null rate, and label-space asymmetry
+between compared systems. It is not part of the retrospective ledger. Estimators and clean values
+for all six (D-001 to D-006) are in [`docs/signals.md`](docs/signals.md).
+
 **Five interventions** (`interventions.py`), each with a manipulation check on the signal it
 targets, plus a cross-model invariance check that voids predictions when a filter removes
 signal rather than artifact:
@@ -126,6 +131,7 @@ Model specs: `dummy:oracle:0.8`, `dummy:first`, `dummy:constant:TRUE`, `dummy:re
 
 ```
 papers/03-benchmark-artifact-signals/PROPOSAL.md   the proposal
+docs/signals.md                                    estimators and clean values, D-001 to D-006
 src/artifact_signals/                              the instrument
 src/artifact_signals/benchmarks/{cod,kripke}.py    adapters for papers 1 and 2 (reproduce, profile, intervene)
 data/external/                                     vendored slices of both source repos (scripts/sync_external.py)

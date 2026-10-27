@@ -10,7 +10,8 @@
    "partial_input_accuracy": 0.107878787879,
    "retrieval_dominance": 1.261904761905,
    "semantic_validity_gap": 0.003333333333,
-   "abstention_failure": null
+   "abstention_failure": null,
+   "scoring_key_validity": null
   },
   "signals": {
    "format_sensitivity": {
@@ -133,6 +134,106 @@
     "gated": false,
     "note": "no unanswerable probes in the cached run; interventions.make_unanswerable for a live run",
     "details": {}
+   },
+   "scoring_key_validity": {
+    "name": "scoring_key_validity",
+    "level": "dataset",
+    "value": null,
+    "ci": null,
+    "gated": false,
+    "note": "no independent key offline: chapter labels are derived from the ICD codes by the same rule, so re-keying would only test consistency; asymmetry = labels the dictionary baseline cannot emit",
+    "details": {
+     "n": 300,
+     "rule_null_rate": 0.0,
+     "emit_spaces": {
+      "qwen2.5:14b": [
+       "Blood",
+       "Circulatory",
+       "Congenital",
+       "Digestive",
+       "Ear",
+       "Endocrine/metabolic",
+       "ExternalCause",
+       "Eye",
+       "Factors",
+       "Genitourinary",
+       "Ill-defined",
+       "Infectious",
+       "Injury",
+       "Mental",
+       "Musculoskeletal",
+       "Neoplasm",
+       "Nervous",
+       "Perinatal",
+       "Pregnancy",
+       "Respiratory",
+       "Skin",
+       "Special"
+      ],
+      "claude-sonnet-5": [
+       "Blood",
+       "Circulatory",
+       "Congenital",
+       "Digestive",
+       "Ear",
+       "Endocrine/metabolic",
+       "ExternalCause",
+       "Eye",
+       "Factors",
+       "Genitourinary",
+       "Ill-defined",
+       "Infectious",
+       "Injury",
+       "Mental",
+       "Musculoskeletal",
+       "Neoplasm",
+       "Nervous",
+       "Perinatal",
+       "Pregnancy",
+       "Respiratory",
+       "Skin",
+       "Special"
+      ],
+      "fuzzy-char3-dictionary": [
+       "Blood",
+       "Circulatory",
+       "Congenital",
+       "Digestive",
+       "Ear",
+       "Endocrine/metabolic",
+       "ExternalCause",
+       "Eye",
+       "Factors",
+       "Genitourinary",
+       "Ill-defined",
+       "Infectious",
+       "Mental",
+       "Musculoskeletal",
+       "Neoplasm",
+       "Nervous",
+       "Perinatal",
+       "Pregnancy",
+       "Respiratory",
+       "Skin"
+      ]
+     },
+     "asymmetric_labels": [
+      "Injury",
+      "Special"
+     ],
+     "label_space_asymmetry": 0.090909090909,
+     "labels_without_gold_support": [
+      "Eye",
+      "Injury",
+      "Factors",
+      "Special"
+     ],
+     "predictions_in_asymmetric_labels": {
+      "qwen2.5:14b": 31,
+      "claude-sonnet-5": 15,
+      "fuzzy-char3-dictionary": 0
+     }
+    }
    }
   }
  },
@@ -147,7 +248,8 @@
    "partial_input_accuracy": 0.107878787879,
    "retrieval_dominance": 1.06,
    "semantic_validity_gap": 0.0,
-   "abstention_failure": null
+   "abstention_failure": null,
+   "scoring_key_validity": null
   },
   "signals": {
    "format_sensitivity": {
@@ -270,6 +372,106 @@
     "gated": false,
     "note": "no unanswerable probes in the cached run; interventions.make_unanswerable for a live run",
     "details": {}
+   },
+   "scoring_key_validity": {
+    "name": "scoring_key_validity",
+    "level": "dataset",
+    "value": null,
+    "ci": null,
+    "gated": false,
+    "note": "no independent key offline: chapter labels are derived from the ICD codes by the same rule, so re-keying would only test consistency; asymmetry = labels the dictionary baseline cannot emit",
+    "details": {
+     "n": 300,
+     "rule_null_rate": 0.0,
+     "emit_spaces": {
+      "qwen2.5:14b": [
+       "Blood",
+       "Circulatory",
+       "Congenital",
+       "Digestive",
+       "Ear",
+       "Endocrine/metabolic",
+       "ExternalCause",
+       "Eye",
+       "Factors",
+       "Genitourinary",
+       "Ill-defined",
+       "Infectious",
+       "Injury",
+       "Mental",
+       "Musculoskeletal",
+       "Neoplasm",
+       "Nervous",
+       "Perinatal",
+       "Pregnancy",
+       "Respiratory",
+       "Skin",
+       "Special"
+      ],
+      "claude-sonnet-5": [
+       "Blood",
+       "Circulatory",
+       "Congenital",
+       "Digestive",
+       "Ear",
+       "Endocrine/metabolic",
+       "ExternalCause",
+       "Eye",
+       "Factors",
+       "Genitourinary",
+       "Ill-defined",
+       "Infectious",
+       "Injury",
+       "Mental",
+       "Musculoskeletal",
+       "Neoplasm",
+       "Nervous",
+       "Perinatal",
+       "Pregnancy",
+       "Respiratory",
+       "Skin",
+       "Special"
+      ],
+      "fuzzy-char3-dictionary": [
+       "Blood",
+       "Circulatory",
+       "Congenital",
+       "Digestive",
+       "Ear",
+       "Endocrine/metabolic",
+       "ExternalCause",
+       "Eye",
+       "Factors",
+       "Genitourinary",
+       "Ill-defined",
+       "Infectious",
+       "Mental",
+       "Musculoskeletal",
+       "Neoplasm",
+       "Nervous",
+       "Perinatal",
+       "Pregnancy",
+       "Respiratory",
+       "Skin"
+      ]
+     },
+     "asymmetric_labels": [
+      "Injury",
+      "Special"
+     ],
+     "label_space_asymmetry": 0.090909090909,
+     "labels_without_gold_support": [
+      "Eye",
+      "Injury",
+      "Factors",
+      "Special"
+     ],
+     "predictions_in_asymmetric_labels": {
+      "qwen2.5:14b": 31,
+      "claude-sonnet-5": 15,
+      "fuzzy-char3-dictionary": 0
+     }
+    }
    }
   }
  },

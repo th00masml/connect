@@ -15,7 +15,7 @@ import random
 import string
 
 from .data import ABSTAIN, Benchmark, Item
-from .modal import Frame, atoms_in, evaluate, random_formula, random_frame, to_str, uses_modal
+from .modal import Frame, ParseError, atoms_in, evaluate, parse, random_formula, random_frame, to_str, uses_modal
 
 TRUTH_OPTIONS = ["TRUE", "FALSE"]
 
@@ -113,6 +113,19 @@ def generate(
         raise RuntimeError(f"could not generate {n} items (got {len(items)}); relax constraints")
     rng.shuffle(items)
     return Benchmark(name or f"synthmodal-{task}", items)
+
+
+def checker_key(item: Item) -> str | None:
+    """Independent key for a truth item: re-evaluate its stored formula on its stored frame with the
+    three-valued model checker. Undetermined -> ABSTAIN; None when the item cannot be re-keyed."""
+    m = item.meta
+    if m.get("task") != "truth":
+        return None
+    try:
+        val = evaluate(parse(m["formula"]), Frame.from_dict(m["frame"]), m["world"])
+    except (ParseError, KeyError):
+        return None
+    return ABSTAIN if val is None else ("TRUE" if val else "FALSE")
 
 
 def _truth_item(k: int, frame: Frame, formula, w: str, label: str, atoms: list[str], ood: bool = False) -> Item:

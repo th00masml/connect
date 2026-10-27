@@ -18,7 +18,8 @@ from ..evaluate import Run
 from ..interventions import LEAKAGE
 from ..judge import exact_match, lenient_choice
 from ..retrieval import char3_sim
-from ..signals import ArtifactRiskProfile, Signal, constraint_gain_from_runs, label_marginal, retrieval_dominance
+from ..signals import (ArtifactRiskProfile, Signal, constraint_gain_from_runs, label_marginal, retrieval_dominance,
+                       scoring_key_validity)
 from ..stats import macro_f1, mean, point_biserial, tv_distance
 
 ROOT = Path(os.environ.get("ARTIFACT_SIGNALS_DATA", Path(__file__).resolve().parents[3] / "data" / "external")) / "cod"
@@ -41,6 +42,27 @@ HARD_THRESHOLD = 0.5
 # COD v2 secondary scoring: ICD10h files nature-of-injury (S-T) in a separate column, so the primary
 # column never holds Injury and the dictionary baseline can never emit it; folding maps it to ExternalCause.
 INJURY_FOLD = {"Injury": "ExternalCause"}
+
+
+# ICD-10 letter + two-digit block -> chapter: port of paper 1's label rule (common_coding.chapter).
+_CHAPTER_TABLE = [("A", 0, 99, "Infectious"), ("B", 0, 99, "Infectious"), ("C", 0, 99, "Neoplasm"), ("D", 0, 48, "Neoplasm"),
+                  ("D", 50, 89, "Blood"), ("E", 0, 99, "Endocrine/metabolic"), ("F", 0, 99, "Mental"), ("G", 0, 99, "Nervous"),
+                  ("H", 0, 59, "Eye"), ("H", 60, 95, "Ear"), ("I", 0, 99, "Circulatory"), ("J", 0, 99, "Respiratory"),
+                  ("K", 0, 99, "Digestive"), ("L", 0, 99, "Skin"), ("M", 0, 99, "Musculoskeletal"), ("N", 0, 99, "Genitourinary"),
+                  ("O", 0, 99, "Pregnancy"), ("P", 0, 99, "Perinatal"), ("Q", 0, 99, "Congenital"), ("R", 0, 99, "Ill-defined"),
+                  ("S", 0, 99, "Injury"), ("T", 0, 99, "Injury"), ("V", 0, 99, "ExternalCause"), ("W", 0, 99, "ExternalCause"),
+                  ("X", 0, 99, "ExternalCause"), ("Y", 0, 99, "ExternalCause"), ("Z", 0, 99, "Factors"), ("U", 0, 99, "Special")]
+
+
+def chapter_from_code(code: str) -> str | None:
+    c = (code or "").strip().upper()
+    if not c or not c[0].isalpha():
+        return None
+    try:
+        num = int(c[1:3])
+    except ValueError:
+        num = 0
+    return next((name for letter, lo, hi, name in _CHAPTER_TABLE if c[0] == letter and lo <= num <= hi), None)
 
 
 def parse_chapter(text: str) -> str | None:
@@ -119,7 +141,7 @@ def _profile(model_key: str, root: Path, retrieval_methods: tuple[str, ...], fol
     signals: dict[str, Signal] = {}
     signals["format_sensitivity"] = Signal("format_sensitivity", None,
                                            note="single prompt in the cached run; needs a live re-run under standard_renderings")
-    maj = runs["B_majority"]
+    maj, fuzzy = runs["B_majority"], runs["B_fuzzy"]
     signals["partial_input_accuracy"] = Signal(
         "partial_input_accuracy", maj.accuracy - 1 / len(CHAPTERS),
         details={"proxy": "majority-class baseline stands in for options-only input (no premises exist to withhold)",
@@ -133,6 +155,13 @@ def _profile(model_key: str, root: Path, retrieval_methods: tuple[str, ...], fol
     signals["semantic_validity_gap"] = constraint_gain_from_runs(strict, llm, test, sem_judge=lenient_choice)
     signals["abstention_failure"] = Signal("abstention_failure", None,
                                            note="no unanswerable probes in the cached run; interventions.make_unanswerable for a live run")
+    skv = scoring_key_validity(
+        test, rule=lambda it: chapter_from_code(it.meta["code"]),
+        emit_spaces={runs[k].model: set(CHAPTERS) for k in LLM_METHODS} | {fuzzy.model: {i.label for i in dictionary}},
+        runs={k: runs[k] for k in (*LLM_METHODS, "B_fuzzy")})
+    skv.note = ("no independent key offline: chapter labels are derived from the ICD codes by the same rule, so "
+                "re-keying would only test consistency; asymmetry = labels the dictionary baseline cannot emit")
+    signals["scoring_key_validity"] = skv
     return ArtifactRiskProfile("cause_of_death", llm.model, signals).apply_gate()
 
 

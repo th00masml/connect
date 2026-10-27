@@ -10,8 +10,9 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass, field
+from typing import Callable
 
-from .data import ABSTAIN, Benchmark
+from .data import ABSTAIN, Benchmark, Item
 from .evaluate import Cache, Run, run_model
 from .judge import Judge, exact_match
 from .render import Rendering, abstention_rendering, baseline_rendering, partial_input_renderings, standard_renderings
@@ -32,6 +33,7 @@ SIGNAL_LEVEL = {
     "retrieval_dominance": "dataset",            # a non-parametric baseline vs the split; the ratio to an LLM is model x benchmark
     "semantic_validity_gap": "protocol",         # a decoding protocol's effect on two metrics; forced_rate needs no model at all
     "abstention_failure": "model_x_benchmark",
+    "scoring_key_validity": "dataset",          # the key the benchmark is scored against, before any model runs
 }
 
 
@@ -270,6 +272,44 @@ def abstention_failure(model, bench: Benchmark, judge: Judge = exact_match, rend
     return abstention_failure_from_run(run_model(model, bench, rendering, judge, cache=cache), bench)
 
 
+# --- 7. scoring-key validity ---------------------------------------------------------------------
+
+
+def scoring_key_validity(bench: Benchmark, *, independent_key: Callable[[Item], str | None] | None = None,
+                         rule: Callable[[Item], str | None] | None = None,
+                         emit_spaces: dict[str, set[str]] | None = None,
+                         runs: dict[str, Run] | None = None) -> Signal:
+    """D-006. Value: share of items whose benchmark label disagrees with an independent re-scoring of the
+    same item (None without an independent key). Details: the rule null rate (items the scoring rule, or
+    else the independent key, cannot key at all) and label-space asymmetry (labels some compared system
+    can emit and another structurally cannot, as a share of the label space). Clean value: 0 for all three."""
+    items = bench.items
+    n = len(items)
+    details: dict = {"n": n}
+    value = None
+    if independent_key is not None:
+        keyed = {i.id: independent_key(i) for i in items}
+        ok = [i for i in items if keyed[i.id] is not None]
+        bad = [i.id for i in ok if keyed[i.id] != i.label]
+        value = len(bad) / len(ok) if ok else None
+        details.update({"n_keyed": len(ok), "disagreeing_ids": bad})
+    keyer = rule or independent_key
+    if keyer is not None:
+        details["rule_null_rate"] = sum(1 for i in items if keyer(i) is None) / n if n else 0.0
+    if emit_spaces:
+        space = bench.label_space()
+        sets = list(emit_spaces.values())
+        asym = sorted((set.union(*sets) - set.intersection(*sets)) & set(space))
+        details.update({"emit_spaces": {k: sorted(v) for k, v in emit_spaces.items()}, "asymmetric_labels": asym,
+                        "label_space_asymmetry": len(asym) / len(space) if space else 0.0,
+                        "labels_without_gold_support": [c for c in space if not any(i.label == c for i in items)]})
+        if runs:
+            details["predictions_in_asymmetric_labels"] = {
+                r.model: sum(1 for a in r.answers.values() if a in asym) for r in runs.values()}
+    note = "" if independent_key is not None else "no independent key supplied"
+    return Signal("scoring_key_validity", value, details=details, note=note)
+
+
 # --- profile ---------------------------------------------------------------------------------
 
 
@@ -339,6 +379,7 @@ def compute_profile(
     n_boot: int = N_BOOT,
     seed: int = 0,
     cache: Cache | None = None,
+    independent_key: Callable[[Item], str | None] | None = None,
 ) -> ArtifactRiskProfile:
     signals: dict[str, Signal] = {}
     fs, runs = format_sensitivity(model, bench, judge, renderings, n_boot=n_boot, seed=seed, cache=cache)
@@ -357,4 +398,6 @@ def compute_profile(
     else:
         signals["semantic_validity_gap"] = Signal("semantic_validity_gap", None, note="no semantic judge supplied")
     signals["abstention_failure"] = abstention_failure(model, bench, judge, cache=cache)
+    if independent_key is not None:
+        signals["scoring_key_validity"] = scoring_key_validity(bench, independent_key=independent_key)
     return ArtifactRiskProfile(bench.name, model.name, signals, fs_gate).apply_gate()

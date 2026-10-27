@@ -40,6 +40,7 @@ Cause-of-death is scored on the preregistered labels; COD v2's Injury-folded sco
 | retrieval_dominance | dataset | 1.262 | corr=+0.055, gap=-0.147, best=char3 |
 | semantic_validity_gap | protocol | 0.003 | cg=+0.003, sg=+0.000 |
 | abstention_failure | model_x_benchmark | n/a | no unanswerable probes in the cached run; interventions.make_unanswerable for a live run |
+| scoring_key_validity | dataset | n/a | no independent key offline: chapter labels are derived from the ICD codes by the same rule, so re-keying would only test consistency; asymmetry = labels the dictionary baseline cannot emit; label-space asymmetry=0.091 (Injury, Special); predictions in those labels: qwen2.5:14b=31, claude-sonnet-5=15, fuzzy-char3-dictionary=0; rule null rate=0.000 |
 
 ### cause_of_death@claude-sonnet-5
 
@@ -50,6 +51,7 @@ Cause-of-death is scored on the preregistered labels; COD v2's Injury-folded sco
 | retrieval_dominance | dataset | 1.060 | corr=-0.047, gap=-0.040, best=char3 |
 | semantic_validity_gap | protocol | 0.000 | cg=+0.000, sg=+0.000 |
 | abstention_failure | model_x_benchmark | n/a | no unanswerable probes in the cached run; interventions.make_unanswerable for a live run |
+| scoring_key_validity | dataset | n/a | no independent key offline: chapter labels are derived from the ICD codes by the same rule, so re-keying would only test consistency; asymmetry = labels the dictionary baseline cannot emit; label-space asymmetry=0.091 (Injury, Special); predictions in those labels: qwen2.5:14b=31, claude-sonnet-5=15, fuzzy-char3-dictionary=0; rule null rate=0.000 |
 
 ### kripke@gold@0.5B
 
