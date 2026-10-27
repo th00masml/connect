@@ -16,7 +16,7 @@ Evaluation of Reasoning in Language Models*, with its offline Phase 1 on papers 
 | `docs/signals.md` | estimator and clean value for each signal, D-001 to D-006 |
 | `papers/03-benchmark-artifact-signals/PROPOSAL.md` | the proposal |
 | `scripts/verify.sh` | the single entry point that regenerates every CPU-reproducible claim |
-| `tests/` | 57 tests, CPU only, no network |
+| `tests/` | 64 tests, CPU only, no network |
 
 ## One command
 
@@ -52,7 +52,7 @@ decimals are rounded from those fields.
 | 10 | Memorisation probe inconclusive: 30 of 30 calls returned empty | `paper12` | CPU | ~20 s | `results.json`: `cause_of_death.memorization_probe.answered` = 0 | yes |
 | 11 | Partial-input accuracy offline is a proxy: 0.108 (COD), 0.050 (Kripke) | `paper12` | CPU | ~20 s | rows marked `(proxy)` | yes |
 | 12 | D-006 on cause-of-death: label-space asymmetry 2/22 = 0.091 (Injury, Special); Injury predictions Sonnet 15, Qwen 31, dictionary 0; rule null rate 0 | `paper12` | CPU | ~20 s | `profiles.json`: `cause_of_death@*.signals.scoring_key_validity.details` | yes |
-| 13 | D-006 is 0 on SynthModal-Control against the model checker, and counts injected label flips exactly | `pytest tests/test_scoring_key.py` | CPU | ~6 s | 5 passed | yes |
+| 13 | D-006 is 0 on SynthModal-Control against the model checker, and counts injected label flips exactly | `pytest tests/test_scoring_key.py` | CPU | ~6 s | 7 passed | yes |
 | 14 | SynthModal-Control is deterministic for a fixed seed | `scripts/verify.sh`, step 6 | CPU | <1 s | `synth --n 400 --seed 0 --ood-frac 0.1` sha256 `aeb68a806a3d188393f66394c6cc03c3f00153b9499b548b9b641ec96b9e1a3d` | yes |
 
 ### Not reproducible from this repository today

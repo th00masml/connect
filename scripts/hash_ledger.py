@@ -38,8 +38,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args(argv)
-    sys.path.insert(0, str(a.root / "src"))
-    sys.path.insert(1, str(Path(__file__).resolve().parents[1] / "src"))
+    # import this script's own package, never code from the tree being checked
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
     from artifact_signals.ledger import Ledger
 
     want = expected(a.root) if a.check else {}
