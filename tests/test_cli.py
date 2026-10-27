@@ -51,3 +51,27 @@ def test_cli_fetch_logiqa_from_local_rows(tmp_path):
     assert len(b) == 5 and [i.label for i in b] == ["Kel is green.", "The lamp is off.", "No quibs are lums.", "Cy",
                                                     "The guard is present."]
     assert all(len(i.options) == 4 and i.label in i.options for i in b)
+
+
+def test_cli_diagnose_replays_saved_outputs_without_the_model(tmp_path):
+    # The 70B path: generate on rented hardware with --cache, copy the cache back, score here.
+    tr, te, cache = tmp_path / "tr.jsonl", tmp_path / "te.jsonl", tmp_path / "cache"
+    main(["synth", "--n", "30", "--seed", "1", "--out", str(tr)])
+    main(["synth", "--n", "30", "--seed", "2", "--ood-frac", "0.2", "--out", str(te)])
+    live, replay = tmp_path / "live.json", tmp_path / "replay.json"
+    args = ["--benchmark", str(te), "--train", str(tr), "--n-boot", "20", "--cache", str(cache)]
+    assert main(["diagnose", "--model", "dummy:oracle:0.8", *args, "--out", str(live)]) == 0
+    name = json.load(open(live))["model"]
+    assert main(["diagnose", "--model", f"cached:{name}", *args, "--out", str(replay)]) == 0
+    assert json.load(open(replay))["vector"] == json.load(open(live))["vector"]
+
+
+def test_cached_model_refuses_to_invent_missing_outputs(tmp_path):
+    import pytest
+
+    from artifact_signals.models import from_spec
+    from artifact_signals.render import baseline_rendering
+    from artifact_signals.synth import generate
+    item = generate(2, seed=0)[0]
+    with pytest.raises(LookupError):
+        from_spec("cached:hf:some/70B-model").generate([baseline_rendering()(item)])

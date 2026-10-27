@@ -152,6 +152,18 @@ class NoisyFormatModel:
 # --- real adapters (lazy imports) -------------------------------------------------
 
 
+class CachedModel:
+    """Replays outputs saved in a Cache by a run of `name` elsewhere (e.g. a 70B model on rented GPUs);
+    never loads weights. run_model only calls generate on cache misses, and a miss is an error here."""
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def generate(self, prompts: list[Prompt], constrained: bool = False) -> list[Generation]:
+        raise LookupError(f"no saved output from {self.name} for {len(prompts)} prompt(s) "
+                          f"(e.g. item {prompts[0].item_id if prompts else '?'}); run that model with the same --cache first")
+
+
 class HFModel:
     """transformers causal LM. Greedy decoding; choice constraint by candidate log-prob scoring;
     regex constraint via `outlines` if installed, else falls back to unconstrained and flags it."""
@@ -280,8 +292,10 @@ class OpenAICompatModel:
 def from_spec(spec: str, *, gold: dict[str, str] | None = None, train: list[Item] | None = None) -> Model:
     """Parse a CLI model spec.
     dummy:oracle:0.8 | dummy:first | dummy:constant:TRUE | dummy:retrieval[:method] | dummy:noisy:0.6:0.5
-    hf:<model_id>  |  openai:<model>[@base_url]
+    hf:<model_id>  |  openai:<model>[@base_url]  |  cached:<model name>  (replay a --cache, no model)
     """
+    if spec.startswith("cached:"):
+        return CachedModel(spec[len("cached:"):])
     parts = spec.split(":")
     if parts[0] == "dummy":
         kind = parts[1]

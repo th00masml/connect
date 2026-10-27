@@ -126,7 +126,12 @@ artifact-signals ledger score ledger/retrospective_papers12.json results.json --
 ```
 
 Model specs: `dummy:oracle:0.8`, `dummy:first`, `dummy:constant:TRUE`, `dummy:retrieval`,
-`dummy:noisy:0.6:0.5`, `hf:<model_id>`, `openai:<model>[@base_url]`.
+`dummy:noisy:0.6:0.5`, `hf:<model_id>`, `openai:<model>[@base_url]`, `cached:<model name>`.
+
+`HFModel` loads full, unquantised weights on a single device; there is no 4-bit or multi-GPU
+path. 70B-class runs are therefore made on rented hardware with `--cache DIR`, the cache is copied
+back, and they are scored here from the saved outputs with `--model cached:hf:<model_id> --cache DIR`,
+which replays the cache, never loads weights, and raises on any prompt it has no output for.
 
 ### Layout
 
