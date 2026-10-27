@@ -3,6 +3,8 @@
   artifact-signals synth     --n 400 --task truth --ood-frac 0.1 --out synth.jsonl
   artifact-signals diagnose  --benchmark test.jsonl [--train train.jsonl] --model dummy:oracle:0.8 --out profile.json
   artifact-signals ledger hash  ledger.json
+  artifact-signals ledger check  ledger.json outputs/paper12/results.json   (freeze readiness)
+  artifact-signals ledger freeze ledger.json outputs/paper12/results.json   (status -> prospective, stamp)
   artifact-signals ledger score ledger.json results.json [--void P07 ...]
 """
 
@@ -15,7 +17,7 @@ import sys
 from .data import PUBLIC_SOURCES, Benchmark
 from .evaluate import Cache
 from .judge import JUDGES
-from .ledger import Ledger, format_score, score_ledger
+from .ledger import Ledger, format_score, freeze, freeze_problems, score_ledger
 from .modal import FORMULA_REGEX
 from .models import from_spec
 from .render import standard_renderings
@@ -66,13 +68,37 @@ def cmd_diagnose(a: argparse.Namespace) -> int:
     return 0
 
 
+def _refuse_if_stamped(path: str) -> None:
+    if "sha256" in json.load(open(path, encoding="utf-8")):
+        sys.exit(f"{path} is already stamped; a stamped ledger is never rewritten")
+
+
 def cmd_ledger(a: argparse.Namespace) -> int:
     if a.action == "hash":
         led = Ledger.load(a.ledger, verify=False)
         print(led.sha256())
         if a.stamp:
+            _refuse_if_stamped(a.ledger)
             led.save(a.ledger)
             print(f"stamped {a.ledger}")
+        return 0
+    if a.action in ("check", "freeze"):
+        dev = json.load(open(a.results))
+        if a.action == "freeze":
+            _refuse_if_stamped(a.ledger)
+        led = Ledger.load(a.ledger, verify=False)
+        problems = freeze_problems(led, dev)
+        for p in problems:
+            print(f"  not ready: {p}")
+        if problems:
+            print(f"{a.ledger}: not freeze-ready ({len(problems)} problem(s))")
+            return 1
+        if a.action == "check":
+            print(f"{a.ledger}: freeze-ready ({len(led.predictions)} predictions)")
+            return 0
+        h = freeze(led, dev).save(a.ledger)
+        print(f"froze {a.ledger}: status prospective, sha256 {h}")
+        print("next: commit, tag, deposit the file and this hash; only then run any model on a test-set benchmark")
         return 0
     led = Ledger.load(a.ledger)
     results = json.load(open(a.results))
@@ -130,7 +156,8 @@ def build_parser() -> argparse.ArgumentParser:
     d.set_defaults(fn=cmd_diagnose)
 
     l = sub.add_parser("ledger", help="hash or score a prediction ledger")
-    l.add_argument("action", choices=["hash", "score"])
+    l.add_argument("action", choices=["hash", "score", "check", "freeze"],
+                   help="check / freeze take the development-set results.json as the second argument")
     l.add_argument("ledger")
     l.add_argument("results", nargs="?")
     l.add_argument("--stamp", action="store_true", help="with hash: write the sha256 into the file")
@@ -150,8 +177,8 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     p = build_parser()
     a = p.parse_args(argv)
-    if a.cmd == "ledger" and a.action == "score" and not a.results:
-        p.error("ledger score requires a results file")
+    if a.cmd == "ledger" and a.action in ("score", "check", "freeze") and not a.results:
+        p.error(f"ledger {a.action} requires a results file")
     if a.cmd == "diagnose" and a.model.startswith("cached:") and not a.cache:
         p.error("a cached: model replays saved outputs, so it needs --cache DIR")
     return a.fn(a)

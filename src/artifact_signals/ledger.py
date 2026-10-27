@@ -107,6 +107,38 @@ def lookup(results: dict, benchmark: str, intervention: str, quantity: str):
     return node if isinstance(node, (int, float)) and not isinstance(node, bool) else None
 
 
+FREEZE_N = (40, 60)  # ledger/prospective_template.json, meta.freeze_procedure step 1
+
+
+def freeze_problems(ledger: Ledger, dev_results: dict) -> list[str]:
+    """Why a ledger cannot be frozen yet (empty list = ready). Mirrors the template's freeze procedure:
+    40-60 atomic predictions, unique ids, every quantity path present in a development-set results.json,
+    and not already prospective."""
+    problems = []
+    n = len(ledger.predictions)
+    if not FREEZE_N[0] <= n <= FREEZE_N[1]:
+        problems.append(f"{n} predictions; the freeze procedure needs {FREEZE_N[0]} to {FREEZE_N[1]}")
+    ids = [p.id for p in ledger.predictions]
+    dups = sorted({i for i in ids if ids.count(i) > 1})
+    if dups:
+        problems.append(f"duplicate prediction ids: {', '.join(dups)}")
+    if ledger.status != "retrospective":
+        problems.append(f"status is already {ledger.status}")
+    for p in ledger.predictions:
+        if not any(lookup(dev_results, b, p.intervention, p.quantity) is not None for b in dev_results):
+            problems.append(f"{p.id}: {p.intervention} / {p.quantity} does not exist in the development-set results")
+    return problems
+
+
+def freeze(ledger: Ledger, dev_results: dict) -> Ledger:
+    """Step 2 of the freeze procedure: status -> prospective, with the freeze time recorded. Save() stamps it."""
+    problems = freeze_problems(ledger, dev_results)
+    if problems:
+        raise ValueError("ledger is not freeze-ready: " + "; ".join(problems))
+    meta = {**ledger.meta, "status": "prospective", "frozen_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+    return Ledger(ledger.title, list(ledger.predictions), ledger.created, meta)
+
+
 def score_ledger(ledger: Ledger, results: dict, *, voided: set[str] | None = None) -> dict:
     voided = voided or set()
     rows, probs, outcomes = [], [], []
