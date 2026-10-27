@@ -95,3 +95,23 @@ def test_cod_memorization_probe_is_inconclusive_not_zero():
     assert probe["verdict"].startswith("INCONCLUSIVE")
     rows = cod.probe_rows()
     assert len(rows) == 30 and all(r["guess"] == "" for r in rows)
+
+
+def test_cod_injury_fold_matches_cod_v2():
+    # COD v2 scores every headline twice: preregistered labels, and Injury folded into ExternalCause
+    # (the dictionary baseline can never emit Injury). Pins connect to the companion repo's paper_stats.json.
+    test, _ = cod.load()
+    sims = cod.dictsim(test)
+    hard = cod.hard_ids(test, sims)
+    plain, folded = cod.cached_runs(test), cod.cached_runs(test, fold_injury=True)
+    v2 = cod.published_paper_stats()["folded"]
+    for key in cod.LLM_METHODS:
+        assert abs(folded[key].accuracy - v2[key]["all"]["acc"]) < 1e-9
+        assert abs(folded[key].accuracy_on(hard) - v2[key]["hard"]["acc"]) < 1e-9
+        f, m = folded["B_fuzzy"], folded[key]
+        assert sum(1 for i in f.correct if f.correct[i] and not m.correct[i]) == v2[key]["all"]["fuzzy_only"]
+        assert sum(1 for i in f.correct if m.correct[i] and not f.correct[i]) == v2[key]["all"]["model_only"]
+    assert folded["B_fuzzy"].answers == plain["B_fuzzy"].answers  # no Injury predictions: fold is a no-op
+    assert sum(1 for i in test if folded["B_fuzzy"].correct[i.id]) == v2["fuzzy_correct_count"]
+    res = cod.interventions("M_comm_sonnet5", fold_injury=True)
+    assert abs(res["leakage_resplit"]["before"]["llm_accuracy"] - v2["M_comm_sonnet5"]["all"]["acc"]) < 1e-9

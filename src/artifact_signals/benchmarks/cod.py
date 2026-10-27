@@ -38,6 +38,9 @@ METHODS = {"B_majority": "majority", "B_fuzzy": "fuzzy-char3-dictionary", "M_loc
            "M_comm_sonnet5": "claude-sonnet-5"}
 LLM_METHODS = ("M_local_qwen14b", "M_comm_sonnet5")
 HARD_THRESHOLD = 0.5
+# COD v2 secondary scoring: ICD10h files nature-of-injury (S-T) in a separate column, so the primary
+# column never holds Injury and the dictionary baseline can never emit it; folding maps it to ExternalCause.
+INJURY_FOLD = {"Injury": "ExternalCause"}
 
 
 def parse_chapter(text: str) -> str | None:
@@ -77,12 +80,14 @@ def recompute_dictsim(test: Benchmark, dictionary: Benchmark) -> dict[str, float
     return {it.id: max(char3_sim(it.question, d) for d in d_texts) for it in test}
 
 
-def cached_runs(test: Benchmark, root: Path = ROOT) -> dict[str, Run]:
+def cached_runs(test: Benchmark, root: Path = ROOT, *, fold_injury: bool = False) -> dict[str, Run]:
     runs = {}
     raws = {"M_comm_sonnet5": "raw_comm.jsonl", "M_local_qwen14b": "raw_local.jsonl"}
     for key, name in METHODS.items():
         pred = json.loads((root / f"pred_{key}.json").read_text())["pred"]
         answers = {it.id: pred[it.meta["index"]] for it in test}
+        if fold_injury:
+            answers = {i: INJURY_FOLD.get(a, a) for i, a in answers.items()}
         raw = None
         if key in raws and (root / raws[key]).exists():
             rows = {r["i"]: r["raw"] for r in (json.loads(l) for l in (root / raws[key]).open(encoding="utf-8") if l.strip())}
@@ -101,14 +106,15 @@ def _run_macro_f1(run: Run, bench: Benchmark, ids: list[str] | None = None) -> f
     return macro_f1([by[i].label for i in ids], [run.answers[i] for i in ids])
 
 
-def profile(model_key: str = "M_comm_sonnet5", root: Path = ROOT, *, retrieval_methods=("char3", "bm25")) -> ArtifactRiskProfile:
-    return _profile(model_key, Path(root), tuple(retrieval_methods))
+def profile(model_key: str = "M_comm_sonnet5", root: Path = ROOT, *, retrieval_methods=("char3", "bm25"),
+            fold_injury: bool = False) -> ArtifactRiskProfile:
+    return _profile(model_key, Path(root), tuple(retrieval_methods), fold_injury)
 
 
 @lru_cache(maxsize=16)
-def _profile(model_key: str, root: Path, retrieval_methods: tuple[str, ...]) -> ArtifactRiskProfile:
+def _profile(model_key: str, root: Path, retrieval_methods: tuple[str, ...], fold_injury: bool) -> ArtifactRiskProfile:
     test, dictionary = load(root)
-    runs = cached_runs(test, root)
+    runs = cached_runs(test, root, fold_injury=fold_injury)
     llm = runs[model_key]
     signals: dict[str, Signal] = {}
     signals["format_sensitivity"] = Signal("format_sensitivity", None,
@@ -121,7 +127,8 @@ def _profile(model_key: str, root: Path, retrieval_methods: tuple[str, ...]) -> 
         note="proxy from the label prior, not a model run")
     signals["retrieval_dominance"] = retrieval_dominance(dictionary, test, llm, methods=retrieval_methods)
     # strict decoding (output must be exactly a chapter name) vs the paper's lenient parse
-    strict = Run.from_answers(llm.model, test, {i: (r if r in CHAPTERS else "") for i, r in llm.raw.items()}, exact_match,
+    strict = Run.from_answers(llm.model, test, {i: (INJURY_FOLD.get(r, r) if fold_injury else r) if r in CHAPTERS else ""
+                                                for i, r in llm.raw.items()}, exact_match,
                               raw=llm.raw, rendering="strict")
     signals["semantic_validity_gap"] = constraint_gain_from_runs(strict, llm, test, sem_judge=lenient_choice)
     signals["abstention_failure"] = Signal("abstention_failure", None,
@@ -130,16 +137,16 @@ def _profile(model_key: str, root: Path, retrieval_methods: tuple[str, ...]) -> 
 
 
 def interventions(model_key: str = "M_comm_sonnet5", root: Path = ROOT, *, thresholds=(0.4, 0.5, 0.6, 0.7, 0.8),
-                  cap: int = 10, seed: int = 0) -> dict:
+                  cap: int = 10, seed: int = 0, fold_injury: bool = False) -> dict:
     """Offline interventions from cached predictions. Returns the results dict the ledger reads."""
     import random
 
     test, dictionary = load(root)
-    runs = cached_runs(test, root)
+    runs = cached_runs(test, root, fold_injury=fold_injury)
     llm, fuzzy = runs[model_key], runs["B_fuzzy"]
     sims = dictsim(test, root)
     ids = [i.id for i in test]
-    out: dict = {"model": llm.model, "n": len(ids)}
+    out: dict = {"model": llm.model, "n": len(ids), "scoring": "injury_folded" if fold_injury else "preregistered"}
 
     def block(sub: list[str]) -> dict:
         l, f = llm.accuracy_on(sub), fuzzy.accuracy_on(sub)
@@ -190,7 +197,7 @@ def interventions(model_key: str = "M_comm_sonnet5", root: Path = ROOT, *, thres
         "label_marginal": {"tv_label_vs_uniform_before": tv_distance({k: v / len(ids) for k, v in lab_before.items()}, uni),
                              "tv_label_vs_uniform": tv_distance({k: v / len(kept) for k, v in lab_after.items()}, uni)},
     }
-    prof = profile(model_key, root)
+    prof = profile(model_key, root, fold_injury=fold_injury)
     svg = prof.signals["semantic_validity_gap"].details
     out["constraint_ablation"] = {"em": {"constrained_minus_free": svg["constraint_gain"]},
                                   "sem": {"constrained_minus_free": svg["semantic_gain"]}, "svg": svg["constraint_gain"] - svg["semantic_gain"],
@@ -205,6 +212,11 @@ def interventions(model_key: str = "M_comm_sonnet5", root: Path = ROOT, *, thres
 def probe_rows(root: Path = ROOT) -> list[dict]:
     """Per-item memorisation-probe outputs (string, gold ICD code, guess). An empty guess is no answer."""
     return [json.loads(l) for l in (root / "probe_results.jsonl").open(encoding="utf-8") if l.strip()]
+
+
+def published_paper_stats(root: Path = ROOT) -> dict:
+    """The companion repo's paper_stats.json (COD v2), including the Injury-folded scoring."""
+    return json.loads((root / "paper_stats.json").read_text())
 
 
 def published(root: Path = ROOT) -> dict:

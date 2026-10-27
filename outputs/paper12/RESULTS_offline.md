@@ -4,6 +4,8 @@ Recomputed by `artifact-signals paper12` from `data/external/`. No model was run
 development set: the instrument was built by inspecting them, so nothing here validates it. The ledger
 below is a protocol demonstration and is labelled retrospective by the scorer.
 
+Cause-of-death is scored on the preregistered labels; COD v2's Injury-folded scoring is reproduced in the table below and in full by `artifact-signals paper12 --fold-injury`.
+
 ## Reproduction check (published vs recomputed)
 
 | quantity | published | recomputed |
@@ -20,6 +22,12 @@ below is a protocol demonstration and is labelled retrospective by the scorer.
 | Kripke 1.5B gold: strict exact prompted / constrained | 8 / 52 | 8 / 52 |
 | Kripke 1.5B gold: forced fixtures | 25 | 25 |
 | Kripke 1.5B product: strict exact constrained | 37 | 37 |
+| COD v2 folded: qwen2.5:14b accuracy | 0.6567 | 0.6567 |
+| COD v2 folded: qwen2.5:14b on HARD | 0.7576 | 0.7576 |
+| COD v2 folded: qwen2.5:14b vs fuzzy, fuzzy only / model only | 60 / 45 | 60 / 45 |
+| COD v2 folded: claude-sonnet-5 accuracy | 0.7133 | 0.7133 |
+| COD v2 folded: claude-sonnet-5 on HARD | 0.7576 | 0.7576 |
+| COD v2 folded: claude-sonnet-5 vs fuzzy, fuzzy only / model only | 52 / 54 | 52 / 54 |
 
 ## Artifact Risk Profiles
 

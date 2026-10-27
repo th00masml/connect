@@ -35,15 +35,17 @@ def stable_json(obj) -> str:
     return json.dumps(_rounded(json.loads(json.dumps(obj, default=float))), indent=1)
 
 
-def run_all(out_dir: Path, ledger_path: Path = LEDGER) -> dict:
+def run_all(out_dir: Path, ledger_path: Path = LEDGER, *, fold_injury: bool = False) -> dict:
+    """fold_injury scores cause-of-death under COD v2's secondary scoring (Injury -> ExternalCause)
+    everywhere; the default is the preregistered labels the ledger was written against."""
     out_dir.mkdir(parents=True, exist_ok=True)
     profiles: dict[str, dict] = {}
     results: dict[str, dict] = {}
 
     for key in cod.LLM_METHODS:
-        prof = cod.profile(key)
+        prof = cod.profile(key, fold_injury=fold_injury)
         profiles[f"cause_of_death@{prof.model}"] = prof.to_dict()
-        results[f"cause_of_death@{prof.model}"] = cod.interventions(key)
+        results[f"cause_of_death@{prof.model}"] = cod.interventions(key, fold_injury=fold_injury)
     results["cause_of_death"] = results["cause_of_death@claude-sonnet-5"]  # registered primary instrument (paper 1)
 
     for model in kripke.MODELS:
@@ -59,7 +61,7 @@ def run_all(out_dir: Path, ledger_path: Path = LEDGER) -> dict:
     (out_dir / "profiles.json").write_text(stable_json(profiles))
     (out_dir / "results.json").write_text(stable_json(results))
     (out_dir / "ledger_score.json").write_text(stable_json(score))
-    report = render_report(profiles, results, score)
+    report = render_report(profiles, results, score, fold_injury=fold_injury)
     (out_dir / "RESULTS_offline.md").write_text(report)
     return {"profiles": profiles, "results": results, "score": score, "report": report}
 
@@ -68,20 +70,48 @@ def _f(x, d=3):
     return "n/a" if x is None else (f"{x:.{d}f}" if isinstance(x, float) else str(x))
 
 
-def render_report(profiles: dict, results: dict, score: dict) -> str:
+def _cod_v2_rows() -> list[str]:
+    """Reproduce COD v2's Injury-folded headline from the cached predictions."""
+    test, _ = cod.load()
+    hard = cod.hard_ids(test, cod.dictsim(test))
+    runs = cod.cached_runs(test, fold_injury=True)
+    v2 = cod.published_paper_stats()["folded"]
+    f = runs["B_fuzzy"]
+    rows = []
+    for key in cod.LLM_METHODS:
+        m = runs[key]
+        fo = sum(1 for i in f.correct if f.correct[i] and not m.correct[i])
+        mo = sum(1 for i in f.correct if m.correct[i] and not f.correct[i])
+        rows += [f"| COD v2 folded: {m.model} accuracy | {v2[key]['all']['acc']:.4f} | {m.accuracy:.4f} |",
+                 f"| COD v2 folded: {m.model} on HARD | {v2[key]['hard']['acc']:.4f} | {m.accuracy_on(hard):.4f} |",
+                 f"| COD v2 folded: {m.model} vs fuzzy, fuzzy only / model only | {v2[key]['all']['fuzzy_only']} / "
+                 f"{v2[key]['all']['model_only']} | {fo} / {mo} |"]
+    return rows
+
+
+def render_report(profiles: dict, results: dict, score: dict, *, fold_injury: bool = False) -> str:
+    scoring = ("Cause-of-death is scored with Injury folded into ExternalCause (COD v2 secondary scoring), "
+               "so its profile, interventions and ledger values differ from the preregistered-label report."
+               if fold_injury else
+               "Cause-of-death is scored on the preregistered labels; COD v2's Injury-folded scoring is reproduced in "
+               "the table below and in full by `artifact-signals paper12 --fold-injury`.")
     L = ["# Development set: retrospective reconstruction on papers 1 and 2", "",
          "Recomputed by `artifact-signals paper12` from `data/external/`. No model was run. Papers 1 and 2 are the",
          "development set: the instrument was built by inspecting them, so nothing here validates it. The ledger",
-         "below is a protocol demonstration and is labelled retrospective by the scorer.", "",
+         "below is a protocol demonstration and is labelled retrospective by the scorer.", "", scoring, "",
          "## Reproduction check (published vs recomputed)", "",
          "| quantity | published | recomputed |", "|---|---:|---:|"]
     pub = cod.published()["metrics"]
+    if fold_injury:  # compare with the scoring actually used, or the table reads as a reproduction failure
+        v2 = cod.published_paper_stats()["folded"]["M_comm_sonnet5"]
+        pub = {**pub, "M_comm_sonnet5": {"all": v2["all"]["acc"], "hard": v2["hard"]["acc"]}}
     c = results["cause_of_death"]
+    tag = " (folded)" if fold_injury else ""
     L += [f"| COD fuzzy dictionary accuracy | {pub['B_fuzzy']['all']:.4f} | {c['leakage_resplit']['before']['retrieval_accuracy']:.4f} |",
-          f"| COD claude-sonnet-5 accuracy | {pub['M_comm_sonnet5']['all']:.4f} | {c['leakage_resplit']['before']['llm_accuracy']:.4f} |",
+          f"| COD claude-sonnet-5 accuracy{tag} | {pub['M_comm_sonnet5']['all']:.4f} | {c['leakage_resplit']['before']['llm_accuracy']:.4f} |",
           f"| COD HARD subset n | 33 | {c['leakage_resplit']['n_kept']} |",
           f"| COD fuzzy on HARD | {pub['B_fuzzy']['hard']:.4f} | {c['leakage_resplit']['after']['retrieval_accuracy']:.4f} |",
-          f"| COD claude-sonnet-5 on HARD | {pub['M_comm_sonnet5']['hard']:.4f} | {c['leakage_resplit']['after']['llm_accuracy']:.4f} |",
+          f"| COD claude-sonnet-5 on HARD{tag} | {pub['M_comm_sonnet5']['hard']:.4f} | {c['leakage_resplit']['after']['llm_accuracy']:.4f} |",
           f"| COD HARD pairwise (LLM only / retrieval only) | 14 / 1 | {c['leakage_resplit']['after']['pairwise']['llm_only']} / {c['leakage_resplit']['after']['pairwise']['retrieval_only']} |"]
     for m in kripke.MODELS:
         ps = kripke.published("gold")["per_model"][m]
@@ -92,6 +122,7 @@ def render_report(profiles: dict, results: dict, score: dict) -> str:
         pp = kripke.published("product")["per_model"][m]
         kp = results[f"kripke@{kripke.SHORT[m]}"]["constraint_ablation"]["per_run"]["product"]
         L.append(f"| Kripke {kripke.SHORT[m]} product: strict exact constrained | {pp['constrained']['strict_exact']} | {round(kp['em']['constrained'] * 80)} |")
+    L += _cod_v2_rows()
     L += ["", "## Artifact Risk Profiles", ""]
     for name, p in profiles.items():
         L += [f"### {name}", "", "| signal | level | value | note |", "|---|---|---:|---|"]
@@ -114,11 +145,9 @@ def render_report(profiles: dict, results: dict, score: dict) -> str:
             if k == "abstention_failure" and d.get("per_arm"):
                 extra = ", ".join(f"{a}={v:.2f}" for a, v in d["per_arm"].items())
             note = (s.get("note") or "") + (("; " + extra) if (extra and s.get("note")) else extra)
-
             flag = " (GATED)" if s["gated"] else ""
             if d.get("proxy"):
                 flag += " (proxy)"
-
             L.append(f"| {k}{flag} | {s['level']} | {_f(s['value'])} | {note} |")
         L.append("")
     L += ["## Interventions", ""]

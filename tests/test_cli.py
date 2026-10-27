@@ -21,3 +21,11 @@ def test_cli_end_to_end(tmp_path, capsys):
     assert s["n_scored"] == 1 and s["hits"] == 1
     out = capsys.readouterr().out
     assert "Artifact Risk Profile" in out and "[dataset]" in out and "[RETROSPECTIVE]" in out
+
+
+def test_cli_paper12_fold_injury_reproduces_cod_v2(tmp_path):
+    out = tmp_path / "folded"
+    assert main(["paper12", "--fold-injury", "--out", str(out)]) == 0
+    report = (out / "RESULTS_offline.md").read_text()
+    assert "| COD claude-sonnet-5 accuracy (folded) | 0.7133 | 0.7133 |" in report
+    assert json.loads((out / "results.json").read_text())["cause_of_death"]["scoring"] == "injury_folded"

@@ -2,6 +2,7 @@
  "cause_of_death@qwen2.5:14b": {
   "model": "qwen2.5:14b",
   "n": 300,
+  "scoring": "preregistered",
   "leakage_resplit": {
    "before": {
     "n": 300,
@@ -427,6 +428,7 @@
  "cause_of_death@claude-sonnet-5": {
   "model": "claude-sonnet-5",
   "n": 300,
+  "scoring": "preregistered",
   "leakage_resplit": {
    "before": {
     "n": 300,
@@ -852,6 +854,7 @@
  "cause_of_death": {
   "model": "claude-sonnet-5",
   "n": 300,
+  "scoring": "preregistered",
   "leakage_resplit": {
    "before": {
     "n": 300,

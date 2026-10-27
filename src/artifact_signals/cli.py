@@ -73,7 +73,7 @@ def cmd_paper12(a: argparse.Namespace) -> int:
 
     from .paper12 import run_all
 
-    res = run_all(Path(a.out))
+    res = run_all(Path(a.out), fold_injury=a.fold_injury)
     print(res["report"] if a.report else res["report"].split("## Ledger score")[0][-1200:])
     print(f"wrote {a.out}/profiles.json, results.json, ledger_score.json, RESULTS_offline.md")
     return 0
@@ -117,6 +117,8 @@ def build_parser() -> argparse.ArgumentParser:
     q = sub.add_parser("paper12", help="offline Phase 1 on papers 1 and 2 from cached outputs")
     q.add_argument("--out", default="outputs/paper12")
     q.add_argument("--report", action="store_true", help="print the full markdown report")
+    q.add_argument("--fold-injury", action="store_true",
+                   help="score cause-of-death with Injury folded into ExternalCause (COD v2 secondary scoring)")
     q.set_defaults(fn=cmd_paper12)
     return p
 
@@ -124,7 +126,6 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     p = build_parser()
     a = p.parse_args(argv)
-
     if a.cmd == "ledger" and a.action == "score" and not a.results:
         p.error("ledger score requires a results file")
     return a.fn(a)
