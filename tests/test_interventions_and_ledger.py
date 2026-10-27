@@ -37,7 +37,6 @@ def test_rebalance_and_filter_balances_and_removes_solved():
     assert len(after) == 0  # every 'yes' item is partial-input-solvable, so nothing balances against 'no'
     after2 = rebalance_and_filter(b, None)
     assert Counter(i.label for i in after2) == {"yes": 10, "no": 10}
-    gold = {i.id: i.label for i in after2}
     pia = partial_input_accuracy(ConstantModel("yes"), after2)
     assert REBALANCE.manipulation_check(pia)
 

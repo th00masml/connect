@@ -187,9 +187,9 @@ def render_report(profiles: dict, results: dict, score: dict, *, fold_injury: bo
               f"(forced subset n={lr['forced_subset']['n']}: {lr['forced_subset']['em_before']:.3f} -> {lr['forced_subset']['em_after']:.3f}; "
               f"free subset n={lr['free_subset']['n']}: {lr['free_subset']['em_before']:.3f} -> {lr['free_subset']['em_after']:.3f}, "
               f"{lr['free_subset']['outputs_identical']}/{lr['free_subset']['n']} outputs byte-identical).",
-              f"Surface re-rendering over the three unconstrained arms: strict EM " + ", ".join(f"{a}={v:.3f}" for a, v in k["surface_rerender"]["strict"]["per_arm"].items())
+              "Surface re-rendering over the three unconstrained arms: strict EM " + ", ".join(f"{a}={v:.3f}" for a, v in k["surface_rerender"]["strict"]["per_arm"].items())
               + "; truth-value accuracy " + ", ".join(f"{a}={v:.3f}" for a, v in k["surface_rerender"]["truth_value"]["per_arm"].items()) + ".",
-              f"Abstention on the 80 out-of-language fixtures, answered rate per arm: " + ", ".join(f"{a}={v:.2f}" for a, v in k["abstention_enabled"]["ood_answered_rate"].items()) + ".", ""]
+              "Abstention on the 80 out-of-language fixtures, answered rate per arm: " + ", ".join(f"{a}={v:.2f}" for a, v in k["abstention_enabled"]["ood_answered_rate"].items()) + ".", ""]
     L += ["## Ledger score", "", "```", format_score(score), "```", "",
           "Status: retrospective. The ledger's wording predates inspecting the cached outputs, but the papers' results were "
           "public and the mapping from each prediction to a concrete cached quantity (model, run, judge) was fixed while building "

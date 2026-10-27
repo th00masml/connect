@@ -19,8 +19,8 @@ from artifact_signals.evaluate import run_model  # noqa: E402
 from artifact_signals.interventions import LEAKAGE, REBALANCE, leakage_resplit, rebalance_and_filter, rerender_score  # noqa: E402
 from artifact_signals.judge import exact_match, lenient_choice  # noqa: E402
 from artifact_signals.ledger import Ledger, Prediction, format_score, score_ledger  # noqa: E402
-from artifact_signals.models import NoisyFormatModel, OracleModel, RetrievalModel  # noqa: E402
-from artifact_signals.render import baseline_rendering, partial_input_renderings, standard_renderings  # noqa: E402
+from artifact_signals.models import NoisyFormatModel  # noqa: E402
+from artifact_signals.render import baseline_rendering, standard_renderings  # noqa: E402
 from artifact_signals.signals import compute_profile, partial_input_accuracy, retrieval_dominance  # noqa: E402
 from artifact_signals.synth import generate  # noqa: E402
 
@@ -102,8 +102,8 @@ def main() -> None:
                                                                "delta": -rd_before.details["per_method"]["fuzzy"]["accuracy"]}},
                                     "retrieval_dominance": {"sim_correctness_corr": 0.0}, "manipulation_check": True}
 
-        # rebalance + partial-input filter
-        partial = [run_model(model, te, pr, exact_match) for pr in partial_input_renderings("choice")]
+        # rebalance only: partial-input filtering is not applied in this dry run (passing the partial-input
+        # runs instead of None turns D07 on the control from a hit into a miss; an open design question)
         bal = rebalance_and_filter(te, None, seed=0)
         gold_b = {i.id: i.label for i in bal}
         after_b = run_model(NoisyFormatModel(gold_b, 0.75, 0.4, seed=1), bal, base, exact_match)

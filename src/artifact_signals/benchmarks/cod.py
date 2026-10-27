@@ -15,12 +15,11 @@ from pathlib import Path
 
 from ..data import Benchmark, Item
 from ..evaluate import Run
-from ..interventions import LEAKAGE
 from ..judge import exact_match, lenient_choice
 from ..retrieval import char3_sim
 from ..signals import (ArtifactRiskProfile, Signal, constraint_gain_from_runs, label_marginal, retrieval_dominance,
                        scoring_key_validity)
-from ..stats import macro_f1, mean, point_biserial, tv_distance
+from ..stats import macro_f1, point_biserial, tv_distance
 
 ROOT = Path(os.environ.get("ARTIFACT_SIGNALS_DATA", Path(__file__).resolve().parents[3] / "data" / "external")) / "cod"
 

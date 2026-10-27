@@ -1,4 +1,4 @@
-from artifact_signals.modal import Atom, Bin, Frame, Modal, Not, evaluate, extract_formula, parse, to_str, uses_modal
+from artifact_signals.modal import Atom, Bin, Frame, evaluate, extract_formula, parse, to_str, uses_modal
 
 
 def frame():
