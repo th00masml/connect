@@ -16,6 +16,23 @@ from .benchmarks import cod, kripke
 from .ledger import Ledger, format_score, score_ledger
 
 LEDGER = Path(__file__).resolve().parents[2] / "ledger" / "retrospective_papers12.json"
+FLOAT_DIGITS = 12
+
+
+def _rounded(x):
+    if isinstance(x, float):
+        return round(x, FLOAT_DIGITS)
+    if isinstance(x, dict):
+        return {k: _rounded(v) for k, v in x.items()}
+    if isinstance(x, list):
+        return [_rounded(v) for v in x]
+    return x
+
+
+def stable_json(obj) -> str:
+    """JSON with floats rounded to 12 decimals, so the committed outputs are byte-identical across
+    CPython versions (3.12 changed float summation, which moves the 16th digit of some means)."""
+    return json.dumps(_rounded(json.loads(json.dumps(obj, default=float))), indent=1)
 
 
 def run_all(out_dir: Path, ledger_path: Path = LEDGER) -> dict:
@@ -39,9 +56,9 @@ def run_all(out_dir: Path, ledger_path: Path = LEDGER) -> dict:
     ledger = Ledger.load(ledger_path, verify=False)
     score = score_ledger(ledger, results)
 
-    (out_dir / "profiles.json").write_text(json.dumps(profiles, indent=1, default=float))
-    (out_dir / "results.json").write_text(json.dumps(results, indent=1, default=float))
-    (out_dir / "ledger_score.json").write_text(json.dumps(score, indent=1, default=float))
+    (out_dir / "profiles.json").write_text(stable_json(profiles))
+    (out_dir / "results.json").write_text(stable_json(results))
+    (out_dir / "ledger_score.json").write_text(stable_json(score))
     report = render_report(profiles, results, score)
     (out_dir / "RESULTS_offline.md").write_text(report)
     return {"profiles": profiles, "results": results, "score": score, "report": report}

@@ -7,8 +7,8 @@
  "n_missing": 2,
  "hits": 4,
  "hit_rate": 0.8,
- "p_vs_coin": 0.18750000000000022,
- "brier": 0.13999999999999999,
+ "p_vs_coin": 0.1875,
+ "brier": 0.14,
  "reliability": [
   {
    "lo": 0.0,
@@ -42,7 +42,7 @@
    "lo": 0.8,
    "hi": 1.0,
    "n": 3,
-   "mean_conf": 0.8000000000000002,
+   "mean_conf": 0.8,
    "hit_rate": 1.0
   }
  ],
@@ -78,7 +78,7 @@
    "threshold": 0.08,
    "confidence": 0.7,
    "family": "magnitude",
-   "value": 0.09090909090909094,
+   "value": 0.090909090909,
    "status": "scored",
    "hit": false
   },
@@ -91,7 +91,7 @@
    "threshold": 0.05,
    "confidence": 0.7,
    "family": "metric_specific",
-   "value": 0.43393939393939396,
+   "value": 0.433939393939,
    "status": "scored",
    "hit": true
   },
@@ -104,7 +104,7 @@
    "threshold": 0.15,
    "confidence": 0.8,
    "family": "manipulation_check",
-   "value": -0.2409023043237984,
+   "value": -0.240902304324,
    "status": "scored",
    "hit": true
   },
@@ -130,7 +130,7 @@
    "threshold": 0.03,
    "confidence": 0.8,
    "family": "metric_specific",
-   "value": 0.012500000000000011,
+   "value": 0.0125,
    "status": "scored",
    "hit": true
   },

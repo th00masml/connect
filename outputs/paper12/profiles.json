@@ -6,9 +6,9 @@
   "gated": false,
   "vector": {
    "format_sensitivity": null,
-   "partial_input_accuracy": 0.10787878787878787,
-   "retrieval_dominance": 1.2619047619047619,
-   "semantic_validity_gap": 0.0033333333333334103,
+   "partial_input_accuracy": 0.107878787879,
+   "retrieval_dominance": 1.261904761905,
+   "semantic_validity_gap": 0.003333333333,
    "abstention_failure": null
   },
   "signals": {
@@ -24,47 +24,47 @@
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
     "level": "dataset",
-    "value": 0.10787878787878787,
+    "value": 0.107878787879,
     "ci": null,
     "gated": false,
     "note": "proxy from the label prior, not a model run",
     "details": {
      "proxy": "majority-class baseline stands in for options-only input (no premises exist to withhold)",
-     "majority_accuracy": 0.15333333333333332,
-     "chance": 0.045454545454545456,
+     "majority_accuracy": 0.153333333333,
+     "chance": 0.045454545455,
      "label_marginal": {
       "marginal": {
-       "Infectious": 0.15333333333333332,
-       "Neoplasm": 0.09333333333333334,
-       "Blood": 0.0033333333333333335,
+       "Infectious": 0.153333333333,
+       "Neoplasm": 0.093333333333,
+       "Blood": 0.003333333333,
        "Endocrine/metabolic": 0.01,
-       "Mental": 0.013333333333333334,
-       "Nervous": 0.04666666666666667,
+       "Mental": 0.013333333333,
+       "Nervous": 0.046666666667,
        "Eye": 0.0,
        "Ear": 0.01,
        "Circulatory": 0.08,
        "Respiratory": 0.05,
-       "Digestive": 0.08666666666666667,
-       "Skin": 0.043333333333333335,
-       "Musculoskeletal": 0.043333333333333335,
+       "Digestive": 0.086666666667,
+       "Skin": 0.043333333333,
+       "Musculoskeletal": 0.043333333333,
        "Genitourinary": 0.08,
        "Pregnancy": 0.02,
-       "Perinatal": 0.023333333333333334,
-       "Congenital": 0.016666666666666666,
-       "Ill-defined": 0.10333333333333333,
+       "Perinatal": 0.023333333333,
+       "Congenital": 0.016666666667,
+       "Ill-defined": 0.103333333333,
        "Injury": 0.0,
-       "ExternalCause": 0.12333333333333334,
+       "ExternalCause": 0.123333333333,
        "Factors": 0.0,
        "Special": 0.0
       },
-      "tv_vs_uniform": 0.40757575757575754
+      "tv_vs_uniform": 0.407575757576
      }
     }
    },
    "retrieval_dominance": {
     "name": "retrieval_dominance",
     "level": "dataset",
-    "value": 1.2619047619047619,
+    "value": 1.261904761905,
     "ci": null,
     "gated": false,
     "note": "",
@@ -73,39 +73,39 @@
      "best_method": "char3",
      "per_method": {
       "char3": {
-       "accuracy": 0.7066666666666667,
-       "ratio": 1.2619047619047619,
-       "gap": -0.1466666666666666,
-       "sim_correctness_corr": 0.055017746205341604,
-       "mean_max_similarity": 0.6867835454638198,
-       "agreement_with_llm": 0.5933333333333334
+       "accuracy": 0.706666666667,
+       "ratio": 1.261904761905,
+       "gap": -0.146666666667,
+       "sim_correctness_corr": 0.055017746205,
+       "mean_max_similarity": 0.686783545464,
+       "agreement_with_llm": 0.593333333333
       },
       "bm25": {
-       "accuracy": 0.6566666666666666,
-       "ratio": 1.1726190476190474,
-       "gap": -0.09666666666666657,
-       "sim_correctness_corr": -0.0888856389913069,
-       "mean_max_similarity": 7.763733251687367,
-       "agreement_with_llm": 0.5433333333333333
+       "accuracy": 0.656666666667,
+       "ratio": 1.172619047619,
+       "gap": -0.096666666667,
+       "sim_correctness_corr": -0.088885638991,
+       "mean_max_similarity": 7.763733251687,
+       "agreement_with_llm": 0.543333333333
       }
      },
-     "sim_correctness_corr": 0.055017746205341604,
-     "gap": -0.1466666666666666
+     "sim_correctness_corr": 0.055017746205,
+     "gap": -0.146666666667
     }
    },
    "semantic_validity_gap": {
     "name": "semantic_validity_gap",
     "level": "protocol",
-    "value": 0.0033333333333334103,
+    "value": 0.003333333333,
     "ci": null,
     "gated": false,
     "note": "",
     "details": {
-     "em_free": 0.5566666666666666,
+     "em_free": 0.556666666667,
      "em_constrained": 0.56,
      "sem_free": 0.56,
      "sem_constrained": 0.56,
-     "constraint_gain": 0.0033333333333334103,
+     "constraint_gain": 0.003333333333,
      "semantic_gain": 0.0,
      "mcnemar_em": {
       "a_only": 0,
@@ -119,8 +119,8 @@
       "n_discordant": 0,
       "p": 1.0
      },
-     "dissociation_rate": 0.0033333333333333335,
-     "invalid_free": 0.006666666666666667,
+     "dissociation_rate": 0.003333333333,
+     "invalid_free": 0.006666666667,
      "invalid_constrained": 0.0
     }
    },
@@ -142,7 +142,7 @@
   "gated": false,
   "vector": {
    "format_sensitivity": null,
-   "partial_input_accuracy": 0.10787878787878787,
+   "partial_input_accuracy": 0.107878787879,
    "retrieval_dominance": 1.06,
    "semantic_validity_gap": 0.0,
    "abstention_failure": null
@@ -160,40 +160,40 @@
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
     "level": "dataset",
-    "value": 0.10787878787878787,
+    "value": 0.107878787879,
     "ci": null,
     "gated": false,
     "note": "proxy from the label prior, not a model run",
     "details": {
      "proxy": "majority-class baseline stands in for options-only input (no premises exist to withhold)",
-     "majority_accuracy": 0.15333333333333332,
-     "chance": 0.045454545454545456,
+     "majority_accuracy": 0.153333333333,
+     "chance": 0.045454545455,
      "label_marginal": {
       "marginal": {
-       "Infectious": 0.15333333333333332,
-       "Neoplasm": 0.09333333333333334,
-       "Blood": 0.0033333333333333335,
+       "Infectious": 0.153333333333,
+       "Neoplasm": 0.093333333333,
+       "Blood": 0.003333333333,
        "Endocrine/metabolic": 0.01,
-       "Mental": 0.013333333333333334,
-       "Nervous": 0.04666666666666667,
+       "Mental": 0.013333333333,
+       "Nervous": 0.046666666667,
        "Eye": 0.0,
        "Ear": 0.01,
        "Circulatory": 0.08,
        "Respiratory": 0.05,
-       "Digestive": 0.08666666666666667,
-       "Skin": 0.043333333333333335,
-       "Musculoskeletal": 0.043333333333333335,
+       "Digestive": 0.086666666667,
+       "Skin": 0.043333333333,
+       "Musculoskeletal": 0.043333333333,
        "Genitourinary": 0.08,
        "Pregnancy": 0.02,
-       "Perinatal": 0.023333333333333334,
-       "Congenital": 0.016666666666666666,
-       "Ill-defined": 0.10333333333333333,
+       "Perinatal": 0.023333333333,
+       "Congenital": 0.016666666667,
+       "Ill-defined": 0.103333333333,
        "Injury": 0.0,
-       "ExternalCause": 0.12333333333333334,
+       "ExternalCause": 0.123333333333,
        "Factors": 0.0,
        "Special": 0.0
       },
-      "tv_vs_uniform": 0.40757575757575754
+      "tv_vs_uniform": 0.407575757576
      }
     }
    },
@@ -205,28 +205,28 @@
     "gated": false,
     "note": "",
     "details": {
-     "llm_accuracy": 0.6666666666666666,
+     "llm_accuracy": 0.666666666667,
      "best_method": "char3",
      "per_method": {
       "char3": {
-       "accuracy": 0.7066666666666667,
+       "accuracy": 0.706666666667,
        "ratio": 1.06,
-       "gap": -0.040000000000000036,
-       "sim_correctness_corr": -0.04650909515710018,
-       "mean_max_similarity": 0.6867835454638198,
+       "gap": -0.04,
+       "sim_correctness_corr": -0.046509095157,
+       "mean_max_similarity": 0.686783545464,
        "agreement_with_llm": 0.62
       },
       "bm25": {
-       "accuracy": 0.6566666666666666,
+       "accuracy": 0.656666666667,
        "ratio": 0.985,
-       "gap": 0.010000000000000009,
-       "sim_correctness_corr": -0.015931642170892952,
-       "mean_max_similarity": 7.763733251687367,
-       "agreement_with_llm": 0.6166666666666667
+       "gap": 0.01,
+       "sim_correctness_corr": -0.015931642171,
+       "mean_max_similarity": 7.763733251687,
+       "agreement_with_llm": 0.616666666667
       }
      },
-     "sim_correctness_corr": -0.04650909515710018,
-     "gap": -0.040000000000000036
+     "sim_correctness_corr": -0.046509095157,
+     "gap": -0.04
     }
    },
    "semantic_validity_gap": {
@@ -237,10 +237,10 @@
     "gated": false,
     "note": "",
     "details": {
-     "em_free": 0.6666666666666666,
-     "em_constrained": 0.6666666666666666,
-     "sem_free": 0.6666666666666666,
-     "sem_constrained": 0.6666666666666666,
+     "em_free": 0.666666666667,
+     "em_constrained": 0.666666666667,
+     "sem_free": 0.666666666667,
+     "sem_constrained": 0.666666666667,
      "constraint_gain": 0.0,
      "semantic_gain": 0.0,
      "mcnemar_em": {
@@ -277,9 +277,9 @@
   "fs_gate": 0.03,
   "gated": true,
   "vector": {
-   "format_sensitivity": 0.13731047544403402,
-   "partial_input_accuracy": 0.050000000000000044,
-   "retrieval_dominance": 1.777777777777778,
+   "format_sensitivity": 0.137310475444,
+   "partial_input_accuracy": 0.05,
+   "retrieval_dominance": 1.777777777778,
    "semantic_validity_gap": 0.125,
    "abstention_failure": 1.0
   },
@@ -287,10 +287,10 @@
    "format_sensitivity": {
     "name": "format_sensitivity",
     "level": "model_x_benchmark",
-    "value": 0.13731047544403402,
+    "value": 0.137310475444,
     "ci": [
-     0.10051948401512348,
-     0.1826692518065248
+     0.100519484015,
+     0.182669251807
     ],
     "gated": false,
     "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
@@ -316,17 +316,17 @@
        "a_only": 0,
        "b_only": 26,
        "n_discordant": 26,
-       "p": 2.980232238769535e-08
+       "p": 2.9802e-08
       },
       "prompt_tuned": {
        "a_only": 0,
        "b_only": 19,
        "n_discordant": 19,
-       "p": 3.814697265625e-06
+       "p": 3.814697e-06
       }
      },
      "lenient": {
-      "value": 0.14719601443879743,
+      "value": 0.147196014439,
       "per_rendering": {
        "naive": {
         "accuracy": 0.0,
@@ -343,7 +343,7 @@
       }
      },
      "truth_value": {
-      "value": 0.18828539212825005,
+      "value": 0.188285392128,
       "per_rendering": {
        "naive": {
         "accuracy": 0.0,
@@ -364,7 +364,7 @@
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
     "level": "dataset",
-    "value": 0.050000000000000044,
+    "value": 0.05,
     "ci": null,
     "gated": true,
     "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.137 > 0.03",
@@ -384,14 +384,14 @@
        "TRUE": 0.45,
        "FALSE": 0.55
       },
-      "tv_vs_uniform": 0.05000000000000002
+      "tv_vs_uniform": 0.05
      }
     }
    },
    "retrieval_dominance": {
     "name": "retrieval_dominance",
     "level": "dataset",
-    "value": 1.777777777777778,
+    "value": 1.777777777778,
     "ci": null,
     "gated": true,
     "note": "gated: format sensitivity 0.137 > 0.03",
@@ -401,15 +401,15 @@
      "per_method": {
       "loo-char3": {
        "accuracy": 0.8,
-       "ratio": 1.777777777777778,
-       "gap": -0.35000000000000003,
-       "sim_correctness_corr": 0.38948109927893354,
+       "ratio": 1.777777777778,
+       "gap": -0.35,
+       "sim_correctness_corr": 0.389481099279,
        "mean_max_similarity": 1.0,
        "agreement_with_llm": 0.45
       }
      },
-     "sim_correctness_corr": 0.38948109927893354,
-     "gap": -0.35000000000000003,
+     "sim_correctness_corr": 0.389481099279,
+     "gap": -0.35,
      "note": "leave-one-out over the 80 in-language fixtures; no separate training split exists"
     }
    },
@@ -425,19 +425,19 @@
      "em_constrained": 0.6375,
      "sem_free": 0.45,
      "sem_constrained": 0.6375,
-     "constraint_gain": 0.31249999999999994,
-     "semantic_gain": 0.18749999999999994,
+     "constraint_gain": 0.3125,
+     "semantic_gain": 0.1875,
      "mcnemar_em": {
       "a_only": 0,
       "b_only": 25,
       "n_discordant": 25,
-      "p": 5.96046447753906e-08
+      "p": 5.9605e-08
      },
      "mcnemar_sem": {
       "a_only": 0,
       "b_only": 15,
       "n_discordant": 15,
-      "p": 6.103515625000003e-05
+      "p": 6.1035156e-05
      },
      "dissociation_rate": 0.125,
      "invalid_free": 0.0,
@@ -453,15 +453,15 @@
        "a_only": 0,
        "b_only": 15,
        "n_discordant": 15,
-       "p": 6.103515625000003e-05
+       "p": 6.1035156e-05
       }
      },
      "free_subset": {
       "n": 55,
-      "em_free": 0.2909090909090909,
-      "em_constrained": 0.4727272727272727,
-      "sem_free": 0.4727272727272727,
-      "sem_constrained": 0.4727272727272727,
+      "em_free": 0.290909090909,
+      "em_constrained": 0.472727272727,
+      "sem_free": 0.472727272727,
+      "sem_constrained": 0.472727272727,
       "mcnemar_sem": {
        "a_only": 0,
        "b_only": 0,
@@ -491,7 +491,7 @@
      "ood_invalid_rate": 0.0,
      "in_dist_accuracy": 0.325,
      "risk_coverage_auc": null,
-     "p_vs_half": 8.271806125530277e-25,
+     "p_vs_half": 0.0,
      "per_arm": {
       "naive": 1.0,
       "prompted": 1.0,
@@ -509,20 +509,20 @@
   "fs_gate": 0.03,
   "gated": true,
   "vector": {
-   "format_sensitivity": 0.14154406459552524,
-   "partial_input_accuracy": 0.050000000000000044,
-   "retrieval_dominance": 1.777777777777778,
-   "semantic_validity_gap": 0.11249999999999999,
+   "format_sensitivity": 0.141544064596,
+   "partial_input_accuracy": 0.05,
+   "retrieval_dominance": 1.777777777778,
+   "semantic_validity_gap": 0.1125,
    "abstention_failure": 1.0
   },
   "signals": {
    "format_sensitivity": {
     "name": "format_sensitivity",
     "level": "model_x_benchmark",
-    "value": 0.14154406459552524,
+    "value": 0.141544064596,
     "ci": [
-     0.10358169078880045,
-     0.18605927968138422
+     0.103581690789,
+     0.186059279681
     ],
     "gated": false,
     "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
@@ -548,17 +548,17 @@
        "a_only": 0,
        "b_only": 27,
        "n_discordant": 27,
-       "p": 1.4901161193847648e-08
+       "p": 1.4901e-08
       },
       "prompt_tuned": {
        "a_only": 0,
        "b_only": 19,
        "n_discordant": 19,
-       "p": 3.814697265625e-06
+       "p": 3.814697e-06
       }
      },
      "lenient": {
-      "value": 0.151497158022482,
+      "value": 0.151497158022,
       "per_rendering": {
        "naive": {
         "accuracy": 0.0,
@@ -575,7 +575,7 @@
       }
      },
      "truth_value": {
-      "value": 0.1896634446123507,
+      "value": 0.189663444612,
       "per_rendering": {
        "naive": {
         "accuracy": 0.0,
@@ -596,7 +596,7 @@
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
     "level": "dataset",
-    "value": 0.050000000000000044,
+    "value": 0.05,
     "ci": null,
     "gated": true,
     "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.142 > 0.03",
@@ -616,14 +616,14 @@
        "TRUE": 0.45,
        "FALSE": 0.55
       },
-      "tv_vs_uniform": 0.05000000000000002
+      "tv_vs_uniform": 0.05
      }
     }
    },
    "retrieval_dominance": {
     "name": "retrieval_dominance",
     "level": "dataset",
-    "value": 1.777777777777778,
+    "value": 1.777777777778,
     "ci": null,
     "gated": true,
     "note": "gated: format sensitivity 0.142 > 0.03",
@@ -633,22 +633,22 @@
      "per_method": {
       "loo-char3": {
        "accuracy": 0.8,
-       "ratio": 1.777777777777778,
-       "gap": -0.35000000000000003,
-       "sim_correctness_corr": 0.38948109927893354,
+       "ratio": 1.777777777778,
+       "gap": -0.35,
+       "sim_correctness_corr": 0.389481099279,
        "mean_max_similarity": 1.0,
        "agreement_with_llm": 0.45
       }
      },
-     "sim_correctness_corr": 0.38948109927893354,
-     "gap": -0.35000000000000003,
+     "sim_correctness_corr": 0.389481099279,
+     "gap": -0.35,
      "note": "leave-one-out over the 80 in-language fixtures; no separate training split exists"
     }
    },
    "semantic_validity_gap": {
     "name": "semantic_validity_gap",
     "level": "protocol",
-    "value": 0.11249999999999999,
+    "value": 0.1125,
     "ci": null,
     "gated": true,
     "note": "EM = strict canonical parse; semantic = truth value under lenient parse; prompted vs constrained arm; gated: format sensitivity 0.142 > 0.03",
@@ -657,7 +657,7 @@
      "em_constrained": 0.45,
      "sem_free": 0.45,
      "sem_constrained": 0.45,
-     "constraint_gain": 0.11249999999999999,
+     "constraint_gain": 0.1125,
      "semantic_gain": 0.0,
      "mcnemar_em": {
       "a_only": 0,
@@ -691,7 +691,7 @@
      "lenient_exact_as_semantic": {
       "sem_free": 0.3625,
       "sem_constrained": 0.45,
-      "semantic_gain": 0.08750000000000002
+      "semantic_gain": 0.0875
      },
      "allowed_set_mode": "product"
     }
@@ -710,7 +710,7 @@
      "ood_invalid_rate": 0.0,
      "in_dist_accuracy": 0.3375,
      "risk_coverage_auc": null,
-     "p_vs_half": 8.271806125530277e-25,
+     "p_vs_half": 0.0,
      "per_arm": {
       "naive": 1.0,
       "prompted": 1.0,
@@ -728,8 +728,8 @@
   "fs_gate": 0.03,
   "gated": true,
   "vector": {
-   "format_sensitivity": 0.13030413142593242,
-   "partial_input_accuracy": 0.050000000000000044,
+   "format_sensitivity": 0.130304131426,
+   "partial_input_accuracy": 0.05,
    "retrieval_dominance": 1.6,
    "semantic_validity_gap": 0.4,
    "abstention_failure": 1.0
@@ -738,10 +738,10 @@
    "format_sensitivity": {
     "name": "format_sensitivity",
     "level": "model_x_benchmark",
-    "value": 0.13030413142593242,
+    "value": 0.130304131426,
     "ci": [
-     0.08720187306856812,
-     0.1739053062892434
+     0.087201873069,
+     0.173905306289
     ],
     "gated": false,
     "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
@@ -767,17 +767,17 @@
        "a_only": 17,
        "b_only": 0,
        "n_discordant": 17,
-       "p": 1.5258789062500003e-05
+       "p": 1.5258789e-05
       },
       "prompt_tuned": {
        "a_only": 25,
        "b_only": 0,
        "n_discordant": 25,
-       "p": 5.96046447753906e-08
+       "p": 5.9605e-08
       }
      },
      "lenient": {
-      "value": 0.09483172230617537,
+      "value": 0.094831722306,
       "per_rendering": {
        "naive": {
         "accuracy": 0.525,
@@ -794,7 +794,7 @@
       }
      },
      "truth_value": {
-      "value": 0.09483172230617537,
+      "value": 0.094831722306,
       "per_rendering": {
        "naive": {
         "accuracy": 0.525,
@@ -815,7 +815,7 @@
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
     "level": "dataset",
-    "value": 0.050000000000000044,
+    "value": 0.05,
     "ci": null,
     "gated": true,
     "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.130 > 0.03",
@@ -837,7 +837,7 @@
        "TRUE": 0.45,
        "FALSE": 0.55
       },
-      "tv_vs_uniform": 0.05000000000000002
+      "tv_vs_uniform": 0.05
      }
     }
    },
@@ -855,14 +855,14 @@
       "loo-char3": {
        "accuracy": 0.8,
        "ratio": 1.6,
-       "gap": -0.30000000000000004,
-       "sim_correctness_corr": -0.40089186286863654,
+       "gap": -0.3,
+       "sim_correctness_corr": -0.400891862869,
        "mean_max_similarity": 1.0,
        "agreement_with_llm": 0.475
       }
      },
-     "sim_correctness_corr": -0.40089186286863654,
-     "gap": -0.30000000000000004,
+     "sim_correctness_corr": -0.400891862869,
+     "gap": -0.3,
      "note": "leave-one-out over the 80 in-language fixtures; no separate training split exists"
     }
    },
@@ -879,18 +879,18 @@
      "sem_free": 0.5,
      "sem_constrained": 0.65,
      "constraint_gain": 0.55,
-     "semantic_gain": 0.15000000000000002,
+     "semantic_gain": 0.15,
      "mcnemar_em": {
       "a_only": 0,
       "b_only": 44,
       "n_discordant": 44,
-      "p": 1.1368683772161599e-13
+      "p": 0.0
      },
      "mcnemar_sem": {
       "a_only": 2,
       "b_only": 14,
       "n_discordant": 16,
-      "p": 0.004180908203124994
+      "p": 0.004180908203
      },
      "dissociation_rate": 0.4,
      "invalid_free": 0.0,
@@ -906,26 +906,26 @@
        "a_only": 0,
        "b_only": 12,
        "n_discordant": 12,
-       "p": 0.0004882812500000003
+       "p": 0.00048828125
       }
      },
      "free_subset": {
       "n": 55,
-      "em_free": 0.12727272727272726,
-      "em_constrained": 0.4909090909090909,
-      "sem_free": 0.4909090909090909,
-      "sem_constrained": 0.4909090909090909,
+      "em_free": 0.127272727273,
+      "em_constrained": 0.490909090909,
+      "sem_free": 0.490909090909,
+      "sem_constrained": 0.490909090909,
       "mcnemar_sem": {
        "a_only": 2,
        "b_only": 2,
        "n_discordant": 4,
-       "p": 0.9999999999999996
+       "p": 1.0
       }
      },
      "lenient_exact_as_semantic": {
       "sem_free": 0.5,
       "sem_constrained": 0.65,
-      "semantic_gain": 0.15000000000000002
+      "semantic_gain": 0.15
      },
      "allowed_set_mode": "gold"
     }
@@ -944,7 +944,7 @@
      "ood_invalid_rate": 0.0,
      "in_dist_accuracy": 0.1,
      "risk_coverage_auc": null,
-     "p_vs_half": 8.271806125530277e-25,
+     "p_vs_half": 0.0,
      "per_arm": {
       "naive": 1.0,
       "prompted": 1.0,
@@ -962,9 +962,9 @@
   "fs_gate": 0.03,
   "gated": true,
   "vector": {
-   "format_sensitivity": 0.13501543121683043,
-   "partial_input_accuracy": 0.050000000000000044,
-   "retrieval_dominance": 1.777777777777778,
+   "format_sensitivity": 0.135015431217,
+   "partial_input_accuracy": 0.05,
+   "retrieval_dominance": 1.777777777778,
    "semantic_validity_gap": 0.3875,
    "abstention_failure": 1.0
   },
@@ -972,10 +972,10 @@
    "format_sensitivity": {
     "name": "format_sensitivity",
     "level": "model_x_benchmark",
-    "value": 0.13501543121683043,
+    "value": 0.135015431217,
     "ci": [
-     0.08897565210026093,
-     0.181429508808977
+     0.0889756521,
+     0.181429508809
     ],
     "gated": false,
     "note": "SD over the three unconstrained prompt arms (naive / prompted / prompt_tuned), strict parse",
@@ -1001,17 +1001,17 @@
        "a_only": 20,
        "b_only": 0,
        "n_discordant": 20,
-       "p": 1.9073486328125e-06
+       "p": 1.907349e-06
       },
       "prompt_tuned": {
        "a_only": 25,
        "b_only": 0,
        "n_discordant": 25,
-       "p": 5.96046447753906e-08
+       "p": 5.9605e-08
       }
      },
      "lenient": {
-      "value": 0.08917056066263623,
+      "value": 0.089170560663,
       "per_rendering": {
        "naive": {
         "accuracy": 0.5125,
@@ -1028,7 +1028,7 @@
       }
      },
      "truth_value": {
-      "value": 0.08354140689901424,
+      "value": 0.083541406899,
       "per_rendering": {
        "naive": {
         "accuracy": 0.5125,
@@ -1049,7 +1049,7 @@
    "partial_input_accuracy": {
     "name": "partial_input_accuracy",
     "level": "dataset",
-    "value": 0.050000000000000044,
+    "value": 0.05,
     "ci": null,
     "gated": true,
     "note": "proxy from the label prior, not a model run; gated: format sensitivity 0.135 > 0.03",
@@ -1071,14 +1071,14 @@
        "TRUE": 0.45,
        "FALSE": 0.55
       },
-      "tv_vs_uniform": 0.05000000000000002
+      "tv_vs_uniform": 0.05
      }
     }
    },
    "retrieval_dominance": {
     "name": "retrieval_dominance",
     "level": "dataset",
-    "value": 1.777777777777778,
+    "value": 1.777777777778,
     "ci": null,
     "gated": true,
     "note": "gated: format sensitivity 0.135 > 0.03",
@@ -1088,15 +1088,15 @@
      "per_method": {
       "loo-char3": {
        "accuracy": 0.8,
-       "ratio": 1.777777777777778,
-       "gap": -0.35000000000000003,
-       "sim_correctness_corr": -0.3626203338114213,
+       "ratio": 1.777777777778,
+       "gap": -0.35,
+       "sim_correctness_corr": -0.362620333811,
        "mean_max_similarity": 1.0,
        "agreement_with_llm": 0.425
       }
      },
-     "sim_correctness_corr": -0.3626203338114213,
-     "gap": -0.35000000000000003,
+     "sim_correctness_corr": -0.362620333811,
+     "gap": -0.35,
      "note": "leave-one-out over the 80 in-language fixtures; no separate training split exists"
     }
    },
@@ -1113,12 +1113,12 @@
      "sem_free": 0.45,
      "sem_constrained": 0.4625,
      "constraint_gain": 0.4,
-     "semantic_gain": 0.012500000000000011,
+     "semantic_gain": 0.0125,
      "mcnemar_em": {
       "a_only": 0,
       "b_only": 32,
       "n_discordant": 32,
-      "p": 4.656612873077396e-10
+      "p": 4.66e-10
      },
      "mcnemar_sem": {
       "a_only": 3,
@@ -1146,7 +1146,7 @@
      "lenient_exact_as_semantic": {
       "sem_free": 0.45,
       "sem_constrained": 0.4625,
-      "semantic_gain": 0.012500000000000011
+      "semantic_gain": 0.0125
      },
      "allowed_set_mode": "product"
     }
@@ -1165,7 +1165,7 @@
      "ood_invalid_rate": 0.0,
      "in_dist_accuracy": 0.0625,
      "risk_coverage_auc": null,
-     "p_vs_half": 8.271806125530277e-25,
+     "p_vs_half": 0.0,
      "per_arm": {
       "naive": 1.0,
       "prompted": 1.0,
